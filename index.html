@@ -609,6 +609,34 @@
       section { padding: 80px 20px; }
       .contact-wrapper { padding: 32px 20px; }
       footer { flex-direction: column; gap: 20px; text-align: center; }
+
+      /* ── Mobile animation fix ── */
+      #animation-sticky {
+        height: 100svh;
+        align-items: flex-start;
+      }
+
+      #butterfly-canvas {
+        width: 100%;
+        height: 65vw;          /* shorter on mobile — shows image, not blown up */
+        max-height: 55vh;
+        object-fit: contain;   /* whole butterfly visible, no cropping */
+        object-position: center top;
+        margin-top: 72px;      /* clear the nav */
+        background: var(--bg);
+      }
+
+      /* Stages text smaller & tighter on mobile */
+      .stage-headline { font-size: clamp(1.6rem, 7vw, 2.4rem); }
+      .stage-sub { font-size: 0.88rem; max-width: 90vw; }
+      .stage-eyebrow { font-size: 0.62rem; }
+
+      /* Reposition stages so text doesn't overlap butterfly */
+      .stage   { justify-content: flex-end; padding-bottom: 6vh; }
+      .stage-1 { justify-content: flex-end; padding-top: 0; padding-bottom: 6vh; }
+      .stage-1 .stage-headline::before { display: none; }
+
+      .scroll-hint { bottom: 2vh; }
     }
 
     /* Fade-in on scroll */
