@@ -14,19 +14,19 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      /* ── Color system (one accent, semantic tokens) ── */
-      --bg:        #080c0a;
-      --bg-raised:  #0e1410;
-      --surface:   #131d16;
-      --surface-2: #1a2620;
-      --accent:    #3d8ef0;        /* single accent — blue */
-      --accent-hover: #5aa3f7;
-      --accent-dim:   rgba(61,142,240,0.14);
-      --text:      #ede9e3;
-      --text-2:    rgba(237,233,227,0.70);
-      --text-3:    rgba(237,233,227,0.42);
-      --border:    rgba(61,142,240,0.13);
-      --border-hover: rgba(61,142,240,0.38);
+      /* ── Color system — white theme ── */
+      --bg:        #f6f3ee;
+      --bg-raised: #ffffff;
+      --surface:   #ffffff;
+      --surface-2: #f0ede8;
+      --accent:    #2275d8;        /* deeper blue — passes 4.5:1 on white */
+      --accent-hover: #1a63c4;
+      --accent-dim:   rgba(34,117,216,0.10);
+      --text:      #141414;
+      --text-2:    rgba(20,20,20,0.62);
+      --text-3:    rgba(20,20,20,0.38);
+      --border:    rgba(0,0,0,0.09);
+      --border-hover: rgba(34,117,216,0.35);
       /* ── One corner-radius system ── */
       --r-sm:  8px;
       --r-md: 14px;
@@ -84,7 +84,7 @@
       justify-content: space-between;
       padding: 0 var(--sp-6);
       height: 72px;
-      background: rgba(8,12,10,0.88);
+      background: rgba(246,243,238,0.92);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
@@ -196,10 +196,10 @@
       inset: 0;
       background: linear-gradient(
         to bottom,
-        rgba(10,15,13,0.45) 0%,
-        rgba(10,15,13,0.1) 40%,
-        rgba(10,15,13,0.1) 60%,
-        rgba(10,15,13,0.85) 100%
+        rgba(246,243,238,0.35) 0%,
+        rgba(246,243,238,0.0) 30%,
+        rgba(246,243,238,0.0) 55%,
+        rgba(246,243,238,0.92) 100%
       );
       pointer-events: none;
     }
@@ -260,19 +260,25 @@
       line-height: 1.08;
       letter-spacing: -0.02em;
       margin-bottom: 16px;
-      text-shadow: 0 4px 30px rgba(0,0,0,0.6);
+      color: #fff;
+      text-shadow: 0 2px 24px rgba(0,0,0,0.55), 0 0 60px rgba(0,0,0,0.3);
     }
     .stage-headline em {
       font-style: normal;
-      color: var(--accent);
+      color: #7ecfff;
+    }
+
+    .stage-eyebrow {
+      color: #c8e8ff;
     }
 
     .stage-sub {
       font-size: clamp(0.95rem, 1.4vw, 1.15rem);
-      color: rgba(240,237,232,0.78);
+      color: rgba(255,255,255,0.82);
       max-width: 500px;
-      font-weight: 300;
+      font-weight: 400;
       line-height: 1.65;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.4);
     }
 
     /* Stage-specific positioning */
@@ -324,6 +330,57 @@
     @keyframes scrollPulse {
       0%, 100% { opacity: 0.3; }
       50% { opacity: 1; }
+    }
+
+    /* ── PAPER FOLD OVERLAY ── */
+    /* Positioned to match the banner in the image:
+       center-ish horizontally, ~36–52% from top of viewport */
+    #paper-wrap {
+      position: absolute;
+      top: 36%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 52%;
+      height: 16%;
+      display: flex;
+      perspective: 800px;
+      pointer-events: none;
+      z-index: 5;
+      opacity: 1;
+      mix-blend-mode: multiply;   /* blends into the image naturally */
+    }
+
+    /* Left half — folds toward viewer (rotateY negative) */
+    #paper-left {
+      width: 50%;
+      height: 100%;
+      transform-origin: right center;
+      transform-style: preserve-3d;
+      /* starts flat, JS will animate rotateY */
+    }
+    /* Right half — folds toward viewer (rotateY positive) */
+    #paper-right {
+      width: 50%;
+      height: 100%;
+      transform-origin: left center;
+      transform-style: preserve-3d;
+    }
+
+    .paper-inner {
+      width: 100%;
+      height: 100%;
+      background: #4a9de0;
+      border-radius: 2px;
+      position: relative;
+      backface-visibility: hidden;
+    }
+    /* Crease shadow on left half — right edge gets darker as it folds */
+    .paper-inner-left {
+      background: linear-gradient(to right, #5baee8, #3a8dd4);
+    }
+    /* Crease shadow on right half — left edge gets darker as it folds */
+    .paper-inner-right {
+      background: linear-gradient(to left, #5baee8, #3a8dd4);
     }
 
     /* ── SECTIONS ── */
@@ -758,6 +815,17 @@
   <section id="animation-section" style="padding:0;max-width:100%;" aria-label="Hero animation">
     <div id="animation-sticky">
       <img id="butterfly-canvas" src="images/ezgif-frame-001.jpg" alt="Magical blue butterfly emerging in a forest — Pop-Up Events" />
+
+      <!-- Paper fold overlay — synced to scroll frames 1-12 -->
+      <div id="paper-wrap" aria-hidden="true">
+        <div id="paper-left">
+          <div class="paper-inner paper-inner-left"></div>
+        </div>
+        <div id="paper-right">
+          <div class="paper-inner paper-inner-right"></div>
+        </div>
+      </div>
+
       <div class="hero-overlay"></div>
 
       <!-- Scroll-driven text stages -->
@@ -1056,6 +1124,32 @@
       currentStage = idx;
     }
 
+    // ── Paper fold elements ──
+    const paperWrap  = document.getElementById('paper-wrap');
+    const paperLeft  = document.getElementById('paper-left');
+    const paperRight = document.getElementById('paper-right');
+
+    // Paper is visible in frames 1–12 (progress 0 → ~0.22)
+    // At progress 0:   both halves flat  (rotateY = 0°)
+    // At progress 0.22: both halves fully folded (rotateY = ±90°) + wrap fades out
+    const PAPER_END = 0.22;
+
+    function updatePaper(progress) {
+      if (progress >= PAPER_END) {
+        paperWrap.style.opacity = '0';
+        return;
+      }
+      const t = progress / PAPER_END; // 0 → 1 within paper phase
+      // Ease in-out for natural feel
+      const ease = t < 0.5 ? 2*t*t : -1+(4-2*t)*t;
+      const foldAngle = ease * 88;  // fold 0 → 88 degrees
+      const opacity   = t < 0.7 ? 1 : 1 - ((t - 0.7) / 0.3); // fade last 30%
+
+      paperLeft.style.transform  = `rotateY(${-foldAngle}deg)`;
+      paperRight.style.transform = `rotateY(${foldAngle}deg)`;
+      paperWrap.style.opacity = opacity;
+    }
+
     gsap.to(frameObj, {
       frame: FRAME_COUNT - 1,
       snap: 'frame',
@@ -1073,6 +1167,10 @@
         }
         // Calculate progress 0–1 through the animation section
         const progress = f / (FRAME_COUNT - 1);
+
+        // Update paper fold
+        updatePaper(progress);
+
         // Find which stage we're in
         let newStage = 0;
         for (let i = STAGE_THRESHOLDS.length - 1; i >= 0; i--) {
