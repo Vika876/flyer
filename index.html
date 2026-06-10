@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pop-Up | Magical Events & Experiences</title>
+  <title>Pop-Up Flyers | Designer Physical Flyers for Your Business</title>
+  <meta name="description" content="Custom designer flyers for beauty masters, cafes, experts and more. Design, print, and ready-made templates." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -14,32 +15,25 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      /* ── Color system — white theme ── */
-      --bg:        #f6f3ee;
-      --bg-raised: #ffffff;
-      --surface:   #ffffff;
-      --surface-2: #f0ede8;
-      --accent:    #2275d8;        /* deeper blue — passes 4.5:1 on white */
+      --bg:           #f5f2ed;
+      --bg-raised:    #ffffff;
+      --surface:      #ffffff;
+      --surface-2:    #edeae4;
+      --accent:       #2275d8;
       --accent-hover: #1a63c4;
       --accent-dim:   rgba(34,117,216,0.10);
-      --text:      #141414;
-      --text-2:    rgba(20,20,20,0.62);
-      --text-3:    rgba(20,20,20,0.38);
-      --border:    rgba(0,0,0,0.09);
-      --border-hover: rgba(34,117,216,0.35);
-      /* ── One corner-radius system ── */
-      --r-sm:  8px;
-      --r-md: 14px;
-      --r-lg: 20px;
-      --r-full: 100px;
-      /* ── Spacing scale (8pt grid) ── */
-      --sp-1: 8px;  --sp-2: 16px; --sp-3: 24px;
-      --sp-4: 32px; --sp-6: 48px; --sp-8: 64px;
-      --sp-12: 96px; --sp-16: 128px;
+      --accent-gold:  #c9922a;
+      --text:         #141414;
+      --text-2:       rgba(20,20,20,0.60);
+      --text-3:       rgba(20,20,20,0.36);
+      --border:       rgba(0,0,0,0.09);
+      --border-hover: rgba(34,117,216,0.32);
+      --r-sm: 8px; --r-md: 14px; --r-lg: 20px; --r-full: 100px;
+      --sp-1:8px; --sp-2:16px; --sp-3:24px; --sp-4:32px;
+      --sp-6:48px; --sp-8:64px; --sp-12:96px; --sp-16:128px;
     }
 
     html { scroll-behavior: smooth; }
-
     body {
       background: var(--bg);
       color: var(--text);
@@ -50,681 +44,352 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ── Skip link (a11y) ── */
     .skip-link {
-      position: absolute;
-      top: -40px;
-      left: 16px;
-      background: var(--accent);
-      color: #fff;
-      padding: 8px 16px;
-      border-radius: var(--r-sm);
-      font-size: 0.85rem;
-      font-weight: 600;
-      text-decoration: none;
-      z-index: 9999;
+      position: absolute; top: -40px; left: 16px;
+      background: var(--accent); color: #fff;
+      padding: 8px 16px; border-radius: var(--r-sm);
+      font-size: 0.85rem; font-weight: 600;
+      text-decoration: none; z-index: 9999;
       transition: top 0.2s;
     }
     .skip-link:focus { top: 16px; }
-
-    /* ── Focus rings (a11y) ── */
-    :focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 3px;
-      border-radius: 3px;
-    }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
 
     /* ── NAV ── */
     nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 var(--sp-6);
-      height: 72px;
-      background: rgba(246,243,238,0.92);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 var(--sp-6); height: 72px;
+      background: rgba(245,242,237,0.93);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
-      transition: background 0.3s;
     }
-
     .nav-logo {
-      font-family: 'Heebo', sans-serif;
-      font-size: 1.5rem;
-      font-weight: 800;
-      letter-spacing: -0.01em;
-      color: var(--text);
-      text-decoration: none;
+      font-size: 1.5rem; font-weight: 900;
+      letter-spacing: -0.02em; color: var(--text); text-decoration: none;
     }
     .nav-logo span { color: var(--accent); }
-
-    .nav-links {
-      display: flex;
-      gap: var(--sp-4);
-      list-style: none;
-    }
+    .nav-links { display: flex; gap: var(--sp-4); list-style: none; }
     .nav-links a {
-      color: var(--text-2);
-      text-decoration: none;
-      font-size: 0.875rem;
-      font-weight: 500;
-      transition: color 0.2s;
+      color: var(--text-2); text-decoration: none;
+      font-size: 0.875rem; font-weight: 500; transition: color 0.2s;
     }
     .nav-links a:hover { color: var(--text); }
+    .nav-right { display: flex; align-items: center; gap: var(--sp-2); }
 
-    .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    /* Language toggle */
     .lang-toggle {
-      display: flex;
-      background: rgba(255,255,255,0.05);
-      border-radius: var(--r-full);
-      padding: 3px;
-      border: 1px solid var(--border);
+      display: flex; background: rgba(0,0,0,0.05);
+      border-radius: var(--r-full); padding: 3px; border: 1px solid var(--border);
     }
     .lang-btn {
-      min-width: 44px;      /* a11y: 44px touch target */
-      min-height: 34px;
-      padding: 5px 14px;
-      border-radius: var(--r-full);
-      font-size: 0.75rem;
-      font-weight: 700;
-      cursor: pointer;
-      border: none;
-      background: transparent;
-      color: var(--text-3);
-      transition: all 0.2s;
-      letter-spacing: 0.06em;
+      min-width: 44px; min-height: 34px; padding: 5px 14px;
+      border-radius: var(--r-full); font-size: 0.75rem; font-weight: 700;
+      cursor: pointer; border: none; background: transparent;
+      color: var(--text-3); transition: all 0.2s; letter-spacing: 0.06em;
       font-family: 'Heebo', sans-serif;
     }
-    .lang-btn.active {
-      background: var(--accent);
-      color: #fff;
-    }
+    .lang-btn.active { background: var(--accent); color: #fff; }
 
     .cta-nav {
-      display: inline-flex;
-      align-items: center;
-      min-height: 44px;     /* a11y: 44px touch target */
-      padding: 0 22px;
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      border-radius: var(--r-full);
-      font-size: 0.875rem;
-      font-weight: 700;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background 0.2s, transform 0.15s;
-      font-family: 'Heebo', sans-serif;
-      white-space: nowrap;
+      display: inline-flex; align-items: center; min-height: 44px;
+      padding: 0 22px; background: var(--accent); color: #fff;
+      border: none; border-radius: var(--r-full);
+      font-size: 0.875rem; font-weight: 700; cursor: pointer;
+      text-decoration: none; transition: background 0.2s, transform 0.15s;
+      font-family: 'Heebo', sans-serif; white-space: nowrap;
     }
     .cta-nav:hover { background: var(--accent-hover); transform: translateY(-1px); }
 
     /* ── HERO / SCROLL ANIMATION ── */
-    #animation-section {
-      position: relative;
-      height: 600vh;
-    }
-
+    #animation-section { position: relative; height: 600vh; }
     #animation-sticky {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
+      position: sticky; top: 0; height: 100vh;
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
     }
+    #butterfly-canvas { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-    #butterfly-canvas {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
+    /* Paper fold */
+    #paper-wrap {
+      position: absolute; top: 36%; left: 50%; transform: translateX(-50%);
+      width: 52%; height: 16%; display: flex; perspective: 800px;
+      pointer-events: none; z-index: 5; mix-blend-mode: multiply;
     }
+    #paper-left  { width:50%; height:100%; transform-origin: right center; transform-style: preserve-3d; }
+    #paper-right { width:50%; height:100%; transform-origin: left  center; transform-style: preserve-3d; }
+    .paper-inner { width:100%; height:100%; border-radius: 2px; backface-visibility: hidden; }
+    .paper-inner-left  { background: linear-gradient(to right, #5baee8, #3a8dd4); }
+    .paper-inner-right { background: linear-gradient(to left,  #5baee8, #3a8dd4); }
 
     .hero-overlay {
-      position: absolute;
-      inset: 0;
+      position: absolute; inset: 0; pointer-events: none;
       background: linear-gradient(
         to bottom,
-        rgba(246,243,238,0.35) 0%,
-        rgba(246,243,238,0.0) 30%,
-        rgba(246,243,238,0.0) 55%,
-        rgba(246,243,238,0.92) 100%
+        rgba(245,242,237,0.3) 0%,
+        rgba(245,242,237,0.0) 30%,
+        rgba(245,242,237,0.0) 55%,
+        rgba(245,242,237,0.95) 100%
       );
-      pointer-events: none;
     }
 
-    .hero-text {
-      position: absolute;
-      bottom: 12vh;
-      left: 50%;
-      transform: translateX(-50%);
-      text-align: center;
-      width: 90%;
-      max-width: 700px;
-      pointer-events: none;
-    }
-
-    /* ── SCROLL STAGES TEXT ── */
-    .scroll-stages {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
+    /* ── SCROLL STAGES ── */
+    .scroll-stages { position: absolute; inset: 0; pointer-events: none; }
     .stage {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      opacity: 0;
-      transition: opacity 0.55s ease;
-      text-align: center;
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 20px; opacity: 0;
+      transition: opacity 0.55s ease; text-align: center;
     }
     .stage.active { opacity: 1; }
-
-    /* Stage 0 – initial (before scroll) anchored at bottom */
-    .stage-0 {
-      justify-content: flex-end;
-      padding-bottom: 12vh;
-    }
-
-    .stage-eyebrow {
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--accent2);
-      margin-bottom: 12px;
-    }
-
-    .stage-headline {
-      font-size: clamp(2.4rem, 5.5vw, 4.6rem);
-      font-weight: 800;
-      line-height: 1.08;
-      letter-spacing: -0.02em;
-      margin-bottom: 16px;
-      color: #fff;
-      text-shadow: 0 2px 24px rgba(0,0,0,0.55), 0 0 60px rgba(0,0,0,0.3);
-    }
-    .stage-headline em {
-      font-style: normal;
-      color: #7ecfff;
-    }
-
-    .stage-eyebrow {
-      color: #c8e8ff;
-    }
-
-    .stage-sub {
-      font-size: clamp(0.95rem, 1.4vw, 1.15rem);
-      color: rgba(255,255,255,0.82);
-      max-width: 500px;
-      font-weight: 400;
-      line-height: 1.65;
-      text-shadow: 0 1px 8px rgba(0,0,0,0.4);
-    }
-
-    /* Stage-specific positioning */
+    .stage-0 { justify-content: flex-end; padding-bottom: 12vh; }
     .stage-1 { justify-content: flex-start; padding-top: 18vh; }
     .stage-2 { justify-content: center; }
     .stage-3 { justify-content: flex-end; padding-bottom: 18vh; }
     .stage-4 { justify-content: center; }
     .stage-5 { justify-content: flex-end; padding-bottom: 10vh; }
 
-    /* accent bar left for stage 1 */
+    .stage-eyebrow {
+      font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: #c8e8ff; margin-bottom: 12px;
+    }
+    .stage-headline {
+      font-size: clamp(2.2rem, 5vw, 4.2rem); font-weight: 900;
+      line-height: 1.08; letter-spacing: -0.025em; margin-bottom: 14px;
+      color: #fff; text-shadow: 0 2px 24px rgba(0,0,0,0.55), 0 0 60px rgba(0,0,0,0.3);
+    }
+    .stage-headline em { font-style: normal; color: #7ecfff; }
+    .stage-sub {
+      font-size: clamp(0.95rem, 1.4vw, 1.1rem); color: rgba(255,255,255,0.82);
+      max-width: 480px; font-weight: 400; line-height: 1.65;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.4);
+    }
     .stage-1 .stage-headline::before {
-      content: '';
-      display: block;
-      width: 40px;
-      height: 3px;
-      background: var(--accent);
-      margin: 0 auto 16px;
+      content:''; display:block; width:36px; height:3px;
+      background: #7ecfff; margin: 0 auto 14px;
     }
-
     .scroll-hint {
-      position: absolute;
-      bottom: 4vh;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      opacity: 0;
-      animation: fadeUp 1s 1.4s forwards;
+      position: absolute; bottom: 4vh; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      opacity: 0; animation: fadeUp 1s 1.4s forwards;
     }
-    .scroll-hint-line {
-      width: 1px;
-      height: 40px;
-      background: linear-gradient(to bottom, var(--accent), transparent);
-      animation: scrollPulse 2s infinite;
-    }
-    .scroll-hint span {
-      font-size: 0.68rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
+    .scroll-hint span { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.55); }
+    .scroll-hint-line { width:1px; height:36px; background: linear-gradient(to bottom, rgba(255,255,255,0.6), transparent); animation: scrollPulse 2s infinite; }
 
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes scrollPulse {
-      0%, 100% { opacity: 0.3; }
-      50% { opacity: 1; }
-    }
-
-    /* ── PAPER FOLD OVERLAY ── */
-    /* Positioned to match the banner in the image:
-       center-ish horizontally, ~36–52% from top of viewport */
-    #paper-wrap {
-      position: absolute;
-      top: 36%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 52%;
-      height: 16%;
-      display: flex;
-      perspective: 800px;
-      pointer-events: none;
-      z-index: 5;
-      opacity: 1;
-      mix-blend-mode: multiply;   /* blends into the image naturally */
-    }
-
-    /* Left half — folds toward viewer (rotateY negative) */
-    #paper-left {
-      width: 50%;
-      height: 100%;
-      transform-origin: right center;
-      transform-style: preserve-3d;
-      /* starts flat, JS will animate rotateY */
-    }
-    /* Right half — folds toward viewer (rotateY positive) */
-    #paper-right {
-      width: 50%;
-      height: 100%;
-      transform-origin: left center;
-      transform-style: preserve-3d;
-    }
-
-    .paper-inner {
-      width: 100%;
-      height: 100%;
-      background: #4a9de0;
-      border-radius: 2px;
-      position: relative;
-      backface-visibility: hidden;
-    }
-    /* Crease shadow on left half — right edge gets darker as it folds */
-    .paper-inner-left {
-      background: linear-gradient(to right, #5baee8, #3a8dd4);
-    }
-    /* Crease shadow on right half — left edge gets darker as it folds */
-    .paper-inner-right {
-      background: linear-gradient(to left, #5baee8, #3a8dd4);
-    }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes scrollPulse { 0%,100%{opacity:0.3} 50%{opacity:1} }
+    @media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation-duration:0.01ms!important; transition-duration:0.01ms!important; } }
 
     /* ── SECTIONS ── */
-    section {
-      padding: var(--sp-16) var(--sp-6);
-      max-width: 1120px;
-      margin: 0 auto;
-    }
+    section { padding: var(--sp-16) var(--sp-6); max-width: 1120px; margin: 0 auto; }
+    .section-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin-bottom: var(--sp-2); }
+    h2 { font-size: clamp(1.9rem, 4vw, 2.8rem); font-weight: 900; line-height: 1.1; letter-spacing: -0.025em; margin-bottom: var(--sp-3); }
+    .lead { font-size: 1.1rem; color: var(--text-2); max-width: 540px; font-weight: 400; line-height: 1.75; }
 
-    .section-label {
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: var(--sp-2);
-    }
+    /* ── ABOUT / WHO ── */
+    #about { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-12); align-items: center; padding-top: var(--sp-16); }
+    .about-image-stack { position: relative; aspect-ratio: 4/5; }
+    .about-img-main { width: 85%; height: 100%; object-fit: cover; border-radius: var(--r-lg); display: block; box-shadow: 0 20px 60px rgba(0,0,0,0.12); }
+    .about-img-accent { position: absolute; bottom: -20px; right: 0; width: 55%; aspect-ratio: 1; object-fit: cover; border-radius: var(--r-lg); border: 4px solid var(--bg); box-shadow: 0 12px 32px rgba(0,0,0,0.1); }
 
-    h2 {
-      font-family: 'Heebo', sans-serif;
-      font-size: clamp(1.9rem, 4vw, 2.9rem);
-      font-weight: 800;
-      line-height: 1.12;
-      letter-spacing: -0.02em;
-      margin-bottom: var(--sp-3);
+    /* WHO IS IT FOR — pill tags */
+    .audience-pills { display: flex; flex-wrap: wrap; gap: var(--sp-1); margin-top: var(--sp-4); }
+    .pill {
+      padding: 6px 16px; border-radius: var(--r-full);
+      background: var(--surface); border: 1.5px solid var(--border);
+      font-size: 0.82rem; font-weight: 600; color: var(--text-2);
+      transition: border-color 0.2s, color 0.2s;
     }
+    .pill:hover { border-color: var(--accent); color: var(--accent); }
 
-    .lead {
-      font-size: 1.1rem;
-      color: var(--text-2);
-      max-width: 560px;
-      font-weight: 400;
-      line-height: 1.75;
-    }
-
-    /* ABOUT */
-    #about {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--sp-12);
-      align-items: center;
-      padding-top: var(--sp-16);
-    }
-
-    .about-image-stack {
-      position: relative;
-      aspect-ratio: 4/5;
-    }
-    .about-img-main {
-      width: 85%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: var(--r-lg);
-      display: block;
-    }
-    .about-img-accent {
-      position: absolute;
-      bottom: -20px;
-      right: 0;
-      width: 55%;
-      aspect-ratio: 1;
-      object-fit: cover;
-      border-radius: var(--r-lg);
-      border: 4px solid var(--bg);
-    }
-
-    .about-stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--sp-3);
-      margin-top: var(--sp-6);
-    }
-    .stat-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--r-md);
-      padding: var(--sp-3);
-      transition: border-color 0.2s;
-    }
-    .stat-card:hover { border-color: var(--border-hover); }
-    .stat-number {
-      font-size: 2.2rem;
-      font-weight: 900;
-      color: var(--accent);
-      line-height: 1;
-      margin-bottom: var(--sp-1);
-      letter-spacing: -0.02em;
-    }
-    .stat-label {
-      font-size: 0.8rem;
-      color: var(--text-3);
-      font-weight: 500;
-    }
-
-    /* SERVICES */
+    /* ── SERVICES ── */
     #services { padding-top: 0; }
-
-    .services-header { margin-bottom: var(--sp-8); }
-
-    /* Bento-style: 3 cols, rows vary — not three equal cards in a row */
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: auto auto;
-      gap: var(--sp-3);
-    }
-    /* Make first card span 2 rows for visual variety */
-    .service-card:first-child {
-      grid-row: span 2;
-      background: var(--surface-2);
-    }
-
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-3); margin-top: var(--sp-8); }
     .service-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--r-md);
-      padding: var(--sp-4);
-      transition: border-color 0.25s, background 0.25s;
-      display: flex;
-      flex-direction: column;
+      background: var(--surface); border: 1.5px solid var(--border);
+      border-radius: var(--r-md); padding: var(--sp-4);
+      transition: border-color 0.25s, box-shadow 0.25s;
+      display: flex; flex-direction: column; position: relative;
     }
-    .service-card:hover {
-      border-color: var(--border-hover);
+    .service-card:hover { border-color: var(--border-hover); box-shadow: 0 8px 32px rgba(34,117,216,0.08); }
+    .service-card.featured {
+      border-color: var(--accent); background: #f0f6ff;
+    }
+    .badge-featured {
+      position: absolute; top: -12px; left: var(--sp-4);
+      background: var(--accent); color: #fff;
+      font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 4px 12px; border-radius: var(--r-full);
+    }
+    .service-icon { font-size: 1.8rem; margin-bottom: var(--sp-3); display: block; line-height: 1; }
+    .service-card h3 { font-size: 1.1rem; font-weight: 800; margin-bottom: var(--sp-1); letter-spacing: -0.01em; }
+    .service-card p { font-size: 0.875rem; color: var(--text-2); line-height: 1.7; flex: 1; }
+    .service-price { margin-top: var(--sp-3); font-size: 1rem; font-weight: 800; color: var(--accent); }
+
+    /* ── HOW IT WORKS ── */
+    #how { padding-top: 0; }
+    .steps { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--sp-3); margin-top: var(--sp-8); position: relative; }
+    .steps::before {
+      content: ''; position: absolute; top: 28px; left: calc(16.5% + 28px); right: calc(16.5% + 28px);
+      height: 2px; background: linear-gradient(to right, var(--accent), var(--accent));
+      opacity: 0.2;
+    }
+    .step { text-align: center; padding: var(--sp-4); }
+    .step-num {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--accent); color: #fff;
+      font-size: 1.3rem; font-weight: 900;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto var(--sp-3);
+    }
+    .step h3 { font-size: 1rem; font-weight: 700; margin-bottom: var(--sp-1); }
+    .step p { font-size: 0.875rem; color: var(--text-2); line-height: 1.65; }
+
+    /* ── GALLERY STRIP ── */
+    #gallery { padding: var(--sp-8) 0; max-width: 100%; overflow: hidden; }
+    .gallery-track { display: flex; gap: var(--sp-2); animation: marquee 36s linear infinite; width: max-content; }
+    .gallery-track img { height: 200px; width: auto; border-radius: var(--r-md); object-fit: cover; flex-shrink: 0; box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+    @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+    @media (prefers-reduced-motion: reduce) { .gallery-track { animation: none; } }
+
+    /* ── TEMPLATES ── */
+    #templates { background: var(--surface); max-width: 100%; padding: var(--sp-16) 0; }
+    #templates > .templates-inner { max-width: 1120px; margin: 0 auto; padding: 0 var(--sp-6); }
+    .templates-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: var(--sp-3); margin-top: var(--sp-8);
+    }
+    .template-card {
+      background: var(--bg); border: 1.5px solid var(--border);
+      border-radius: var(--r-md); overflow: hidden;
+      transition: border-color 0.25s, box-shadow 0.25s;
+    }
+    .template-card:hover { border-color: var(--border-hover); box-shadow: 0 8px 32px rgba(34,117,216,0.1); }
+    .template-thumb {
+      width: 100%; aspect-ratio: 3/2; object-fit: cover; display: block;
       background: var(--surface-2);
     }
+    .template-thumb-placeholder {
+      width: 100%; aspect-ratio: 3/2; background: var(--surface-2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem;
+    }
+    .template-info { padding: var(--sp-3); }
+    .template-tag {
+      display: inline-block; font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--accent); background: var(--accent-dim);
+      padding: 2px 10px; border-radius: var(--r-full); margin-bottom: var(--sp-1);
+    }
+    .template-name { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+    .template-desc { font-size: 0.82rem; color: var(--text-2); margin-bottom: var(--sp-3); line-height: 1.55; }
+    .template-footer { display: flex; align-items: center; justify-content: space-between; }
+    .template-price { font-size: 1.1rem; font-weight: 900; color: var(--text); }
+    .template-price span { font-size: 0.78rem; font-weight: 500; color: var(--text-3); }
+    .btn-buy {
+      display: inline-flex; align-items: center; min-height: 40px;
+      padding: 0 18px; background: var(--accent); color: #fff;
+      border: none; border-radius: var(--r-full);
+      font-size: 0.82rem; font-weight: 700; cursor: pointer;
+      font-family: 'Heebo', sans-serif; transition: background 0.2s;
+    }
+    .btn-buy:hover { background: var(--accent-hover); }
+    .payment-note {
+      text-align: center; margin-top: var(--sp-6);
+      font-size: 0.82rem; color: var(--text-3);
+    }
+    .payment-note strong { color: var(--text-2); }
 
-    .service-icon {
-      font-size: 1.75rem;
-      margin-bottom: var(--sp-3);
-      display: block;
-      line-height: 1;
+    /* ── ORDER FORM ── */
+    #order { padding-top: 0; }
+    .order-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-12); align-items: start; margin-top: var(--sp-8); }
+    .order-info h3 { font-size: 1.3rem; font-weight: 800; margin-bottom: var(--sp-2); }
+    .order-info p { font-size: 0.95rem; color: var(--text-2); line-height: 1.7; margin-bottom: var(--sp-4); }
+    .order-perks { list-style: none; display: flex; flex-direction: column; gap: var(--sp-2); }
+    .order-perks li { display: flex; align-items: center; gap: 10px; font-size: 0.9rem; font-weight: 500; }
+    .order-perks li::before { content: '✓'; color: var(--accent); font-weight: 900; font-size: 1rem; flex-shrink: 0; }
+
+    .order-form-wrap {
+      background: var(--surface); border: 1.5px solid var(--border);
+      border-radius: var(--r-lg); padding: var(--sp-6);
     }
 
-    .service-card h3 {
-      font-size: 1.05rem;
-      font-weight: 700;
-      margin-bottom: var(--sp-1);
-      letter-spacing: -0.01em;
-    }
-
-    .service-card p {
-      font-size: 0.875rem;
+    /* Radio groups */
+    .radio-group { display: flex; flex-wrap: wrap; gap: var(--sp-1); margin-top: var(--sp-1); }
+    .radio-chip input[type="radio"] { display: none; }
+    .radio-chip label {
+      display: inline-flex; align-items: center; height: 38px;
+      padding: 0 16px; border-radius: var(--r-full);
+      border: 1.5px solid var(--border); font-size: 0.82rem; font-weight: 600;
+      cursor: pointer; transition: all 0.18s; background: var(--bg);
       color: var(--text-2);
-      line-height: 1.7;
-      flex: 1;
+    }
+    .radio-chip input[type="radio"]:checked + label {
+      border-color: var(--accent); background: var(--accent); color: #fff;
     }
 
-    /* GALLERY STRIP */
-    #gallery {
-      padding: var(--sp-8) 0;
-      max-width: 100%;
-      overflow: hidden;
+    .form-group { margin-bottom: var(--sp-3); }
+    .form-group label { display: block; font-size: 0.8rem; font-weight: 700; margin-bottom: var(--sp-1); color: var(--text-2); letter-spacing: 0.04em; }
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%; background: var(--bg); border: 1.5px solid var(--border);
+      border-radius: var(--r-sm); padding: 13px 16px; color: var(--text);
+      font-family: 'Heebo', sans-serif; font-size: 0.95rem; outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s; min-height: 48px;
     }
-
-    /* Pause marquee on reduced-motion */
-    @media (prefers-reduced-motion: reduce) {
-      .gallery-track { animation: none; }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+      border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-dim);
     }
-
-    .gallery-track {
-      display: flex;
-      gap: var(--sp-2);
-      animation: marquee 36s linear infinite;
-      width: max-content;
-    }
-
-    .gallery-track img {
-      height: 200px;
-      width: auto;
-      border-radius: var(--r-md);
-      object-fit: cover;
-      flex-shrink: 0;
-    }
-
-    @keyframes marquee {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
-    }
-
-    /* TESTIMONIALS */
-    #testimonials { text-align: center; }
-
-    .testimonials-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: var(--sp-3);
-      margin-top: var(--sp-8);
-      text-align: left;
-    }
-
-    .testimonial-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--r-md);
-      padding: var(--sp-4);
-      display: flex;
-      flex-direction: column;
-      gap: var(--sp-2);
-      transition: border-color 0.2s;
-    }
-    .testimonial-card:hover { border-color: var(--border-hover); }
-
-    .stars {
-      color: #f5c842;       /* gold stars, not accent blue — avoids color confusion */
-      font-size: 0.8rem;
-      letter-spacing: 3px;
-    }
-
-    .testimonial-card blockquote {
-      font-size: 0.925rem;
-      line-height: 1.75;
-      color: var(--text-2);
-      font-style: italic;
-      flex: 1;
-    }
-
-    .testimonial-author {
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: var(--accent);
-      letter-spacing: 0.02em;
-    }
-
-    /* CONTACT */
-    #contact { text-align: center; }
-
-    .contact-wrapper {
-      margin-top: var(--sp-8);
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--r-lg);
-      padding: var(--sp-8);
-      max-width: 620px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .form-group {
-      margin-bottom: var(--sp-3);
-      text-align: left;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 0.8rem;
-      font-weight: 700;
-      margin-bottom: var(--sp-1);
-      color: var(--text-2);
-      letter-spacing: 0.04em;
-    }
-
-    .form-group input,
-    .form-group textarea,
-    .form-group select {
-      width: 100%;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--border);
-      border-radius: var(--r-sm);
-      padding: 13px 16px;
-      color: var(--text);
-      font-family: 'Heebo', sans-serif;
-      font-size: 0.95rem;
-      outline: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
-      /* Reserve height so layout doesn't shift on focus */
-      min-height: 48px;
-    }
-
-    .form-group input:focus,
-    .form-group textarea:focus,
-    .form-group select:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-dim);
-    }
-
-    .form-group textarea { min-height: 120px; resize: vertical; }
+    .form-group textarea { min-height: 100px; resize: vertical; }
     .form-group select option { background: var(--surface); }
 
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-2); }
+
     .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      min-height: 52px;     /* a11y: generous touch target */
-      padding: 0 var(--sp-4);
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      border-radius: var(--r-full);
-      font-size: 1rem;
-      font-weight: 700;
-      cursor: pointer;
-      font-family: 'Heebo', sans-serif;
-      transition: background 0.2s, transform 0.15s;
-      margin-top: var(--sp-1);
-      letter-spacing: 0.01em;
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 100%; min-height: 52px; padding: 0 var(--sp-4);
+      background: var(--accent); color: #fff; border: none;
+      border-radius: var(--r-full); font-size: 1rem; font-weight: 800;
+      cursor: pointer; font-family: 'Heebo', sans-serif;
+      transition: background 0.2s, transform 0.15s; margin-top: var(--sp-1);
     }
     .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); }
 
-    /* FOOTER */
+    /* ── TESTIMONIALS ── */
+    #testimonials { padding-top: 0; }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--sp-3); margin-top: var(--sp-8); }
+    .testimonial-card {
+      background: var(--surface); border: 1.5px solid var(--border);
+      border-radius: var(--r-md); padding: var(--sp-4);
+      display: flex; flex-direction: column; gap: var(--sp-2);
+      transition: border-color 0.2s;
+    }
+    .testimonial-card:hover { border-color: var(--border-hover); }
+    .stars { color: #f5c842; font-size: 0.8rem; letter-spacing: 3px; }
+    .testimonial-card blockquote { font-size: 0.925rem; line-height: 1.75; color: var(--text-2); font-style: italic; flex:1; }
+    .testimonial-author { font-size: 0.8rem; font-weight: 700; color: var(--accent); }
+
+    /* ── FOOTER ── */
     footer {
-      border-top: 1px solid var(--border);
-      padding: var(--sp-6) var(--sp-6);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      max-width: 1120px;
-      margin: 0 auto;
+      border-top: 1px solid var(--border); padding: var(--sp-6);
+      display: flex; align-items: center; justify-content: space-between;
+      max-width: 1120px; margin: 0 auto;
     }
-
-    .footer-logo {
-      font-size: 1.25rem;
-      font-weight: 800;
-      letter-spacing: -0.01em;
-    }
+    .footer-logo { font-size: 1.25rem; font-weight: 900; letter-spacing: -0.02em; }
     .footer-logo span { color: var(--accent); }
-
-    .footer-links {
-      display: flex;
-      gap: var(--sp-3);
-      list-style: none;
-    }
-    .footer-links a {
-      color: var(--text-3);
-      text-decoration: none;
-      font-size: 0.85rem;
-      transition: color 0.2s;
-    }
+    .footer-links { display: flex; gap: var(--sp-3); list-style: none; }
+    .footer-links a { color: var(--text-3); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
     .footer-links a:hover { color: var(--text); }
+    .footer-copy { font-size: 0.75rem; color: var(--text-3); }
 
-    .footer-copy {
-      font-size: 0.75rem;
-      color: var(--text-3);
-    }
-
-    /* ── RTL (Hebrew) ── */
-    html[dir="rtl"] body {
-      font-family: 'Heebo', sans-serif;
-    }
+    /* ── RTL ── */
+    html[dir="rtl"] body { font-family: 'Heebo', sans-serif; }
     html[dir="rtl"] nav { flex-direction: row-reverse; }
     html[dir="rtl"] .nav-links { flex-direction: row-reverse; }
     html[dir="rtl"] #about { direction: rtl; }
-    html[dir="rtl"] .lead { direction: rtl; }
+    html[dir="rtl"] .order-grid { direction: rtl; }
     html[dir="rtl"] footer { flex-direction: row-reverse; }
+    html[dir="rtl"] .form-group label { text-align: right; }
+    html[dir="rtl"] .radio-chip label { direction: rtl; }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
@@ -732,352 +397,460 @@
       .nav-links { display: none; }
       #about { grid-template-columns: 1fr; gap: var(--sp-6); padding-top: var(--sp-12); }
       .services-grid { grid-template-columns: 1fr; }
-      /* reset first-card span on mobile */
-      .service-card:first-child { grid-row: span 1; }
+      .steps { grid-template-columns: 1fr; }
+      .steps::before { display: none; }
+      .templates-grid { grid-template-columns: 1fr 1fr; }
+      .order-grid { grid-template-columns: 1fr; }
       .testimonials-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
       section { padding: var(--sp-12) var(--sp-3); }
-      .contact-wrapper { padding: var(--sp-4) var(--sp-3); }
       footer { flex-direction: column; gap: var(--sp-3); text-align: center; }
-      .footer-links { flex-wrap: wrap; justify-content: center; }
 
-      /* ── Mobile animation fix ── */
-      #animation-sticky {
-        height: 100svh;
-        align-items: flex-start;
-      }
-
-      #butterfly-canvas {
-        width: 100%;
-        height: 62vw;
-        max-height: 52vh;
-        object-fit: contain;
-        object-position: center top;
-        margin-top: 72px;
-        background: var(--bg);
-      }
-
-      /* Stages text on mobile */
+      #animation-sticky { height: 100svh; align-items: flex-start; }
+      #butterfly-canvas { width:100%; height:62vw; max-height:52vh; object-fit:contain; object-position:center top; margin-top:72px; background:var(--bg); }
+      #paper-wrap { top: calc(72px + 12vw); width: 64%; height: 14%; }
       .stage-headline { font-size: clamp(1.5rem, 6.5vw, 2.2rem); }
       .stage-sub { font-size: 0.85rem; max-width: 88vw; }
       .stage-eyebrow { font-size: 0.6rem; }
-
-      .stage   { justify-content: flex-end; padding-bottom: 5vh; }
+      .stage { justify-content: flex-end; padding-bottom: 5vh; }
       .stage-1 { justify-content: flex-end; padding-top: 0; padding-bottom: 5vh; }
       .stage-1 .stage-headline::before { display: none; }
-      .scroll-hint { bottom: 2vh; }
+    }
+    @media (max-width: 600px) {
+      .templates-grid { grid-template-columns: 1fr; }
     }
 
-    /* ── Reduced motion: disable all animations ── */
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        transition-duration: 0.01ms !important;
-      }
-    }
-
-    /* Fade-in on scroll */
-    .reveal {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
   </style>
 </head>
 
 <body>
-
   <a href="#main-content" class="skip-link" data-en="Skip to content" data-he="דלג לתוכן">Skip to content</a>
 
   <!-- NAV -->
   <nav role="navigation" aria-label="Main navigation">
     <a href="#" class="nav-logo">Pop<span>-Up</span></a>
     <ul class="nav-links">
-      <li><a href="#about"   data-en="About"    data-he="אודות">About</a></li>
-      <li><a href="#services" data-en="Services" data-he="שירותים">Services</a></li>
-      <li><a href="#gallery" data-en="Gallery"  data-he="גלריה">Gallery</a></li>
-      <li><a href="#contact" data-en="Contact"  data-he="צור קשר">Contact</a></li>
+      <li><a href="#services"  data-en="Services"  data-he="שירותים">Services</a></li>
+      <li><a href="#templates" data-en="Templates" data-he="תבניות">Templates</a></li>
+      <li><a href="#order"     data-en="Order"     data-he="הזמנה">Order</a></li>
+      <li><a href="#testimonials" data-en="Reviews" data-he="ביקורות">Reviews</a></li>
     </ul>
     <div class="nav-right">
       <div class="lang-toggle">
         <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
         <button class="lang-btn"        id="btn-he" onclick="setLang('he')">HE</button>
       </div>
-      <a href="#contact" class="cta-nav" data-en="Book Now" data-he="הזמן עכשיו">Book Now</a>
+      <a href="#order" class="cta-nav" data-en="Order Now" data-he="הזמן עכשיו">Order Now</a>
     </div>
   </nav>
 
-  <!-- SCROLL ANIMATION HERO -->
   <main id="main-content">
-  <section id="animation-section" style="padding:0;max-width:100%;" aria-label="Hero animation">
-    <div id="animation-sticky">
-      <img id="butterfly-canvas" src="images/ezgif-frame-001.jpg" alt="Magical blue butterfly emerging in a forest — Pop-Up Events" />
 
-      <!-- Paper fold overlay — synced to scroll frames 1-12 -->
+  <!-- HERO SCROLL ANIMATION -->
+  <section id="animation-section" style="padding:0;max-width:100%;" aria-label="Hero">
+    <div id="animation-sticky">
+      <img id="butterfly-canvas" src="images/ezgif-frame-001.jpg" alt="Pop-Up flyer design — physical designer flyers" />
+
       <div id="paper-wrap" aria-hidden="true">
-        <div id="paper-left">
-          <div class="paper-inner paper-inner-left"></div>
-        </div>
-        <div id="paper-right">
-          <div class="paper-inner paper-inner-right"></div>
-        </div>
+        <div id="paper-left"><div class="paper-inner paper-inner-left"></div></div>
+        <div id="paper-right"><div class="paper-inner paper-inner-right"></div></div>
       </div>
 
       <div class="hero-overlay"></div>
 
-      <!-- Scroll-driven text stages -->
       <div class="scroll-stages">
-
-        <!-- Stage 0: page load -->
         <div class="stage stage-0 active" id="stage-0">
-          <p class="stage-eyebrow"
-             data-en="Where magic meets your moment"
-             data-he="שם שהקסם פוגש את הרגע שלך">Where magic meets your moment</p>
+          <p class="stage-eyebrow" data-en="Not just another leaflet" data-he="לא עוד עלון רגיל">Not just another leaflet</p>
           <h1 class="stage-headline"
-              data-en="Every event is a<br><em>Pop&#8209;Up</em> story"
-              data-he="כל אירוע הוא<br>סיפור <em>פופ&#8209;אפ</em>">
-            Every event is a<br><em>Pop&#8209;Up</em> story
+              data-en="Flyers that make people<br><em>stop and stare</em>"
+              data-he="פלאיירים שגורמים לאנשים<br><em>לעצור ולהסתכל</em>">
+            Flyers that make people<br><em>stop and stare</em>
           </h1>
           <p class="stage-sub"
-             data-en="We design breathtaking pop-up experiences that leave your guests speechless."
-             data-he="אנו מעצבים חוויות פופ-אפ מרהיבות שמשאירות את האורחים שלך ללא מילים.">
-            We design breathtaking pop-up experiences that leave your guests speechless.
+             data-en="Designer physical flyers for beauty masters, cafes, experts and everyone who wants more than a plain leaflet."
+             data-he="פלאיירים מעוצבים למאסטרים של יופי, בתי קפה, מומחים וכל מי שרוצה יותר מעלון רגיל.">
+            Designer physical flyers for beauty masters, cafes, experts and everyone who wants more than a plain leaflet.
           </p>
         </div>
 
-        <!-- Stage 1: ~20% scroll — the wings open -->
         <div class="stage stage-1" id="stage-1">
-          <p class="stage-eyebrow"
-             data-en="Born from imagination"
-             data-he="נולד מהדמיון">Born from imagination</p>
+          <p class="stage-eyebrow" data-en="Design & Print" data-he="עיצוב והדפסה">Design & Print</p>
           <h2 class="stage-headline"
-              data-en="We turn any space<br>into a <em>world</em>"
-              data-he="אנחנו הופכים<br>כל מרחב ל<em>עולם</em>">
-            We turn any space<br>into a <em>world</em>
+              data-en="Your brand,<br>beautifully <em>printed</em>"
+              data-he="המותג שלך,<br>מודפס <em>בצורה מרהיבה</em>">
+            Your brand,<br>beautifully <em>printed</em>
           </h2>
         </div>
 
-        <!-- Stage 2: ~40% scroll — butterfly fully revealed -->
         <div class="stage stage-2" id="stage-2">
-          <p class="stage-eyebrow"
-             data-en="For brands that dare"
-             data-he="למותגים שמעיזים">For brands that dare</p>
+          <p class="stage-eyebrow" data-en="For every business" data-he="לכל עסק">For every business</p>
           <h2 class="stage-headline"
-              data-en="Make your brand<br><em>unforgettable</em>"
-              data-he="הפוך את המותג שלך<br>ל<em>בלתי נשכח</em>">
-            Make your brand<br><em>unforgettable</em>
+              data-en="Beauty masters,<br>cafes &amp; <em>experts</em>"
+              data-he="מאסטרים של יופי,<br>בתי קפה &amp; <em>מומחים</em>">
+            Beauty masters,<br>cafes &amp; <em>experts</em>
           </h2>
           <p class="stage-sub"
-             data-en="Pop-up activations that stop people in their tracks."
-             data-he="אירועי פופ-אפ שגורמים לאנשים לעצור ולהתפעל.">
-            Pop-up activations that stop people in their tracks.
+             data-en="We replace boring flyers with something people actually keep."
+             data-he="אנחנו מחליפים עלונים משעממים במשהו שאנשים באמת שומרים.">
+            We replace boring flyers with something people actually keep.
           </p>
         </div>
 
-        <!-- Stage 3: ~60% scroll — sparkles appear -->
         <div class="stage stage-3" id="stage-3">
-          <p class="stage-eyebrow"
-             data-en="For moments that matter"
-             data-he="לרגעים שחשובים">For moments that matter</p>
+          <p class="stage-eyebrow" data-en="From ₪0.90 per flyer" data-he="מ-₪0.90 לפלאייר">From ₪0.90 per flyer</p>
           <h2 class="stage-headline"
-              data-en="Celebrate with<br><em>magic</em>"
-              data-he="חגגו עם<br><em>קסם</em>">
-            Celebrate with<br><em>magic</em>
+              data-en="100 to 5000+<br>copies, <em>your choice</em>"
+              data-he="100 עד 5000+<br>עותקים, <em>הבחירה שלך</em>">
+            100 to 5000+<br>copies, <em>your choice</em>
           </h2>
-          <p class="stage-sub"
-             data-en="Weddings, birthdays, milestones — designed down to the last detail."
-             data-he="חתונות, ימי הולדת, אבני דרך — מעוצבים עד לפרט האחרון.">
-            Weddings, birthdays, milestones — designed down to the last detail.
-          </p>
         </div>
 
-        <!-- Stage 4: ~80% scroll — butterfly flying free -->
         <div class="stage stage-4" id="stage-4">
-          <p class="stage-eyebrow"
-             data-en="Art meets experience"
-             data-he="אמנות פוגשת חוויה">Art meets experience</p>
+          <p class="stage-eyebrow" data-en="Ready templates too" data-he="גם תבניות מוכנות">Ready templates too</p>
           <h2 class="stage-headline"
-              data-en="Immersive<br><em>installations</em>"
-              data-he="התקנות<br><em>סוחפות</em>">
-            Immersive<br><em>installations</em>
+              data-en="Pick a template,<br><em>customize &amp; print</em>"
+              data-he="בחר תבנית,<br><em>התאם אישית והדפס</em>">
+            Pick a template,<br><em>customize &amp; print</em>
           </h2>
           <p class="stage-sub"
-             data-en="Multi-sensory worlds that your guests will never forget."
-             data-he="עולמות רב-חושיים שהאורחים שלך לעולם לא ישכחו.">
-            Multi-sensory worlds that your guests will never forget.
+             data-en="Browse our ready-made template library — buy, edit with your details, print."
+             data-he="עיין בספריית התבניות המוכנות שלנו - קנה, ערוך עם הפרטים שלך, הדפס.">
+            Browse our ready-made template library — buy, edit with your details, print.
           </p>
         </div>
 
-        <!-- Stage 5: ~95% scroll — final frame -->
         <div class="stage stage-5" id="stage-5">
-          <p class="stage-eyebrow"
-             data-en="Ready to create?"
-             data-he="מוכנים ליצור?">Ready to create?</p>
+          <p class="stage-eyebrow" data-en="Ready to stand out?" data-he="מוכן לבלוט?">Ready to stand out?</p>
           <h2 class="stage-headline"
-              data-en="Your story<br>begins <em>here</em>"
-              data-he="הסיפור שלך<br>מתחיל <em>כאן</em>">
-            Your story<br>begins <em>here</em>
+              data-en="Leave a request<br>in <em>60 seconds</em>"
+              data-he="השאר בקשה<br>ב-<em>60 שניות</em>">
+            Leave a request<br>in <em>60 seconds</em>
           </h2>
-          <p class="stage-sub"
-             data-en="Let's build something extraordinary together."
-             data-he="בואו ניצור יחד משהו יוצא דופן.">
-            Let's build something extraordinary together.
-          </p>
         </div>
-
-      </div><!-- /scroll-stages -->
+      </div>
 
       <div class="scroll-hint" id="scroll-hint">
-        <span data-en="Scroll" data-he="גלול">Scroll</span>
+        <span data-en="Scroll to explore" data-he="גלול לגלות">Scroll to explore</span>
         <div class="scroll-hint-line"></div>
       </div>
     </div>
   </section>
 
-  <!-- ABOUT -->
+  <!-- ABOUT / WHO IS IT FOR -->
   <section id="about">
     <div class="about-content reveal">
-      <p class="section-label" data-en="Our Story" data-he="הסיפור שלנו">Our Story</p>
-      <h2 data-en="We turn empty spaces into<br>unforgettable worlds" data-he="אנחנו הופכים מרחבים ריקים<br>לעולמות בלתי נשכחים">
-        We turn empty spaces into<br>unforgettable worlds
+      <p class="section-label" data-en="Who is it for?" data-he="למי זה מיועד?">Who is it for?</p>
+      <h2 data-en="Replace plain leaflets<br>with something memorable" data-he="החלף עלונים רגילים<br>במשהו בלתי נשכח">
+        Replace plain leaflets<br>with something memorable
       </h2>
-      <p class="lead" data-en="Pop-Up was born from a simple belief: every gathering deserves to feel extraordinary. We blend art, design, and imagination to create immersive popup experiences for brands, celebrations, and cultural moments." data-he="Pop-Up נולד מאמונה פשוטה: כל התכנסות ראויה להרגיש יוצאת דופן. אנו משלבים אמנות, עיצוב ודמיון ליצירת חוויות פופ-אפ סוחפות לברנדים, חגיגות ורגעי תרבות.">
-        Pop-Up was born from a simple belief: every gathering deserves to feel extraordinary. We blend art, design, and imagination to create immersive popup experiences for brands, celebrations, and cultural moments.
+      <p class="lead" data-en="We design and print physical flyers that people actually pick up, keep, and share. Every flyer is tailored — not a generic template from a print shop." data-he="אנחנו מעצבים ומדפיסים פלאיירים פיזיים שאנשים באמת אוספים, שומרים ומשתפים. כל פלאייר מותאם אישית - לא תבנית גנרית ממרכז הדפסה.">
+        We design and print physical flyers that people actually pick up, keep, and share. Every flyer is tailored — not a generic template from a print shop.
       </p>
-
-      <div class="about-stats">
-        <div class="stat-card">
-          <div class="stat-number">200+</div>
-          <div class="stat-label" data-en="Events Produced" data-he="אירועים שהופקו">Events Produced</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number">50k+</div>
-          <div class="stat-label" data-en="Happy Guests" data-he="אורחים מרוצים">Happy Guests</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number">8</div>
-          <div class="stat-label" data-en="Years of Magic" data-he="שנות קסם">Years of Magic</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number">100%</div>
-          <div class="stat-label" data-en="Custom Design" data-he="עיצוב מותאם אישית">Custom Design</div>
-        </div>
+      <div class="audience-pills" style="margin-top: var(--sp-4);">
+        <span class="pill" data-en="💅 Beauty Masters" data-he="💅 מאסטרים של יופי">💅 Beauty Masters</span>
+        <span class="pill" data-en="☕ Cafes & Bars" data-he="☕ בתי קפה וברים">☕ Cafes & Bars</span>
+        <span class="pill" data-en="🧘 Coaches & Experts" data-he="🧘 מאמנים ומומחים">🧘 Coaches & Experts</span>
+        <span class="pill" data-en="🍽️ Restaurants" data-he="🍽️ מסעדות">🍽️ Restaurants</span>
+        <span class="pill" data-en="🛍️ Boutiques" data-he="🛍️ בוטיקים">🛍️ Boutiques</span>
+        <span class="pill" data-en="🎓 Studios & Schools" data-he="🎓 סטודיוס ובתי ספר">🎓 Studios & Schools</span>
+        <span class="pill" data-en="+ Anyone who wants to stand out" data-he="+ כל מי שרוצה לבלוט">+ Anyone who wants to stand out</span>
       </div>
     </div>
-
     <div class="about-image-stack reveal">
-      <img class="about-img-main"   src="images/ezgif-frame-025.jpg" alt="Butterfly with wings fully spread in a sunlit forest" loading="lazy" />
-      <img class="about-img-accent" src="images/ezgif-frame-010.jpg" alt="Close-up of butterfly wings" loading="lazy" />
+      <img class="about-img-main"   src="images/ezgif-frame-025.jpg" alt="Beautiful designer flyer example" loading="lazy" />
+      <img class="about-img-accent" src="images/ezgif-frame-010.jpg" alt="Flyer detail close-up" loading="lazy" />
     </div>
   </section>
 
   <!-- SERVICES -->
   <section id="services">
-    <div class="services-header reveal">
-      <p class="section-label" data-en="What We Do" data-he="מה אנחנו עושים">What We Do</p>
-      <h2 data-en="Experiences crafted<br>for every occasion" data-he="חוויות שנוצרו<br>לכל מנגנה">Experiences crafted<br>for every occasion</h2>
-    </div>
+    <p class="section-label reveal" data-en="What We Offer" data-he="מה אנחנו מציעים">What We Offer</p>
+    <h2 class="reveal" data-en="Design. Print. Both." data-he="עיצוב. הדפסה. שניהם.">Design. Print. Both.</h2>
 
     <div class="services-grid">
       <div class="service-card reveal">
-        <span class="service-icon">🦋</span>
-        <h3 data-en="Brand Activations" data-he="הפעלות מותג">Brand Activations</h3>
-        <p data-en="Turn your brand into a living, breathing experience. Pop-up installations that stop people in their tracks and spark social sharing." data-he="הפוך את המותג שלך לחוויה חיה ונושמת. התקנות פופ-אפ שגורמות לאנשים לעצור ומעוררות שיתוף ברשתות.">Turn your brand into a living, breathing experience. Pop-up installations that stop people in their tracks and spark social sharing.</p>
+        <span class="service-icon">🎨</span>
+        <h3 data-en="Design Only" data-he="עיצוב בלבד">Design Only</h3>
+        <p data-en="You get a print-ready file. Our designer creates a unique flyer based on your brief — colors, fonts, vibe, content. You print wherever you like." data-he="אתה מקבל קובץ מוכן להדפסה. המעצב שלנו יוצר פלאייר ייחודי על בסיס הבריף שלך - צבעים, פונטים, ויב, תוכן. אתה מדפיס איפה שתרצה.">You get a print-ready file. Our designer creates a unique flyer based on your brief — colors, fonts, vibe, content. You print wherever you like.</p>
+        <p class="service-price" data-en="From ₪150" data-he="מ-₪150">From ₪150</p>
       </div>
-      <div class="service-card reveal">
+
+      <div class="service-card featured reveal">
+        <div class="badge-featured" data-en="Most Popular" data-he="הכי פופולרי">Most Popular</div>
         <span class="service-icon">✨</span>
-        <h3 data-en="Private Celebrations" data-he="חגיגות פרטיות">Private Celebrations</h3>
-        <p data-en="Birthdays, weddings, anniversaries — we design intimate worlds tailored entirely to you, down to the smallest magical detail." data-he="ימי הולדת, חתונות, יובלים - אנו מעצבים עולמות אינטימיים המותאמים לכם לחלוטין, עד לפרטים הקטנים והקסומים ביותר.">Birthdays, weddings, anniversaries — we design intimate worlds tailored entirely to you, down to the smallest magical detail.</p>
+        <h3 data-en="Design + Print" data-he="עיצוב + הדפסה">Design + Print</h3>
+        <p data-en="Full service: we design your flyer and print it. Choose format, paper type, finish (matte/gloss/soft-touch), and quantity. Delivered to your door." data-he="שירות מלא: אנחנו מעצבים את הפלאייר שלך ומדפיסים אותו. בחר פורמט, סוג נייר, גימור (מט/גלוס/סופט-טאץ') וכמות. מגיע עד הדלת.">Full service: we design your flyer and print it. Choose format, paper type, finish (matte/gloss/soft-touch), and quantity. Delivered to your door.</p>
+        <p class="service-price" data-en="From ₪350" data-he="מ-₪350">From ₪350</p>
       </div>
+
       <div class="service-card reveal">
-        <span class="service-icon">🌿</span>
-        <h3 data-en="Cultural & Art Events" data-he="אירועי תרבות ואמנות">Cultural & Art Events</h3>
-        <p data-en="Gallery nights, film premieres, cultural festivals — we create the atmosphere that makes art feel alive and audiences feel immersed." data-he="ערבי גלריה, בכורות קולנוע, פסטיבלי תרבות - אנחנו יוצרים את האווירה שגורמת לאמנות להרגיש חיה ולקהל להרגיש שקוע בתוכה.">Gallery nights, film premieres, cultural festivals — we create the atmosphere that makes art feel alive and audiences feel immersed.</p>
+        <span class="service-icon">🖨️</span>
+        <h3 data-en="Print Only" data-he="הדפסה בלבד">Print Only</h3>
+        <p data-en="Already have a design? We handle the printing. Upload your print-ready file, pick your specs, and get professional quality prints fast." data-he="כבר יש לך עיצוב? אנחנו מטפלים בהדפסה. העלה את הקובץ המוכן להדפסה, בחר את המפרט שלך, וקבל הדפסות באיכות מקצועית מהר.">Already have a design? We handle the printing. Upload your print-ready file, pick your specs, and get professional quality prints fast.</p>
+        <p class="service-price" data-en="From ₪0.90/unit" data-he="מ-₪0.90 ליחידה">From ₪0.90/unit</p>
       </div>
+
       <div class="service-card reveal">
-        <span class="service-icon">🏙️</span>
-        <h3 data-en="Corporate Events" data-he="אירועי חברות">Corporate Events</h3>
-        <p data-en="Product launches, conferences, team experiences — we elevate corporate gatherings from ordinary to extraordinary." data-he="השקות מוצרים, כנסים, חוויות צוות - אנו מעלים כינוסים עסקיים מרמה רגילה לבלתי נשכחת.">Product launches, conferences, team experiences — we elevate corporate gatherings from ordinary to extraordinary.</p>
+        <span class="service-icon">✂️</span>
+        <h3 data-en="Die-Cut Shapes" data-he="חיתוך מיוחד">Die-Cut Shapes</h3>
+        <p data-en="Round, oval, arch, custom silhouette — stand-out shapes that no plain rectangular flyer can match. Perfect for beauty, wellness and food brands." data-he="עגול, אובלי, קשת, סילואט מותאם אישית - צורות בולטות שאף פלאייר מלבני רגיל לא יכול להתחרות. מושלם למותגי יופי, בריאות ומזון.">Round, oval, arch, custom silhouette — stand-out shapes that no plain rectangular flyer can match. Perfect for beauty, wellness and food brands.</p>
+        <p class="service-price" data-en="Ask for quote" data-he="בקש הצעת מחיר">Ask for quote</p>
       </div>
+
       <div class="service-card reveal">
-        <span class="service-icon">🎪</span>
-        <h3 data-en="Pop-Up Markets" data-he="שווקי פופ-אפ">Pop-Up Markets</h3>
-        <p data-en="Curated vendor markets with a designed aesthetic. We bring together makers, chefs, and artists in beautifully staged environments." data-he="שווקים מאורגנים עם אסתטיקה מעוצבת. אנו מקבצים יצרנים, שפים ואמנים בסביבות מבויימות יפהפיות.">Curated vendor markets with a designed aesthetic. We bring together makers, chefs, and artists in beautifully staged environments.</p>
+        <span class="service-icon">📂</span>
+        <h3 data-en="Template Customization" data-he="התאמת תבנית">Template Customization</h3>
+        <p data-en="Buy a ready-made template and we'll customize it with your logo, colors, and info. Fastest path from zero to printed flyers." data-he="קנה תבנית מוכנה ואנחנו נתאים אותה עם הלוגו, הצבעים והמידע שלך. הדרך המהירה ביותר מאפס לפלאיירים מודפסים.">Buy a ready-made template and we'll customize it with your logo, colors, and info. Fastest path from zero to printed flyers.</p>
+        <p class="service-price" data-en="From ₪79" data-he="מ-₪79">From ₪79</p>
       </div>
+
       <div class="service-card reveal">
-        <span class="service-icon">🎬</span>
-        <h3 data-en="Immersive Installations" data-he="התקנות סוחפות">Immersive Installations</h3>
-        <p data-en="Multi-sensory art and tech installations that transport guests to other worlds. Photography-worthy moments by design." data-he="התקנות אמנות וטכנולוגיה רב-חושיות שמעבירות אורחים לעולמות אחרים. רגעים ראויים לצילום בעיצוב.">Multi-sensory art and tech installations that transport guests to other worlds. Photography-worthy moments by design.</p>
+        <span class="service-icon">⚡</span>
+        <h3 data-en="Express 48h" data-he="אקספרס 48 שעות">Express 48h</h3>
+        <p data-en="Need it yesterday? Our express service delivers design + print in 48 hours. Available for standard formats and quantities up to 500." data-he="צריך את זה כבר אתמול? שירות האקספרס שלנו מספק עיצוב + הדפסה ב-48 שעות. זמין לפורמטים סטנדרטיים וכמויות עד 500.">Need it yesterday? Our express service delivers design + print in 48 hours. Available for standard formats and quantities up to 500.</p>
+        <p class="service-price" data-en="+ ₪120 surcharge" data-he="+ תוספת ₪120">+ ₪120 surcharge</p>
       </div>
     </div>
   </section>
 
-  <!-- GALLERY STRIP -->
-  <div id="gallery">
+  <!-- HOW IT WORKS -->
+  <section id="how">
+    <p class="section-label reveal" data-en="Simple Process" data-he="תהליך פשוט">Simple Process</p>
+    <h2 class="reveal" data-en="3 steps to your perfect flyer" data-he="3 צעדים לפלאייר המושלם שלך">3 steps to your perfect flyer</h2>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">1</div>
+        <h3 data-en="Fill the order form" data-he="מלא את טופס ההזמנה">Fill the order form</h3>
+        <p data-en="Tell us who you are, what service you need, your format, quantity, and any design notes. Takes 2 minutes." data-he="ספר לנו מי אתה, איזה שירות אתה צריך, הפורמט, הכמות וכל הערות עיצוב. לוקח 2 דקות.">Tell us who you are, what service you need, your format, quantity, and any design notes. Takes 2 minutes.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">2</div>
+        <h3 data-en="We design & approve" data-he="אנחנו מעצבים ומאשרים">We design & approve</h3>
+        <p data-en="Our designer creates your flyer. You get a preview, request edits, and approve. Usually done in 1-2 business days." data-he="המעצב שלנו יוצר את הפלאייר שלך. אתה מקבל תצוגה מקדימה, מבקש עריכות ומאשר. בדרך כלל מוכן תוך 1-2 ימי עבודה.">Our designer creates your flyer. You get a preview, request edits, and approve. Usually done in 1-2 business days.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">3</div>
+        <h3 data-en="Printed & delivered" data-he="מודפס ומוגש">Printed & delivered</h3>
+        <p data-en="Once approved, we print and ship. Delivery within Israel 2-4 business days. Or pick up in Tel Aviv." data-he="לאחר האישור, אנחנו מדפיסים ושולחים. משלוח בתוך ישראל 2-4 ימי עבודה. או איסוף עצמי בתל אביב.">Once approved, we print and ship. Delivery within Israel 2-4 business days. Or pick up in Tel Aviv.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <div id="gallery" role="region" aria-label="Work examples">
     <div class="gallery-track" id="gallery-track"></div>
   </div>
 
-  <!-- TESTIMONIALS -->
-  <section id="testimonials">
-    <p class="section-label reveal" data-en="Kind Words" data-he="מילים טובות">Kind Words</p>
-    <h2 class="reveal" data-en="What our clients say" data-he="מה הלקוחות שלנו אומרים">What our clients say</h2>
+  <!-- TEMPLATES -->
+  <section id="templates" style="padding:0; max-width:100%;">
+  <div class="templates-inner">
+    <p class="section-label reveal" data-en="Ready-Made Templates" data-he="תבניות מוכנות">Ready-Made Templates</p>
+    <h2 class="reveal" data-en="Buy a template, customize, print" data-he="קנה תבנית, התאם אישית, הדפס">Buy a template, customize, print</h2>
+    <p class="lead reveal" data-en="Professional designs ready to go. Buy the file, add your details, and order print with us or any print shop." data-he="עיצובים מקצועיים מוכנים לשימוש. קנה את הקובץ, הוסף את הפרטים שלך, והזמן הדפסה אצלנו או בכל מרכז הדפסה.">Professional designs ready to go. Buy the file, add your details, and order print with us or any print shop.</p>
 
-    <div class="testimonials-grid">
-      <div class="testimonial-card reveal">
-        <div class="stars">★★★★★</div>
-        <blockquote data-en='"Pop-Up transformed our product launch into a moment people are still talking about months later. Truly breathtaking work."' data-he='"Pop-Up הפך את השקת המוצר שלנו לרגע שאנשים עדיין מדברים עליו חודשים לאחר מכן. עבודה מרהיבה באמת."'>"Pop-Up transformed our product launch into a moment people are still talking about months later. Truly breathtaking work."</blockquote>
-        <div class="testimonial-author" data-en="Noa A., Brand Director" data-he="נועה א., מנהלת מותג">Noa A., Brand Director</div>
+    <div class="templates-grid">
+
+      <div class="template-card reveal">
+        <div class="template-thumb-placeholder">💅</div>
+        <div class="template-info">
+          <span class="template-tag" data-en="Beauty" data-he="יופי">Beauty</span>
+          <div class="template-name" data-en="Nail Studio Pro" data-he="נייל סטודיו פרו">Nail Studio Pro</div>
+          <div class="template-desc" data-en="Clean, elegant A5 flyer for nail salons. Includes price list layout, social handles, and booking CTA." data-he="פלאייר A5 נקי ואלגנטי לסלוני ציפורניים. כולל פריסת מחירון, ידיות רשתות חברתיות וקריאה להזמנה.">Clean, elegant A5 flyer for nail salons. Includes price list layout, social handles, and booking CTA.</div>
+          <div class="template-footer">
+            <div class="template-price">₪49 <span data-en="/ file" data-he="/ קובץ">/ file</span></div>
+            <button class="btn-buy" data-en="Buy Template" data-he="קנה תבנית">Buy Template</button>
+          </div>
+        </div>
       </div>
-      <div class="testimonial-card reveal">
-        <div class="stars">★★★★★</div>
-        <blockquote data-en='"They designed my wedding like a scene from a dream. Every detail, every corner, every light was perfect. I cried happy tears."' data-he='"הם עיצבו את חתונתי כמו סצנה מחלום. כל פרט, כל פינה, כל אור היה מושלם. בכיתי דמעות של אושר."'>"They designed my wedding like a scene from a dream. Every detail, every corner, every light was perfect. I cried happy tears."</blockquote>
-        <div class="testimonial-author" data-en="Maya & Ron, Newlyweds" data-he="מאיה ורון, זוג נשוי">Maya & Ron, Newlyweds</div>
+
+      <div class="template-card reveal">
+        <div class="template-thumb-placeholder">☕</div>
+        <div class="template-info">
+          <span class="template-tag" data-en="Cafe" data-he="בית קפה">Cafe</span>
+          <div class="template-name" data-en="Morning Brew" data-he="Morning Brew">Morning Brew</div>
+          <div class="template-desc" data-en="Bold, editorial-style flyer for cafes. Great for promoting seasonal menus, events, or loyalty programs." data-he="פלאייר בסגנון אדיטוריאל נועז לבתי קפה. מעולה לקידום תפריטים עונתיים, אירועים או תוכניות נאמנות.">Bold, editorial-style flyer for cafes. Great for promoting seasonal menus, events, or loyalty programs.</div>
+          <div class="template-footer">
+            <div class="template-price">₪49 <span data-en="/ file" data-he="/ קובץ">/ file</span></div>
+            <button class="btn-buy" data-en="Buy Template" data-he="קנה תבנית">Buy Template</button>
+          </div>
+        </div>
       </div>
-      <div class="testimonial-card reveal">
-        <div class="stars">★★★★★</div>
-        <blockquote data-en='"Our museum opening drew 3x our expected attendance. The immersive experience Pop-Up created made headlines. Worth every shekel."' data-he='"פתיחת המוזיאון שלנו משכה פי 3 מהנוכחות הצפויה. החוויה הסוחפת שיצר Pop-Up עשתה כותרות. שווה כל שקל."'>"Our museum opening drew 3x our expected attendance. The immersive experience Pop-Up created made headlines. Worth every shekel."</blockquote>
-        <div class="testimonial-author" data-en="David K., Museum Director" data-he="דוד ק., מנהל מוזיאון">David K., Museum Director</div>
+
+      <div class="template-card reveal">
+        <div class="template-thumb-placeholder">🧘</div>
+        <div class="template-info">
+          <span class="template-tag" data-en="Wellness" data-he="בריאות">Wellness</span>
+          <div class="template-name" data-en="Studio Flow" data-he="Studio Flow">Studio Flow</div>
+          <div class="template-desc" data-en="Minimal, soft A6 flyer for yoga, pilates, and wellness studios. Includes class schedule and promo offer layouts." data-he="פלאייר A6 מינימלי ועדין לסטודיוס ליוגה, פילאטיס ובריאות. כולל פריסות לוח זמנים לשיעורים ומבצעים.">Minimal, soft A6 flyer for yoga, pilates, and wellness studios. Includes class schedule and promo offer layouts.</div>
+          <div class="template-footer">
+            <div class="template-price">₪49 <span data-en="/ file" data-he="/ קובץ">/ file</span></div>
+            <button class="btn-buy" data-en="Buy Template" data-he="קנה תבנית">Buy Template</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="template-card reveal">
+        <div class="template-thumb-placeholder">🍽️</div>
+        <div class="template-info">
+          <span class="template-tag" data-en="Food" data-he="אוכל">Food</span>
+          <div class="template-name" data-en="Taste & Tell" data-he="Taste & Tell">Taste & Tell</div>
+          <div class="template-desc" data-en="Rich, dark-themed restaurant flyer with space for signature dishes, hours, and address. Square format option." data-he="פלאייר מסעדה עשיר בנושא כהה עם מקום למנות החתימה, שעות כתובת. אפשרות פורמט ריבועי.">Rich, dark-themed restaurant flyer with space for signature dishes, hours, and address. Square format option.</div>
+          <div class="template-footer">
+            <div class="template-price">₪59 <span data-en="/ file" data-he="/ קובץ">/ file</span></div>
+            <button class="btn-buy" data-en="Buy Template" data-he="קנה תבנית">Buy Template</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="template-card reveal">
+        <div class="template-thumb-placeholder">🎓</div>
+        <div class="template-info">
+          <span class="template-tag" data-en="Expert" data-he="מומחה">Expert</span>
+          <div class="template-name" data-en="Authority Card" data-he="Authority Card">Authority Card</div>
+          <div class="template-desc" data-en="Premium flyer for coaches, consultants and speakers. Photo-forward with bio, credentials, and contact block." data-he="פלאייר פרמיום למאמנים, יועצים ודוברים. ממוקד תמונה עם ביוגרפיה, כישורים ובלוק יצירת קשר.">Premium flyer for coaches, consultants and speakers. Photo-forward with bio, credentials, and contact block.</div>
+          <div class="template-footer">
+            <div class="template-price">₪69 <span data-en="/ file" data-he="/ קובץ">/ file</span></div>
+            <button class="btn-buy" data-en="Buy Template" data-he="קנה תבנית">Buy Template</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="template-card reveal">
+        <div class="template-thumb-placeholder">🛍️</div>
+        <div class="template-info">
+          <span class="template-tag" data-en="Retail" data-he="קמעונאות">Retail</span>
+          <div class="template-name" data-en="Sale & Style" data-he="Sale & Style">Sale & Style</div>
+          <div class="template-desc" data-en="Eye-catching sale flyer for boutiques and shops. Works great as a loyalty card or discount voucher too." data-he="פלאייר מבצע בולט לבוטיקים וחנויות. עובד נהדר גם ככרטיס נאמנות או שובר הנחה.">Eye-catching sale flyer for boutiques and shops. Works great as a loyalty card or discount voucher too.</div>
+          <div class="template-footer">
+            <div class="template-price">₪49 <span data-en="/ file" data-he="/ קובץ">/ file</span></div>
+            <button class="btn-buy" data-en="Buy Template" data-he="קנה תבנית">Buy Template</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="payment-note reveal">
+      <strong data-en="Payment via BitPayBox — coming soon." data-he="תשלום דרך BitPayBox — בקרוב.">Payment via BitPayBox — coming soon.</strong>
+      <span data-en=" In the meantime, leave an order request below." data-he=" בינתיים, השאר בקשת הזמנה למטה."> In the meantime, leave an order request below.</span>
+    </p>
+  </div>
+  </section>
+
+  <!-- ORDER FORM -->
+  <section id="order">
+    <p class="section-label reveal" data-en="Place Your Order" data-he="בצע הזמנה">Place Your Order</p>
+    <h2 class="reveal" data-en="Tell us about your project" data-he="ספר לנו על הפרויקט שלך">Tell us about your project</h2>
+
+    <div class="order-grid">
+      <div class="order-info reveal">
+        <h3 data-en="We'll get back to you within 4 hours" data-he="נחזור אליך תוך 4 שעות">We'll get back to you within 4 hours</h3>
+        <p data-en="Fill in the form and our team will reach out with a quote and any questions. No commitment needed." data-he="מלא את הטופס והצוות שלנו יצור קשר עם הצעת מחיר ושאלות. אין צורך בהתחייבות.">Fill in the form and our team will reach out with a quote and any questions. No commitment needed.</p>
+        <ul class="order-perks">
+          <li data-en="Free design consultation" data-he="ייעוץ עיצוב חינם">Free design consultation</li>
+          <li data-en="PDF proof before printing" data-he="הוכחת PDF לפני הדפסה">PDF proof before printing</li>
+          <li data-en="Unlimited revisions on design" data-he="תיקונים ללא הגבלה על עיצוב">Unlimited revisions on design</li>
+          <li data-en="Delivery across Israel" data-he="משלוח בכל רחבי ישראל">Delivery across Israel</li>
+          <li data-en="WhatsApp support throughout" data-he="תמיכת WhatsApp לאורך כל הדרך">WhatsApp support throughout</li>
+        </ul>
+      </div>
+
+      <div class="order-form-wrap reveal">
+        <form onsubmit="handleSubmit(event)" novalidate>
+
+          <!-- Who are you -->
+          <div class="form-group">
+            <label data-en="I am a..." data-he="אני...">I am a...</label>
+            <div class="radio-group" id="who-group">
+              <div class="radio-chip"><input type="radio" name="who" id="who-beauty" value="Beauty Master" /><label for="who-beauty" data-en="💅 Beauty Master" data-he="💅 מאסטר יופי">💅 Beauty Master</label></div>
+              <div class="radio-chip"><input type="radio" name="who" id="who-cafe"   value="Cafe / Bar"    /><label for="who-cafe"   data-en="☕ Cafe / Bar"    data-he="☕ בית קפה / בר">☕ Cafe / Bar</label></div>
+              <div class="radio-chip"><input type="radio" name="who" id="who-expert" value="Expert / Coach" /><label for="who-expert" data-en="🧘 Expert / Coach" data-he="🧘 מומחה / מאמן">🧘 Expert / Coach</label></div>
+              <div class="radio-chip"><input type="radio" name="who" id="who-rest"   value="Restaurant"   /><label for="who-rest"   data-en="🍽️ Restaurant"   data-he="🍽️ מסעדה">🍽️ Restaurant</label></div>
+              <div class="radio-chip"><input type="radio" name="who" id="who-shop"   value="Shop / Boutique" /><label for="who-shop"   data-en="🛍️ Shop / Boutique" data-he="🛍️ חנות / בוטיק">🛍️ Shop / Boutique</label></div>
+              <div class="radio-chip"><input type="radio" name="who" id="who-other"  value="Other"        /><label for="who-other"  data-en="✦ Other"          data-he="✦ אחר">✦ Other</label></div>
+            </div>
+          </div>
+
+          <!-- Service -->
+          <div class="form-group">
+            <label data-en="Service needed" data-he="שירות נדרש">Service needed</label>
+            <div class="radio-group">
+              <div class="radio-chip"><input type="radio" name="service" id="svc-both"   value="Design + Print" checked /><label for="svc-both"   data-en="Design + Print" data-he="עיצוב + הדפסה">Design + Print</label></div>
+              <div class="radio-chip"><input type="radio" name="service" id="svc-design" value="Design Only"    /><label for="svc-design" data-en="Design Only"    data-he="עיצוב בלבד">Design Only</label></div>
+              <div class="radio-chip"><input type="radio" name="service" id="svc-print"  value="Print Only"    /><label for="svc-print"  data-en="Print Only"     data-he="הדפסה בלבד">Print Only</label></div>
+              <div class="radio-chip"><input type="radio" name="service" id="svc-tmpl"   value="Template"      /><label for="svc-tmpl"   data-en="Template + Edit" data-he="תבנית + עריכה">Template + Edit</label></div>
+            </div>
+          </div>
+
+          <!-- Format -->
+          <div class="form-group">
+            <label data-en="Format" data-he="פורמט">Format</label>
+            <div class="radio-group">
+              <div class="radio-chip"><input type="radio" name="format" id="fmt-a5"     value="A5"         checked /><label for="fmt-a5"     data-en="A5"         data-he="A5">A5</label></div>
+              <div class="radio-chip"><input type="radio" name="format" id="fmt-a6"     value="A6"                /><label for="fmt-a6"     data-en="A6"         data-he="A6">A6</label></div>
+              <div class="radio-chip"><input type="radio" name="format" id="fmt-sq"     value="Square"            /><label for="fmt-sq"     data-en="Square"     data-he="ריבועי">Square</label></div>
+              <div class="radio-chip"><input type="radio" name="format" id="fmt-die"    value="Die-Cut"           /><label for="fmt-die"    data-en="Die-Cut"    data-he="חיתוך מיוחד">Die-Cut</label></div>
+              <div class="radio-chip"><input type="radio" name="format" id="fmt-folded" value="Folded"            /><label for="fmt-folded" data-en="Folded"     data-he="מקופל">Folded</label></div>
+              <div class="radio-chip"><input type="radio" name="format" id="fmt-other"  value="Other"             /><label for="fmt-other"  data-en="Other"      data-he="אחר">Other</label></div>
+            </div>
+          </div>
+
+          <!-- Quantity -->
+          <div class="form-group">
+            <label data-en="Quantity" data-he="כמות">Quantity</label>
+            <div class="radio-group">
+              <div class="radio-chip"><input type="radio" name="qty" id="qty-100"  value="100"  /><label for="qty-100"  >100</label></div>
+              <div class="radio-chip"><input type="radio" name="qty" id="qty-250"  value="250"  /><label for="qty-250"  >250</label></div>
+              <div class="radio-chip"><input type="radio" name="qty" id="qty-500"  value="500"  checked /><label for="qty-500"  >500</label></div>
+              <div class="radio-chip"><input type="radio" name="qty" id="qty-1000" value="1000" /><label for="qty-1000" >1,000</label></div>
+              <div class="radio-chip"><input type="radio" name="qty" id="qty-2000" value="2000" /><label for="qty-2000" >2,000+</label></div>
+              <div class="radio-chip"><input type="radio" name="qty" id="qty-cust" value="Custom" /><label for="qty-cust"  data-en="Custom" data-he="מותאם">Custom</label></div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label data-en="Your Name" data-he="שמך">Your Name</label>
+              <input type="text" placeholder="Your name" required />
+            </div>
+            <div class="form-group">
+              <label data-en="WhatsApp / Phone" data-he="וואטסאפ / טלפון">WhatsApp / Phone</label>
+              <input type="tel" placeholder="05x-xxxxxxx" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label data-en="Tell us about your project (optional)" data-he="ספר לנו על הפרויקט שלך (אופציונלי)">Tell us about your project (optional)</label>
+            <textarea placeholder="Colors, style, what the flyer is for, any references..."></textarea>
+          </div>
+
+          <button type="submit" class="btn-primary" data-en="Send Request — We'll Be in Touch!" data-he="שלח בקשה — ניצור קשר!">Send Request — We'll Be in Touch!</button>
+        </form>
       </div>
     </div>
   </section>
 
-  <!-- CONTACT -->
-  <section id="contact">
-    <p class="section-label reveal" data-en="Let's Create Together" data-he="בואו ניצור יחד">Let's Create Together</p>
-    <h2 class="reveal" data-en="Tell us about your event" data-he="ספרו לנו על האירוע שלכם">Tell us about your event</h2>
-    <p class="lead reveal" style="margin:0 auto 0;" data-en="We'd love to hear your vision. Every Pop-Up starts with a conversation." data-he="נשמח לשמוע את החזון שלך. כל פופ-אפ מתחיל בשיחה.">We'd love to hear your vision. Every Pop-Up starts with a conversation.</p>
-
-    <div class="contact-wrapper reveal">
-      <form onsubmit="handleSubmit(event)">
-        <div class="form-group">
-          <label data-en="Your Name" data-he="שמך">Your Name</label>
-          <input type="text" placeholder="Jane Smith" required />
-        </div>
-        <div class="form-group">
-          <label data-en="Email Address" data-he="כתובת אימייל">Email Address</label>
-          <input type="email" placeholder="hello@example.com" required />
-        </div>
-        <div class="form-group">
-          <label data-en="Event Type" data-he="סוג האירוע">Event Type</label>
-          <select>
-            <option data-en="Select event type..." data-he="בחר סוג אירוע...">Select event type...</option>
-            <option data-en="Brand Activation"     data-he="הפעלת מותג">Brand Activation</option>
-            <option data-en="Private Celebration"  data-he="חגיגה פרטית">Private Celebration</option>
-            <option data-en="Corporate Event"      data-he="אירוע עסקי">Corporate Event</option>
-            <option data-en="Cultural / Art Event" data-he="אירוע תרבות / אמנות">Cultural / Art Event</option>
-            <option data-en="Pop-Up Market"        data-he="שוק פופ-אפ">Pop-Up Market</option>
-            <option data-en="Other"                data-he="אחר">Other</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label data-en="Tell us about your vision" data-he="ספרו לנו על החזון שלכם">Tell us about your vision</label>
-          <textarea placeholder="A few sentences about what you're dreaming of..."></textarea>
-        </div>
-        <button type="submit" class="btn-primary" data-en="Send Message" data-he="שלח הודעה">Send Message</button>
-      </form>
+  <!-- TESTIMONIALS -->
+  <section id="testimonials">
+    <p class="section-label reveal" data-en="Happy Clients" data-he="לקוחות מרוצים">Happy Clients</p>
+    <h2 class="reveal" data-en="What our clients say" data-he="מה הלקוחות שלנו אומרים">What our clients say</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card reveal">
+        <div class="stars">★★★★★</div>
+        <blockquote data-en='"I used to hand out generic flyers from a print shop. Now my clients actually comment on how beautiful my materials are. My bookings went up 30% after the new flyers."' data-he='"נהגתי לחלק עלונים גנריים ממרכז הדפסה. עכשיו הלקוחות שלי מעירים כמה חומרים יפים יש לי. ההזמנות שלי עלו ב-30% אחרי הפלאיירים החדשים."'>"I used to hand out generic flyers from a print shop. Now my clients actually comment on how beautiful my materials are. My bookings went up 30% after the new flyers."</blockquote>
+        <div class="testimonial-author" data-en="Shira M., Nail & Lash Artist" data-he="שירה מ., אמנית ציפורניים ורסים">Shira M., Nail & Lash Artist</div>
+      </div>
+      <div class="testimonial-card reveal">
+        <div class="stars">★★★★★</div>
+        <blockquote data-en='"We ordered die-cut flyers shaped like a coffee cup for our cafe opening. People were taking them just to keep. Pop-Up delivered in 3 days — fast and perfect."' data-he='"הזמנו פלאיירים בחיתוך מיוחד בצורת ספל קפה לפתיחת בית הקפה שלנו. אנשים לקחו אותם רק כדי לשמור. Pop-Up סיפק תוך 3 ימים - מהיר ומושלם."'>"We ordered die-cut flyers shaped like a coffee cup for our cafe opening. People were taking them just to keep. Pop-Up delivered in 3 days — fast and perfect."</blockquote>
+        <div class="testimonial-author" data-en="Yossi K., Cafe Owner, Tel Aviv" data-he="יוסי ק., בעל בית קפה, תל אביב">Yossi K., Cafe Owner, Tel Aviv</div>
+      </div>
+      <div class="testimonial-card reveal">
+        <div class="stars">★★★★★</div>
+        <blockquote data-en='"As a business coach I needed something premium to hand out at events. The template was exactly what I needed — bought it, added my photo and details, printed 300 copies. Worth every shekel."' data-he='"כמאמן עסקי הייתי צריך משהו פרמיום לחלק באירועים. התבנית הייתה בדיוק מה שצריכתי - קניתי, הוספתי את התמונה והפרטים שלי, הדפסתי 300 עותקים. שווה כל שקל."'>"As a business coach I needed something premium to hand out at events. The template was exactly what I needed — bought it, added my photo and details, printed 300 copies. Worth every shekel."</blockquote>
+        <div class="testimonial-author" data-en="Amir D., Business Coach" data-he="עמיר ד., מאמן עסקי">Amir D., Business Coach</div>
+      </div>
     </div>
   </section>
 
@@ -1087,22 +860,19 @@
   <footer>
     <div class="footer-logo">Pop<span>-Up</span></div>
     <ul class="footer-links">
-      <li><a href="#about"    data-en="About"    data-he="אודות">About</a></li>
-      <li><a href="#services" data-en="Services" data-he="שירותים">Services</a></li>
-      <li><a href="#contact"  data-en="Contact"  data-he="צור קשר">Contact</a></li>
+      <li><a href="#services"  data-en="Services"  data-he="שירותים">Services</a></li>
+      <li><a href="#templates" data-en="Templates" data-he="תבניות">Templates</a></li>
+      <li><a href="#order"     data-en="Order"     data-he="הזמנה">Order</a></li>
     </ul>
-    <p class="footer-copy" data-en="© 2026 Pop-Up. All rights reserved." data-he="© 2026 Pop-Up. כל הזכויות שמורות.">© 2026 Pop-Up. All rights reserved.</p>
+    <p class="footer-copy" data-en="© 2026 Pop-Up Flyers. All rights reserved." data-he="© 2026 Pop-Up Flyers. כל הזכויות שמורות.">© 2026 Pop-Up Flyers. All rights reserved.</p>
   </footer>
 
   <script>
-    // ── FRAME ANIMATION ──
     gsap.registerPlugin(ScrollTrigger);
 
     const FRAME_COUNT = 50;
     const img = document.getElementById('butterfly-canvas');
     const frameObj = { frame: 0 };
-
-    // Preload all frames
     const frames = [];
     for (let i = 1; i <= FRAME_COUNT; i++) {
       const image = new Image();
@@ -1110,144 +880,107 @@
       frames.push(image);
     }
 
-    // Stage breakpoints (0–1 scroll progress → which stage to show)
-    // 6 stages: 0, 1, 2, 3, 4, 5
+    // Stage thresholds
     const STAGE_THRESHOLDS = [0, 0.18, 0.38, 0.58, 0.78, 0.93];
     let currentStage = 0;
-
     function setStage(idx) {
       if (idx === currentStage) return;
       document.getElementById(`stage-${currentStage}`).classList.remove('active');
       document.getElementById(`stage-${idx}`).classList.add('active');
-      // Hide scroll hint after first scroll
       if (idx > 0) document.getElementById('scroll-hint').style.opacity = '0';
       currentStage = idx;
     }
 
-    // ── Paper fold elements ──
+    // Paper fold
     const paperWrap  = document.getElementById('paper-wrap');
     const paperLeft  = document.getElementById('paper-left');
     const paperRight = document.getElementById('paper-right');
-
-    // Paper is visible in frames 1–12 (progress 0 → ~0.22)
-    // At progress 0:   both halves flat  (rotateY = 0°)
-    // At progress 0.22: both halves fully folded (rotateY = ±90°) + wrap fades out
     const PAPER_END = 0.22;
-
     function updatePaper(progress) {
-      if (progress >= PAPER_END) {
-        paperWrap.style.opacity = '0';
-        return;
-      }
-      const t = progress / PAPER_END; // 0 → 1 within paper phase
-      // Ease in-out for natural feel
+      if (progress >= PAPER_END) { paperWrap.style.opacity = '0'; return; }
+      const t = progress / PAPER_END;
       const ease = t < 0.5 ? 2*t*t : -1+(4-2*t)*t;
-      const foldAngle = ease * 88;  // fold 0 → 88 degrees
-      const opacity   = t < 0.7 ? 1 : 1 - ((t - 0.7) / 0.3); // fade last 30%
-
+      const foldAngle = ease * 88;
+      const opacity   = t < 0.7 ? 1 : 1 - ((t-0.7)/0.3);
       paperLeft.style.transform  = `rotateY(${-foldAngle}deg)`;
       paperRight.style.transform = `rotateY(${foldAngle}deg)`;
       paperWrap.style.opacity = opacity;
     }
 
     gsap.to(frameObj, {
-      frame: FRAME_COUNT - 1,
-      snap: 'frame',
-      ease: 'none',
+      frame: FRAME_COUNT - 1, snap: 'frame', ease: 'none',
       scrollTrigger: {
-        trigger: '#animation-section',
-        start: 'top top',
-        end: 'bottom bottom',
-        scrub: 0.5,
+        trigger: '#animation-section', start: 'top top', end: 'bottom bottom', scrub: 0.5,
       },
       onUpdate: () => {
         const f = Math.round(frameObj.frame);
-        if (frames[f] && frames[f].complete) {
-          img.src = frames[f].src;
-        }
-        // Calculate progress 0–1 through the animation section
+        if (frames[f]?.complete) img.src = frames[f].src;
         const progress = f / (FRAME_COUNT - 1);
-
-        // Update paper fold
         updatePaper(progress);
-
-        // Find which stage we're in
         let newStage = 0;
-        for (let i = STAGE_THRESHOLDS.length - 1; i >= 0; i--) {
+        for (let i = STAGE_THRESHOLDS.length-1; i >= 0; i--) {
           if (progress >= STAGE_THRESHOLDS[i]) { newStage = i; break; }
         }
         setStage(newStage);
       }
     });
 
-    // ── GALLERY STRIP ──
+    // Gallery
     const track = document.getElementById('gallery-track');
-    const galleryFrames = [3, 8, 12, 18, 22, 28, 35, 40, 45, 50];
-    // Duplicate for seamless loop
-    [...galleryFrames, ...galleryFrames].forEach(n => {
+    const galleryFrames = [3,8,12,18,22,28,35,40,45,50];
+    [...galleryFrames,...galleryFrames].forEach(n => {
       const el = document.createElement('img');
       el.src = `images/ezgif-frame-${String(n).padStart(3,'0')}.jpg`;
-      el.alt = 'Pop-Up gallery image';
+      el.alt = 'Flyer example';
       track.appendChild(el);
     });
 
-    // ── REVEAL ON SCROLL ──
-    const revealEls = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          observer.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.12 });
-    revealEls.forEach(el => observer.observe(el));
+    // Reveal on scroll
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    // ── LANGUAGE SWITCHER ──
+    // Template buy buttons — placeholder until BitPayBox
+    document.querySelectorAll('.btn-buy').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const lang = document.documentElement.getAttribute('lang') || 'en';
+        btn.textContent = lang === 'he' ? 'בקרוב...' : 'Coming soon...';
+        setTimeout(() => {
+          btn.textContent = btn.getAttribute(`data-${lang}`) || (lang === 'he' ? 'קנה תבנית' : 'Buy Template');
+        }, 2000);
+      });
+    });
+
+    // Language
     function setLang(lang) {
       const html = document.documentElement;
       html.setAttribute('lang', lang);
       html.setAttribute('dir', lang === 'he' ? 'rtl' : 'ltr');
-
       document.getElementById('btn-en').classList.toggle('active', lang === 'en');
       document.getElementById('btn-he').classList.toggle('active', lang === 'he');
-
       document.querySelectorAll('[data-en]').forEach(el => {
         const text = el.getAttribute(`data-${lang}`);
-        if (!text) return;
-        // Always use innerHTML to support <br>, <em>, non-breaking hyphens
-        el.innerHTML = text;
+        if (text) el.innerHTML = text;
       });
-
-      // Update select options
-      document.querySelectorAll('select option[data-en]').forEach(opt => {
-        const text = opt.getAttribute(`data-${lang}`);
-        if (text) opt.textContent = text;
-      });
-
-      // Update placeholders
-      const placeholders = {
-        en: ['Your name', 'hello@example.com', 'A few sentences about what you\'re dreaming of...'],
-        he: ['השם שלך', 'hello@example.com', 'כמה משפטים על מה שאתם חולמים עליו...']
-      };
-      const inputs = document.querySelectorAll('input[placeholder], textarea[placeholder]');
-      inputs.forEach((el, i) => {
-        if (placeholders[lang][i]) el.placeholder = placeholders[lang][i];
+      document.querySelectorAll('input[placeholder], textarea[placeholder]').forEach(el => {
+        const map = {
+          en: { 'Your name': 'Your name', '05x-xxxxxxx': '05x-xxxxxxx', 'Colors, style, what the flyer is for, any references...': 'Colors, style, what the flyer is for, any references...' },
+          he: { 'Your name': 'השם שלך', '05x-xxxxxxx': '05x-xxxxxxx', 'Colors, style, what the flyer is for, any references...': 'צבעים, סגנון, למה הפלאייר מיועד, כל הפניות...' }
+        };
+        const ph = map[lang]?.[el.placeholder];
+        if (ph) el.placeholder = ph;
       });
     }
 
-    // ── FORM SUBMIT ──
+    // Form submit
     function handleSubmit(e) {
       e.preventDefault();
       const btn = e.target.querySelector('.btn-primary');
       const lang = document.documentElement.getAttribute('lang') || 'en';
-      btn.textContent = lang === 'he' ? 'נשלח! נחזור אליך בקרוב ✓' : 'Sent! We\'ll be in touch soon ✓';
-      btn.style.background = '#2d7a4f';
-      setTimeout(() => {
-        btn.textContent = lang === 'he' ? 'שלח הודעה' : 'Send Message';
-        btn.style.background = '';
-        e.target.reset();
-      }, 4000);
+      btn.textContent = lang === 'he' ? 'נשלח! ניצור קשר תוך 4 שעות ✓' : 'Sent! We\'ll be in touch within 4 hours ✓';
+      btn.style.background = '#1d7a4a';
+      setTimeout(() => { btn.textContent = btn.getAttribute(`data-${lang}`); btn.style.background = ''; e.target.reset(); }, 5000);
     }
   </script>
 </body>
