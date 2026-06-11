@@ -107,44 +107,49 @@
     }
     .cta-nav:hover { background: var(--accent-dark); transform: translateY(-1px); }
 
-    /* ══════════════════════════════
-       HERO — scroll animation
-    ══════════════════════════════ */
+    /* ══════════════════════════════════════════
+       HERO — sticky scroll + Dribbble layout
+    ══════════════════════════════════════════ */
     #animation-section { position: relative; height: 600vh; }
     #animation-sticky {
       position: sticky; top: 0; height: 100vh; overflow: hidden;
+      background: #f0efff;   /* light lavender — visible around contained image */
     }
 
-    /* Gradient blob — top left, like Dribbble design */
+    /* ── BLOB: large top-left rounded shape, exactly like Dribbble ── */
     .hero-blob {
-      position: absolute; top: -15%; left: -15%;
-      width: 70%; height: 90%;
-      background: linear-gradient(135deg, #9090FF 0%, #5956E9 45%, #3B38C8 100%);
-      border-radius: 58% 42% 55% 45% / 48% 60% 40% 52%;
-      opacity: 0.92; z-index: 1; pointer-events: none;
-      transition: opacity 0.8s ease;
+      position: absolute;
+      top: -8%; left: -8%;
+      width: 68%; height: 92%;
+      background: linear-gradient(140deg, #B0ADFF 0%, #7370F5 30%, #5956E9 60%, #4340D5 100%);
+      border-radius: 0 55% 50% 0 / 0 50% 45% 0;
+      opacity: 1; z-index: 1; pointer-events: none;
+      transition: opacity 1s ease;
     }
 
+    /* ── BUTTERFLY: contained so full image is visible, centered ── */
     #butterfly-canvas {
       position: absolute; inset: 0;
       width: 100%; height: 100%;
-      object-fit: cover; display: block; z-index: 2;
+      object-fit: contain;
+      object-position: center center;
+      display: block; z-index: 2;
       transform-origin: center center;
     }
 
-    /* ── Float animation — plays on first stage, paused on scroll ── */
+    /* ── Float animation ── */
     @keyframes butterfly-fly {
-      0%   { transform: translateY(0px)   rotate(0deg)   scale(1); }
-      20%  { transform: translateY(-18px) rotate(1.2deg) scale(1.015); }
-      45%  { transform: translateY(-28px) rotate(-0.8deg) scale(1.02); }
-      70%  { transform: translateY(-14px) rotate(1deg)   scale(1.01); }
-      100% { transform: translateY(0px)   rotate(0deg)   scale(1); }
+      0%   { transform: translateY(0px)    rotate(0deg)    scale(1); }
+      25%  { transform: translateY(-22px)  rotate(1.5deg)  scale(1.018); }
+      50%  { transform: translateY(-32px)  rotate(-1deg)   scale(1.025); }
+      75%  { transform: translateY(-16px)  rotate(1deg)    scale(1.01); }
+      100% { transform: translateY(0px)    rotate(0deg)    scale(1); }
     }
     #butterfly-canvas.is-flying {
-      animation: butterfly-fly 3.8s ease-in-out infinite;
+      animation: butterfly-fly 4s ease-in-out infinite;
     }
 
-    /* Paper fold */
+    /* ── Paper fold ── */
     #paper-wrap {
       position: absolute; top: 36%; left: 50%; transform: translateX(-50%);
       width: 52%; height: 16%; display: flex; perspective: 800px;
@@ -156,131 +161,179 @@
     .paper-inner-left  { background: linear-gradient(to right, #7878F8, #5550E8); }
     .paper-inner-right { background: linear-gradient(to left,  #7878F8, #5550E8); }
 
+    /* ── Bottom fade-out ── */
     .hero-overlay {
       position: absolute; inset: 0; pointer-events: none; z-index: 3;
-      background: linear-gradient(
-        to bottom,
-        rgba(255,255,255,0.0) 0%,
-        rgba(255,255,255,0.0) 65%,
-        rgba(255,255,255,0.97) 100%
-      );
+      background: linear-gradient(to bottom,
+        transparent 0%, transparent 68%, #f0efff 100%);
     }
 
-    /* ── SCROLL STAGES ── */
+    /* ════════════════════════════════════
+       SCROLL STAGES
+    ════════════════════════════════════ */
     .scroll-stages { position: absolute; inset: 0; pointer-events: none; z-index: 7; }
     .stage {
       position: absolute; inset: 0;
-      display: flex; flex-direction: column;
-      padding: 0 6% 12vh; opacity: 0; transition: opacity 0.5s ease;
+      opacity: 0; transition: opacity 0.5s ease;
     }
     .stage.active { opacity: 1; }
 
-    /* ── STAGE 0 — Dribbble layout: text left, butterfly center, tag right ── */
+    /* ════════════════════════════════════
+       STAGE 0 — exact Dribbble reference
+       ┌────────────────────────────────┐
+       │ [blob top-left]                │
+       │                                │
+       │  STEP INSIDE A WORLD OF        │
+       │  LIVING BUTTERFLIES            │  [🦋 center]
+       │                                │
+       │  desc text                     │
+       │  [ORDER NOW btn]               │
+       │                      BEAUTY   │
+       │                      MOVES    │
+       │                      AROUND   │
+       │                      YOU      │
+       └────────────────────────────────┘
+    ════════════════════════════════════ */
     .stage-0 {
-      padding: 0;
       display: grid;
-      grid-template-columns: 46% 1fr;
+      grid-template-columns: 44% 1fr;
       grid-template-rows: 1fr auto;
-      align-items: stretch;
-      justify-items: stretch;
+      padding: 0;
     }
+
+    /* Left column: heading + sub + CTA — vertically centered-low */
     .s0-left {
-      grid-column: 1; grid-row: 1 / 3;
-      display: flex; flex-direction: column;
+      grid-column: 1 / 2;
+      grid-row: 1 / 3;
+      display: flex;
+      flex-direction: column;
       justify-content: flex-end;
-      padding: 72px 0 10vh 52px;
+      padding: 80px 0 9vh 52px;
       pointer-events: auto;
-      position: relative; z-index: 9;
+      z-index: 9;
     }
+
     .s0-eyebrow {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-size: 0.7rem; font-weight: 800; letter-spacing: 0.18em;
-      text-transform: uppercase; color: var(--accent);
-      background: var(--accent-light);
-      border-radius: var(--r-full); padding: 5px 14px; margin-bottom: 20px;
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 0.68rem; font-weight: 800; letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent); background: rgba(255,255,255,0.9);
+      border-radius: var(--r-full); padding: 5px 14px;
       border: 1.5px solid var(--border-v);
-      width: fit-content;
+      width: fit-content; margin-bottom: 22px;
+      box-shadow: 0 2px 12px rgba(89,86,233,0.12);
     }
     .s0-eyebrow::before { content: '+ '; }
+
     .s0-headline {
-      font-size: clamp(2.6rem, 5.5vw, 5.2rem);
       font-weight: 900; text-transform: uppercase;
-      letter-spacing: -0.025em; line-height: 0.95;
-      margin-bottom: 22px;
+      letter-spacing: -0.025em; line-height: 0.93;
+      margin-bottom: 20px;
     }
-    .s0-headline-dark { display: block; color: var(--text); }
-    .s0-headline-accent { display: block; color: var(--accent); }
+    /* "STEP INSIDE A WORLD OF" — dark, normal size */
+    .s0-line1 {
+      display: block;
+      font-size: clamp(1.8rem, 3.8vw, 3.8rem);
+      color: var(--text);
+    }
+    /* "LIVING BUTTERFLIES" — indigo, slightly larger */
+    .s0-line2 {
+      display: block;
+      font-size: clamp(2rem, 4.2vw, 4.4rem);
+      color: var(--accent);
+    }
+
     .s0-sub {
-      font-size: clamp(0.85rem, 1.2vw, 1rem);
-      color: var(--text-2); max-width: 340px;
+      font-size: clamp(0.82rem, 1.1vw, 0.97rem);
+      color: var(--text-2); max-width: 320px;
       line-height: 1.65; margin-bottom: 28px;
     }
     .s0-cta {
       display: inline-flex; align-items: center; justify-content: center;
-      height: 52px; padding: 0 32px;
+      height: 50px; padding: 0 30px;
       background: var(--accent); color: #fff;
       border-radius: var(--r-full); text-decoration: none;
       font-size: 0.9rem; font-weight: 800;
       font-family: 'Heebo', sans-serif;
       transition: background 0.2s, transform 0.15s;
-      width: fit-content;
+      width: fit-content; letter-spacing: 0.02em;
     }
     .s0-cta:hover { background: var(--accent-dark); transform: translateY(-2px); }
 
-    /* Bottom-right: "DESIGN THAT GETS YOU NOTICED" — mirrors Dribbble "BEAUTY MOVES AROUND YOU" */
+    /* Bottom-right: "BEAUTY MOVES AROUND YOU" equivalent */
     .s0-right-text {
-      grid-column: 2; grid-row: 2;
-      display: flex; flex-direction: column; align-items: flex-end;
-      justify-content: flex-end;
-      padding: 0 48px 9vh 0;
+      grid-column: 2 / 3;
+      grid-row: 2 / 3;
+      display: flex; flex-direction: column;
+      align-items: flex-end; justify-content: flex-end;
+      padding: 0 52px 9vh 0;
       pointer-events: none; z-index: 9;
     }
     .s0-right-line {
-      font-size: clamp(1.6rem, 3.2vw, 3rem);
+      display: block;
+      font-size: clamp(1.5rem, 2.8vw, 2.8rem);
       font-weight: 900; text-transform: uppercase;
-      letter-spacing: -0.02em; line-height: 0.95;
+      letter-spacing: -0.025em; line-height: 0.93;
       color: var(--text); text-align: right;
     }
     .s0-right-line.accent { color: var(--accent); }
 
-    /* Stages 1-5 */
-    .stage-1 { justify-content: flex-start; align-items: flex-start; padding-top: 20vh; }
-    .stage-2 { justify-content: center; align-items: flex-end; padding-right: 6%; }
-    .stage-3 { justify-content: flex-end; align-items: flex-start; }
-    .stage-4 { justify-content: center; align-items: flex-start; }
-    .stage-5 { justify-content: flex-end; align-items: flex-end; padding-right: 6%; }
+    /* ── Stages 1–5 ── */
+    .stage-1 {
+      display: flex; flex-direction: column;
+      justify-content: flex-start; align-items: flex-start;
+      padding: 20vh 0 0 52px;
+    }
+    .stage-2 {
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: flex-end;
+      padding: 0 52px;
+    }
+    .stage-3 {
+      display: flex; flex-direction: column;
+      justify-content: flex-end; align-items: flex-start;
+      padding: 0 0 12vh 52px;
+    }
+    .stage-4 {
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: flex-start;
+      padding: 0 0 0 52px;
+    }
+    .stage-5 {
+      display: flex; flex-direction: column;
+      justify-content: flex-end; align-items: flex-end;
+      padding: 0 52px 10vh 0;
+    }
 
     .stage-eyebrow {
       display: inline-flex; align-items: center; gap: 6px;
-      font-size: 0.72rem; font-weight: 800; letter-spacing: 0.18em;
+      font-size: 0.68rem; font-weight: 800; letter-spacing: 0.18em;
       text-transform: uppercase; color: #fff;
-      background: rgba(89,86,233,0.75); backdrop-filter: blur(8px);
+      background: rgba(89,86,233,0.7); backdrop-filter: blur(8px);
       border-radius: var(--r-full); padding: 5px 14px; margin-bottom: 16px;
-      border: 1px solid rgba(255,255,255,0.25);
+      border: 1px solid rgba(255,255,255,0.2); width: fit-content;
     }
     .stage-eyebrow::before { content: '+'; font-size: 0.85em; }
 
     .stage-headline {
-      font-size: clamp(2.4rem, 5.5vw, 5rem); font-weight: 900;
-      text-transform: uppercase; letter-spacing: -0.02em; line-height: 0.97;
-      margin-bottom: 20px; max-width: 580px;
-      text-shadow: 0 2px 20px rgba(0,0,0,0.18);
+      font-size: clamp(2.2rem, 5vw, 4.6rem); font-weight: 900;
+      text-transform: uppercase; letter-spacing: -0.025em; line-height: 0.95;
+      margin-bottom: 18px; max-width: 560px;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.2);
     }
     .stage-1 .stage-headline,
-    .stage-5 .stage-headline { color: var(--text); }
-    .stage-2 .stage-headline,
+    .stage-5 .stage-headline { color: var(--text); text-shadow: none; }
+    .stage-2 .stage-headline { color: #fff; text-align: right; }
     .stage-3 .stage-headline,
     .stage-4 .stage-headline { color: #fff; }
-    .stage-2 .stage-headline { text-align: right; }
-
-    .stage-headline em { font-style: normal; color: #BDB9FF; }
-    .stage-1 .stage-headline em { color: var(--accent); }
+    .stage-headline em { font-style: normal; color: #C0BCFF; }
+    .stage-1 .stage-headline em,
     .stage-5 .stage-headline em { color: var(--accent); }
 
     .stage-sub {
-      font-size: clamp(0.9rem, 1.3vw, 1.05rem); max-width: 400px;
-      font-weight: 400; line-height: 1.65; color: rgba(255,255,255,0.8);
-      text-shadow: 0 1px 6px rgba(0,0,0,0.25);
+      font-size: clamp(0.88rem, 1.2vw, 1rem); max-width: 380px;
+      font-weight: 400; line-height: 1.65; color: rgba(255,255,255,0.82);
+      text-shadow: 0 1px 6px rgba(0,0,0,0.2);
     }
     .stage-1 .stage-sub { color: var(--text-2); text-shadow: none; }
 
@@ -588,19 +641,21 @@
       .footer-links { flex-wrap: wrap; justify-content: center; }
 
       /* Mobile hero */
-      #animation-sticky { height: 100svh; }
-      #butterfly-canvas { object-fit: contain; object-position: center 35%; }
-      .hero-blob { width: 120%; height: 50%; top: -5%; left: -10%; }
+      #animation-sticky { height: 100svh; background: #f0efff; }
+      #butterfly-canvas { object-fit: contain; object-position: center 30%; }
+      .hero-blob { width: 110%; height: 52%; top: -5%; left: -5%; border-radius: 0 0 60% 0 / 0 0 50% 0; }
 
-      /* Stage-0 mobile: stack vertically */
+      /* Stage-0 mobile */
       .stage-0 { grid-template-columns: 1fr; grid-template-rows: 1fr auto; }
-      .s0-left { grid-column: 1; padding: 72px 20px 4vh 20px; justify-content: flex-end; }
-      .s0-right-text { grid-column: 1; grid-row: 2; align-items: flex-start; padding: 0 20px 5vh; }
-      .s0-right-line { font-size: clamp(1.2rem, 6vw, 2rem); text-align: left; }
-      .s0-headline { font-size: clamp(1.9rem, 7.5vw, 3rem); }
-      .s0-sub { font-size: 0.85rem; max-width: 100%; }
+      .s0-left { grid-column: 1; grid-row: 2; padding: 0 20px 4vh; justify-content: flex-start; }
+      .s0-right-text { grid-column: 1; grid-row: 2; align-items: flex-start; padding: 0 20px 2vh; display: none; }
+      .s0-line1 { font-size: clamp(1.7rem, 7vw, 2.6rem); }
+      .s0-line2 { font-size: clamp(1.9rem, 7.5vw, 2.9rem); }
+      .s0-sub { font-size: 0.82rem; max-width: 100%; margin-bottom: 18px; }
 
-      .stage { padding: 0 20px 8vh; }
+      /* Stages 1-5 mobile */
+      .stage-1, .stage-3, .stage-4 { padding-left: 20px; padding-right: 20px; }
+      .stage-2, .stage-5 { padding-left: 20px; padding-right: 20px; }
       .stage-2 { align-items: flex-start; }
       .stage-5 { align-items: flex-start; }
       .stage-headline { font-size: clamp(1.8rem, 7vw, 2.8rem); }
