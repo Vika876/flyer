@@ -129,6 +129,19 @@
       position: absolute; inset: 0;
       width: 100%; height: 100%;
       object-fit: cover; display: block; z-index: 2;
+      transform-origin: center center;
+    }
+
+    /* ── Float animation — plays on first stage, paused on scroll ── */
+    @keyframes butterfly-fly {
+      0%   { transform: translateY(0px)   rotate(0deg)   scale(1); }
+      20%  { transform: translateY(-18px) rotate(1.2deg) scale(1.015); }
+      45%  { transform: translateY(-28px) rotate(-0.8deg) scale(1.02); }
+      70%  { transform: translateY(-14px) rotate(1deg)   scale(1.01); }
+      100% { transform: translateY(0px)   rotate(0deg)   scale(1); }
+    }
+    #butterfly-canvas.is-flying {
+      animation: butterfly-fly 3.8s ease-in-out infinite;
     }
 
     /* Paper fold */
@@ -162,10 +175,77 @@
     }
     .stage.active { opacity: 1; }
 
-    /* Stage 0: bottom-left, like hero text in Dribbble */
-    .stage-0 { justify-content: flex-end; align-items: flex-start; }
+    /* ── STAGE 0 — Dribbble layout: text left, butterfly center, tag right ── */
+    .stage-0 {
+      padding: 0;
+      display: grid;
+      grid-template-columns: 46% 1fr;
+      grid-template-rows: 1fr auto;
+      align-items: stretch;
+      justify-items: stretch;
+    }
+    .s0-left {
+      grid-column: 1; grid-row: 1 / 3;
+      display: flex; flex-direction: column;
+      justify-content: flex-end;
+      padding: 72px 0 10vh 52px;
+      pointer-events: auto;
+      position: relative; z-index: 9;
+    }
+    .s0-eyebrow {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.7rem; font-weight: 800; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--accent);
+      background: var(--accent-light);
+      border-radius: var(--r-full); padding: 5px 14px; margin-bottom: 20px;
+      border: 1.5px solid var(--border-v);
+      width: fit-content;
+    }
+    .s0-eyebrow::before { content: '+ '; }
+    .s0-headline {
+      font-size: clamp(2.6rem, 5.5vw, 5.2rem);
+      font-weight: 900; text-transform: uppercase;
+      letter-spacing: -0.025em; line-height: 0.95;
+      margin-bottom: 22px;
+    }
+    .s0-headline-dark { display: block; color: var(--text); }
+    .s0-headline-accent { display: block; color: var(--accent); }
+    .s0-sub {
+      font-size: clamp(0.85rem, 1.2vw, 1rem);
+      color: var(--text-2); max-width: 340px;
+      line-height: 1.65; margin-bottom: 28px;
+    }
+    .s0-cta {
+      display: inline-flex; align-items: center; justify-content: center;
+      height: 52px; padding: 0 32px;
+      background: var(--accent); color: #fff;
+      border-radius: var(--r-full); text-decoration: none;
+      font-size: 0.9rem; font-weight: 800;
+      font-family: 'Heebo', sans-serif;
+      transition: background 0.2s, transform 0.15s;
+      width: fit-content;
+    }
+    .s0-cta:hover { background: var(--accent-dark); transform: translateY(-2px); }
+
+    /* Bottom-right: "DESIGN THAT GETS YOU NOTICED" — mirrors Dribbble "BEAUTY MOVES AROUND YOU" */
+    .s0-right-text {
+      grid-column: 2; grid-row: 2;
+      display: flex; flex-direction: column; align-items: flex-end;
+      justify-content: flex-end;
+      padding: 0 48px 9vh 0;
+      pointer-events: none; z-index: 9;
+    }
+    .s0-right-line {
+      font-size: clamp(1.6rem, 3.2vw, 3rem);
+      font-weight: 900; text-transform: uppercase;
+      letter-spacing: -0.02em; line-height: 0.95;
+      color: var(--text); text-align: right;
+    }
+    .s0-right-line.accent { color: var(--accent); }
+
+    /* Stages 1-5 */
     .stage-1 { justify-content: flex-start; align-items: flex-start; padding-top: 20vh; }
-    .stage-2 { justify-content: center; align-items: flex-end; padding-right: 6%; padding-bottom: 0; }
+    .stage-2 { justify-content: center; align-items: flex-end; padding-right: 6%; }
     .stage-3 { justify-content: flex-end; align-items: flex-start; }
     .stage-4 { justify-content: center; align-items: flex-start; }
     .stage-5 { justify-content: flex-end; align-items: flex-end; padding-right: 6%; }
@@ -186,13 +266,12 @@
       margin-bottom: 20px; max-width: 580px;
       text-shadow: 0 2px 20px rgba(0,0,0,0.18);
     }
-    /* Dark on light stages */
-    .stage-0 .stage-headline,
-    .stage-3 .stage-headline,
-    .stage-4 .stage-headline { color: #fff; }
     .stage-1 .stage-headline,
     .stage-5 .stage-headline { color: var(--text); }
-    .stage-2 .stage-headline { color: #fff; text-align: right; }
+    .stage-2 .stage-headline,
+    .stage-3 .stage-headline,
+    .stage-4 .stage-headline { color: #fff; }
+    .stage-2 .stage-headline { text-align: right; }
 
     .stage-headline em { font-style: normal; color: #BDB9FF; }
     .stage-1 .stage-headline em { color: var(--accent); }
@@ -510,10 +589,18 @@
 
       /* Mobile hero */
       #animation-sticky { height: 100svh; }
-      #butterfly-canvas { object-fit: contain; object-position: center 40%; }
+      #butterfly-canvas { object-fit: contain; object-position: center 35%; }
       .hero-blob { width: 120%; height: 50%; top: -5%; left: -10%; }
+
+      /* Stage-0 mobile: stack vertically */
+      .stage-0 { grid-template-columns: 1fr; grid-template-rows: 1fr auto; }
+      .s0-left { grid-column: 1; padding: 72px 20px 4vh 20px; justify-content: flex-end; }
+      .s0-right-text { grid-column: 1; grid-row: 2; align-items: flex-start; padding: 0 20px 5vh; }
+      .s0-right-line { font-size: clamp(1.2rem, 6vw, 2rem); text-align: left; }
+      .s0-headline { font-size: clamp(1.9rem, 7.5vw, 3rem); }
+      .s0-sub { font-size: 0.85rem; max-width: 100%; }
+
       .stage { padding: 0 20px 8vh; }
-      .stage-0 { justify-content: flex-end; align-items: flex-start; }
       .stage-2 { align-items: flex-start; }
       .stage-5 { align-items: flex-start; }
       .stage-headline { font-size: clamp(1.8rem, 7vw, 2.8rem); }
@@ -570,17 +657,39 @@
     <div class="scroll-stages">
 
       <div class="stage stage-0 active" id="stage-0">
-        <span class="stage-eyebrow" data-en="Designer Physical Flyers" data-he="פלאיירים פיזיים מעוצבים">Designer Physical Flyers</span>
-        <h1 class="stage-headline"
-            data-en="Flyers that make<br>people <em>stop</em><br>and stare"
-            data-he="פלאיירים שגורמים<br>לאנשים <em>לעצור</em><br>ולהסתכל">
-          Flyers that make<br>people <em>stop</em><br>and stare
-        </h1>
-        <p class="stage-sub"
-           data-en="Designer physical flyers for beauty masters, cafes, experts and anyone who wants more than a plain leaflet."
-           data-he="פלאיירים מעוצבים למאסטרים של יופי, בתי קפה, מומחים וכל מי שרוצה יותר מעלון רגיל.">
-          Designer physical flyers for beauty masters, cafes, experts and anyone who wants more than a plain leaflet.
-        </p>
+
+        <!-- LEFT: main headline + sub + CTA (like Dribbble left column) -->
+        <div class="s0-left">
+          <span class="s0-eyebrow"
+                data-en="Designer Physical Flyers"
+                data-he="פלאיירים פיזיים מעוצבים">Designer Physical Flyers</span>
+          <h1 class="s0-headline">
+            <span class="s0-headline-dark"
+                  data-en="FLYERS THAT"
+                  data-he="פלאיירים שגורמים">FLYERS THAT</span>
+            <span class="s0-headline-dark"
+                  data-en="MAKE PEOPLE"
+                  data-he="לאנשים">MAKE PEOPLE</span>
+            <span class="s0-headline-accent"
+                  data-en="STOP &amp; STARE"
+                  data-he="לעצור ולהסתכל">STOP &amp; STARE</span>
+          </h1>
+          <p class="s0-sub"
+             data-en="Designer flyers for beauty masters, cafes, experts and everyone who wants more than a plain leaflet."
+             data-he="פלאיירים מעוצבים למאסטרים של יופי, בתי קפה ומומחים שרוצים יותר מעלון רגיל.">
+            Designer flyers for beauty masters, cafes, experts and everyone who wants more than a plain leaflet.
+          </p>
+          <a href="#order" class="s0-cta"
+             data-en="Order Now" data-he="הזמן עכשיו">Order Now</a>
+        </div>
+
+        <!-- BOTTOM RIGHT: "DESIGN THAT GETS YOU NOTICED" — mirrors Dribbble "BEAUTY MOVES AROUND YOU" -->
+        <div class="s0-right-text">
+          <span class="s0-right-line" data-en="DESIGN THAT" data-he="עיצוב שגורם">DESIGN THAT</span>
+          <span class="s0-right-line" data-en="GETS YOU" data-he="לך לבלוט">GETS YOU</span>
+          <span class="s0-right-line accent" data-en="NOTICED" data-he="להיראות">NOTICED</span>
+        </div>
+
       </div>
 
       <div class="stage stage-1" id="stage-1">
@@ -1013,6 +1122,9 @@
     paperWrap.style.opacity    = String(t < 0.7 ? 1 : 1-((t-0.7)/0.3));
   }
 
+  // Start flying animation immediately
+  img.classList.add('is-flying');
+
   gsap.to(frameObj, {
     frame: FRAME_COUNT - 1, snap: 'frame', ease: 'none',
     scrollTrigger: { trigger: '#animation-section', start: 'top top', end: 'bottom bottom', scrub: 0.5 },
@@ -1020,6 +1132,16 @@
       const f = Math.round(frameObj.frame);
       if (frames[f]?.complete) img.src = frames[f].src;
       const progress = f / (FRAME_COUNT - 1);
+
+      // Stop float animation once user starts scrolling
+      if (f > 1 && img.classList.contains('is-flying')) {
+        img.classList.remove('is-flying');
+      }
+      // Restore float when user scrolls back to top
+      if (f === 0 && !img.classList.contains('is-flying')) {
+        img.classList.add('is-flying');
+      }
+
       updatePaper(progress);
       let ns = 0;
       for (let i = STAGE_THRESHOLDS.length-1; i >= 0; i--) {
