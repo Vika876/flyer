@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pop-Up Flyer | Designer Physical Flyers</title>
+  <meta name="description" content="Designer physical flyers for beauty masters, cafes, experts. Design, print, ready-made templates." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:    #14123A;
+      --accent:  #6B5CE7;
+      --accent2: #8B7CF8;
+      --accent3: #4A3BC8;
+      --accent-dim: rgba(107,92,231,0.10);
+      --bg:      #ffffff;
+      --bg2:     #F7F7FB;
+      --text:    #0C0A1E;
+      --text2:   rgba(12,10,30,0.55);
+      --text3:   rgba(12,10,30,0.35);
+      --border:  rgba(12,10,30,0.08);
+      --border-a:rgba(107,92,231,0.22);
+      --r-sm:8px; --r-md:14px; --r-lg:22px; --r-xl:30px; --r-full:100px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: 'Heebo', sans-serif; font-size: 16px; line-height: 1.6;
+      overflow-x: hidden; -webkit-font-smoothing: antialiased;
+    }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
+
+    /* ═══════════════════════════════════
+       NAV — fixed, light over animation
+    ═══════════════════════════════════ */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 68px; padding: 0 48px;
+      background: rgba(255,255,255,0.82);
+      backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    nav.scrolled { border-bottom-color: var(--border); background: rgba(255,255,255,0.94); }
+    .logo { display: flex; align-items: center; gap: 9px; color: var(--text); text-decoration: none; }
+    .logo-mark { width: 28px; height: 28px; flex-shrink: 0; }
+    .logo-text { font-size: 1.1rem; font-weight: 800; line-height: 0.95; letter-spacing: -0.01em; }
+    .logo-text small { display: block; font-size: 0.78em; font-weight: 700; color: var(--accent); }
+    .nav-links { display: flex; gap: 30px; list-style: none; position: absolute; left: 50%; transform: translateX(-50%); }
+    .nav-links a { font-size: 0.875rem; font-weight: 500; color: var(--text2); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-right { display: flex; align-items: center; gap: 14px; }
+    .lang-toggle { display: flex; background: rgba(12,10,30,0.05); border-radius: var(--r-full); padding: 3px; }
+    .lang-btn { min-width: 38px; min-height: 30px; padding: 3px 12px; border-radius: var(--r-full); font-size: 0.7rem; font-weight: 800; cursor: pointer; border: none; background: transparent; color: var(--text3); font-family: 'Heebo', sans-serif; transition: all 0.2s; letter-spacing: 0.06em; }
+    .lang-btn.active { background: var(--accent); color: #fff; }
+    .nav-cta { display: inline-flex; align-items: center; height: 42px; padding: 0 22px; background: var(--accent); color: #fff; border-radius: var(--r-full); font-size: 0.875rem; font-weight: 800; text-decoration: none; transition: background 0.2s, transform 0.15s; }
+    .nav-cta:hover { background: var(--accent3); transform: translateY(-1px); }
+
+    /* ═══════════════════════════════════
+       HERO = BUTTERFLY SCROLL ANIMATION
+       (FIRST thing — attention grabber)
+    ═══════════════════════════════════ */
+    #hero { position: relative; height: 640vh; }
+    #hero-sticky {
+      position: sticky; top: 0; height: 100vh; overflow: hidden;
+      background:
+        radial-gradient(ellipse 55% 45% at 78% 35%, rgba(139,124,248,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 55% at 18% 70%, rgba(107,92,231,0.14) 0%, transparent 55%),
+        linear-gradient(165deg, #F0EFFF 0%, #F8F7FF 35%, #FFFFFF 70%);
+    }
+    /* Butterfly — gray frame bg hidden via multiply */
+    #bfly {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 54%; max-width: 700px; height: auto;
+      display: block; z-index: 2; mix-blend-mode: multiply;
+    }
+    /* Cover Gemini ✦ watermark */
+    .gem-cover {
+      position: absolute; bottom: 0; right: 0; width: 11%; height: 17%;
+      background: linear-gradient(135deg, transparent 28%, #fafaff 60%);
+      z-index: 3; pointer-events: none;
+    }
+
+    /* Scroll stages */
+    .stage { position: absolute; inset: 0; opacity: 0; transition: opacity 0.5s ease; pointer-events: none; }
+    .stage.on { opacity: 1; }
+    .s-inner { position: absolute; inset: 0; display: flex; flex-direction: column; padding: 96px 52px 11vh; }
+    .s1-inner { justify-content: flex-end; align-items: flex-start; }
+    .s2-inner { justify-content: flex-start; align-items: flex-start; padding-top: 20vh; }
+    .s3-inner { justify-content: center; align-items: flex-end; }
+    .s4-inner { justify-content: flex-end; align-items: flex-start; }
+    .s5-inner { justify-content: flex-end; align-items: flex-end; }
+
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 0.68rem; font-weight: 800; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--accent);
+      background: var(--accent-dim); border-radius: var(--r-full);
+      padding: 5px 14px; margin-bottom: 16px; border: 1px solid var(--border-a);
+    }
+    .eyebrow::before { content: '+'; }
+    .headline {
+      font-size: clamp(2.4rem, 5.5vw, 5rem); font-weight: 900;
+      text-transform: uppercase; letter-spacing: -0.025em; line-height: 0.92;
+      margin-bottom: 18px; max-width: 600px; color: var(--text);
+    }
+    .s3-inner .headline { text-align: right; }
+    .headline em { font-style: normal; color: var(--accent); }
+    .stage-sub { font-size: clamp(0.9rem, 1.2vw, 1.05rem); max-width: 380px; color: var(--text2); line-height: 1.65; margin-bottom: 26px; }
+    .stage-cta { display: inline-flex; align-items: center; height: 52px; padding: 0 32px; background: var(--accent); color: #fff; border-radius: var(--r-full); text-decoration: none; font-size: 0.92rem; font-weight: 800; transition: background 0.2s, transform 0.15s; pointer-events: auto; }
+    .stage-cta:hover { background: var(--accent3); transform: translateY(-2px); }
+
+    /* Top-right hero badge */
+    .hero-badge {
+      position: absolute; top: 96px; right: 52px; z-index: 5;
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 1.5px solid var(--border-a); border-radius: var(--r-full);
+      padding: 8px 18px; font-size: 0.68rem; font-weight: 800;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--accent); background: rgba(255,255,255,0.7); backdrop-filter: blur(8px);
+    }
+    .hero-badge-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); animation: blink 2s infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    /* Scroll hint */
+    .scroll-hint { position: absolute; bottom: 3.5vh; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; z-index: 6; }
+    .scroll-hint span { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text3); }
+    .scroll-line { width:1px; height:32px; background: linear-gradient(to bottom, var(--accent), transparent); animation: spulse 2s infinite; }
+    @keyframes spulse { 0%,100%{opacity:0.25} 50%{opacity:1} }
+    @media (prefers-reduced-motion:reduce) { *,*::before,*::after { animation-duration:0.01ms!important; transition-duration:0.01ms!important; } }
+
+    /* ═══════════════════════════════════
+       STATS BAR — trust right after hero
+    ═══════════════════════════════════ */
+    #stats { background: var(--navy); color: #fff; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4,1fr); max-width: 1140px; margin: 0 auto; }
+    .stat { padding: 54px 32px; text-align: center; border-right: 1px solid rgba(255,255,255,0.08); }
+    .stat:last-child { border-right: none; }
+    .stat-num { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 900; color: var(--accent2); letter-spacing: -0.03em; line-height: 1; margin-bottom: 8px; }
+    .stat-label { font-size: 0.8rem; font-weight: 600; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.08em; }
+
+    /* ═══════════════════════════════════
+       SHARED
+    ═══════════════════════════════════ */
+    .wrap { max-width: 1140px; margin: 0 auto; padding: 0 48px; }
+    .pad  { padding-top: 110px; padding-bottom: 110px; }
+    .sec-label { font-size: 0.66rem; font-weight: 800; letter-spacing: 0.24em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+    h2 { font-size: clamp(1.9rem, 4.2vw, 3.2rem); font-weight: 900; text-transform: uppercase; letter-spacing: -0.025em; line-height: 1.0; margin-bottom: 22px; }
+    h2 em { font-style: normal; color: var(--accent); }
+    .lead { font-size: 1.05rem; color: var(--text2); max-width: 500px; line-height: 1.75; }
+
+    /* ABOUT */
+    #about { background: #fff; }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .about-imgs { position: relative; aspect-ratio: 4/5; }
+    .about-main { width: 85%; height: 100%; object-fit: contain; border-radius: var(--r-lg); display: block; mix-blend-mode: multiply; background: #f6f5ff; box-shadow: 0 20px 56px rgba(107,92,231,0.12); }
+    .about-accent { position: absolute; bottom: -16px; right: 0; width: 52%; aspect-ratio: 1; object-fit: contain; border-radius: var(--r-lg); border: 4px solid #fff; mix-blend-mode: multiply; background: #f6f5ff; box-shadow: 0 10px 28px rgba(107,92,231,0.1); }
+    .pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+    .pill { padding: 7px 16px; border-radius: var(--r-full); background: #f0ebff; border: 1.5px solid var(--border-a); font-size: 0.82rem; font-weight: 600; color: var(--accent); transition: background 0.2s, transform 0.15s; }
+    .pill:hover { background: var(--accent); color: #fff; transform: translateY(-2px); }
+
+    /* SERVICES */
+    #services { background: var(--bg2); }
+    .svc-list { margin-top: 56px; }
+    .svc-row { display: grid; grid-template-columns: 68px 1fr 148px; gap: 28px; align-items: center; padding: 26px 0; border-bottom: 1px solid var(--border); transition: all 0.2s; }
+    .svc-row:first-child { border-top: 1px solid var(--border); }
+    .svc-row:hover { background: #f0ebff; padding-left: 18px; padding-right: 18px; margin: 0 -18px; border-color: transparent; border-radius: var(--r-md); }
+    .svc-num { font-size: 0.7rem; font-weight: 900; color: var(--accent); letter-spacing: 0.1em; }
+    .svc-body h3 { font-size: 1.05rem; font-weight: 800; text-transform: uppercase; letter-spacing: -0.01em; margin-bottom: 4px; }
+    .svc-body p { font-size: 0.875rem; color: var(--text2); line-height: 1.6; max-width: 480px; }
+    .svc-price { text-align: right; font-size: 1rem; font-weight: 900; color: var(--accent); }
+    .svc-price span { display: block; font-size: 0.68rem; font-weight: 500; color: var(--text3); margin-top: 2px; }
+
+    /* HOW */
+    #how { background: #f0ebff; }
+    .steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; margin-top: 56px; }
+    .step-card { background: #fff; border: 1.5px solid rgba(107,92,231,0.15); border-radius: var(--r-lg); padding: 30px; transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s; }
+    .step-card:hover { border-color: var(--border-a); box-shadow: 0 8px 32px rgba(107,92,231,0.08); transform: translateY(-4px); }
+    .step-tag { display: inline-block; font-size: 0.66rem; font-weight: 900; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); background: #f0ebff; padding: 4px 12px; border-radius: var(--r-full); margin-bottom: 22px; }
+    .step-card h3 { font-size: 0.95rem; font-weight: 800; text-transform: uppercase; letter-spacing: -0.01em; margin-bottom: 8px; }
+    .step-card p { font-size: 0.875rem; color: var(--text2); line-height: 1.7; }
+
+    /* GALLERY */
+    #gallery { overflow: hidden; padding: 56px 0; background: #fff; }
+    .gtrack { display: flex; gap: 12px; animation: marquee 40s linear infinite; width: max-content; }
+    .gtrack img { height: 160px; width: auto; flex-shrink: 0; border-radius: var(--r-md); object-fit: contain; mix-blend-mode: multiply; background: #f6f5ff; }
+    @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+    @media (prefers-reduced-motion:reduce) { .gtrack { animation:none; } }
+
+    /* TEMPLATES */
+    #templates { background: var(--bg2); }
+    .tmpl-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; margin-top: 56px; }
+    .tmpl-card { background: #fff; border: 1.5px solid var(--border); border-radius: var(--r-lg); overflow: hidden; position: relative; transition: border-color 0.25s, box-shadow 0.25s, transform 0.2s; }
+    .tmpl-card:hover { border-color: var(--border-a); box-shadow: 0 12px 40px rgba(107,92,231,0.1); transform: translateY(-4px); }
+    .tmpl-thumb { width: 100%; aspect-ratio: 3/2; background: linear-gradient(135deg, #f0ebff, #ddd6fe); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; }
+    .tmpl-body { padding: 20px; }
+    .tmpl-tag { display: inline-block; font-size: 0.62rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); background: #f0ebff; padding: 3px 10px; border-radius: var(--r-full); margin-bottom: 8px; }
+    .tmpl-name { font-size: 0.95rem; font-weight: 800; text-transform: uppercase; letter-spacing: -0.01em; margin-bottom: 6px; }
+    .tmpl-desc { font-size: 0.8rem; color: var(--text2); line-height: 1.55; margin-bottom: 18px; }
+    .tmpl-foot { display: flex; align-items: center; justify-content: space-between; }
+    .tmpl-price { font-size: 1.15rem; font-weight: 900; }
+    .tmpl-price span { font-size: 0.7rem; font-weight: 500; color: var(--text3); }
+    .btn-buy { display: inline-flex; align-items: center; height: 38px; padding: 0 16px; background: var(--accent); color: #fff; border: none; border-radius: var(--r-full); font-size: 0.8rem; font-weight: 800; cursor: pointer; font-family: 'Heebo', sans-serif; transition: background 0.2s; }
+    .btn-buy:hover { background: var(--accent3); }
+    .tmpl-badge { position: absolute; top: 12px; right: 12px; background: var(--accent); color: #fff; font-size: 0.6rem; font-weight: 900; letter-spacing: 0.12em; text-transform: uppercase; padding: 4px 10px; border-radius: var(--r-full); }
+    .tmpl-card.hot { border-color: var(--accent); }
+    .pay-note { text-align: center; margin-top: 36px; font-size: 0.82rem; color: var(--text3); }
+
+    /* ORDER */
+    #order { background: #fff; }
+    .order-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: start; margin-top: 56px; }
+    .order-info h3 { font-size: 1.25rem; font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; margin-bottom: 14px; }
+    .order-info p { font-size: 0.95rem; color: var(--text2); line-height: 1.75; margin-bottom: 24px; }
+    .perks { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .perks li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.9rem; font-weight: 500; }
+    .perks li::before { content: '→'; color: var(--accent); font-weight: 900; flex-shrink: 0; }
+    .form-box { background: #f6f5ff; border: 1.5px solid var(--border-a); border-radius: var(--r-lg); padding: 44px; }
+    .rgroup { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    .rchip input[type="radio"] { display: none; }
+    .rchip label { display: inline-flex; align-items: center; min-height: 38px; padding: 0 16px; border-radius: var(--r-full); border: 1.5px solid var(--border); font-size: 0.8rem; font-weight: 600; cursor: pointer; background: #fff; color: var(--text2); transition: all 0.18s; }
+    .rchip input:checked + label { border-color: var(--accent); background: var(--accent); color: #fff; }
+    .fg { margin-bottom: 22px; }
+    .fg label { display: block; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; color: var(--text2); }
+    .fg input, .fg textarea, .fg select { width: 100%; background: #fff; border: 1.5px solid var(--border); border-radius: var(--r-sm); padding: 12px 16px; color: var(--text); font-family: 'Heebo', sans-serif; font-size: 0.95rem; outline: none; min-height: 48px; transition: border-color 0.2s, box-shadow 0.2s; }
+    .fg input:focus, .fg textarea:focus, .fg select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-dim); }
+    .fg textarea { min-height: 96px; resize: vertical; }
+    .frow { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .btn-submit { display: inline-flex; align-items: center; justify-content: center; width: 100%; min-height: 52px; padding: 0 28px; background: var(--accent); color: #fff; border: none; border-radius: var(--r-full); font-size: 1rem; font-weight: 900; cursor: pointer; font-family: 'Heebo', sans-serif; transition: background 0.2s, transform 0.15s; margin-top: 6px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .btn-submit:hover { background: var(--accent3); transform: translateY(-2px); }
+
+    /* REVIEWS */
+    #reviews { background: var(--bg2); }
+    .rev-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; margin-top: 56px; }
+    .rev-card { background: #fff; border: 1.5px solid var(--border); border-radius: var(--r-lg); padding: 26px; display: flex; flex-direction: column; gap: 12px; transition: border-color 0.2s, box-shadow 0.2s; }
+    .rev-card:hover { border-color: var(--border-a); box-shadow: 0 8px 24px rgba(107,92,231,0.07); }
+    .stars { color: #F59E0B; font-size: 0.8rem; letter-spacing: 2px; }
+    .rev-card blockquote { font-size: 0.9rem; line-height: 1.75; color: var(--text2); font-style: italic; flex: 1; }
+    .rev-author { font-size: 0.76rem; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 0.04em; }
+
+    /* FINAL CTA */
+    #final-cta { background: var(--navy); color: #fff; text-align: center; padding: 110px 24px; position: relative; overflow: hidden; }
+    #final-cta::before { content:''; position:absolute; inset:0; background: radial-gradient(ellipse 50% 60% at 50% 0%, rgba(139,124,248,0.3), transparent 70%); }
+    .fc-inner { position: relative; max-width: 700px; margin: 0 auto; }
+    #final-cta h2 { color: #fff; }
+    #final-cta h2 em { color: var(--accent2); }
+    .fc-sub { font-size: 1.05rem; color: rgba(255,255,255,0.7); margin-bottom: 32px; max-width: 480px; margin-left: auto; margin-right: auto; }
+    .fc-btn { display: inline-flex; align-items: center; height: 56px; padding: 0 40px; background: #fff; color: var(--navy); border-radius: var(--r-full); text-decoration: none; font-size: 1rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.03em; transition: transform 0.15s, box-shadow 0.2s; }
+    .fc-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(0,0,0,0.3); }
+
+    /* FOOTER */
+    footer { background: #0A0820; color: rgba(255,255,255,0.45); padding: 56px 48px 36px; }
+    .foot-inner { max-width: 1140px; margin: 0 auto; }
+    .foot-top { display: flex; align-items: center; justify-content: space-between; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 28px; }
+    .foot-logo { display: flex; align-items: center; gap: 9px; color: #fff; }
+    .foot-logo .logo-text { font-size: 1.05rem; }
+    .foot-logo .logo-text small { color: var(--accent2); }
+    .foot-links { display: flex; gap: 24px; list-style: none; }
+    .foot-links a { color: rgba(255,255,255,0.45); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+    .foot-links a:hover { color: #fff; }
+    .foot-bottom { display: flex; justify-content: space-between; }
+    .foot-copy { font-size: 0.74rem; color: rgba(255,255,255,0.3); }
+
+    /* RTL */
+    html[dir="rtl"] .nav-right { flex-direction: row-reverse; }
+    html[dir="rtl"] .about-grid, html[dir="rtl"] .order-grid { direction: rtl; }
+    html[dir="rtl"] .foot-top, html[dir="rtl"] .foot-bottom { flex-direction: row-reverse; }
+    html[dir="rtl"] .s1-inner, html[dir="rtl"] .s2-inner, html[dir="rtl"] .s4-inner { align-items: flex-end; text-align: right; }
+    html[dir="rtl"] .s3-inner { align-items: flex-start; }
+    html[dir="rtl"] .s3-inner .headline { text-align: left; }
+    html[dir="rtl"] .s5-inner { align-items: flex-start; }
+    html[dir="rtl"] .hero-badge { right: auto; left: 52px; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      nav { padding: 0 18px; }
+      .nav-links { display: none; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .stat:nth-child(2) { border-right: none; }
+      .stat { border-bottom: 1px solid rgba(255,255,255,0.08); }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .svc-row { grid-template-columns: 52px 1fr; }
+      .svc-price { display: none; }
+      .steps { grid-template-columns: 1fr; }
+      .tmpl-grid { grid-template-columns: 1fr 1fr; }
+      .order-grid { grid-template-columns: 1fr; }
+      .rev-grid { grid-template-columns: 1fr; }
+      .frow { grid-template-columns: 1fr; }
+      .wrap { padding: 0 20px; }
+      .pad { padding-top: 72px; padding-bottom: 72px; }
+      footer { padding: 40px 20px 28px; }
+      .foot-top { flex-direction: column; gap: 20px; text-align: center; }
+      .foot-links { flex-wrap: wrap; justify-content: center; }
+      .foot-bottom { flex-direction: column; gap: 6px; text-align: center; }
+      #hero-sticky { height: 100svh; }
+      #bfly { width: 86%; }
+      .s-inner { padding: 90px 20px 9vh; }
+      .s3-inner, .s5-inner { align-items: flex-start; }
+      .s3-inner .headline { text-align: left; }
+      .headline { font-size: clamp(1.8rem,7vw,2.8rem); }
+      .hero-badge { top: 80px; right: 16px; }
+      .form-box { padding: 24px 18px; }
+    }
+    @media (max-width: 600px) { .tmpl-grid { grid-template-columns: 1fr; } }
+
+    .reveal { opacity:0; transform:translateY(24px); transition:opacity 0.65s cubic-bezier(.2,.7,.3,1), transform 0.65s cubic-bezier(.2,.7,.3,1); }
+    .reveal.on { opacity:1; transform:translateY(0); }
+    .reveal.d1 { transition-delay: 0.08s; }
+    .reveal.d2 { transition-delay: 0.16s; }
+    .reveal.d3 { transition-delay: 0.24s; }
+
+    /* ═══════════════════════════════════
+       PRICING — shadcn-style, animated
+    ═══════════════════════════════════ */
+    #pricing { background: #fff; text-align: center; }
+    .pricing-head { max-width: 600px; margin: 0 auto 14px; }
+    .pricing-head h2 { margin-bottom: 14px; }
+    .pricing-head p { font-size: 1.05rem; color: var(--text2); line-height: 1.7; }
+
+    .billing-toggle { display: inline-flex; align-items: center; gap: 12px; margin: 28px 0 48px; }
+    .switch {
+      position: relative; width: 46px; height: 26px;
+      background: var(--border); border-radius: var(--r-full);
+      border: none; cursor: pointer; transition: background 0.25s; padding: 0;
+    }
+    .switch.on { background: var(--accent); }
+    .switch::after {
+      content: ''; position: absolute; top: 3px; left: 3px;
+      width: 20px; height: 20px; background: #fff; border-radius: 50%;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2); transition: transform 0.25s;
+    }
+    .switch.on::after { transform: translateX(20px); }
+    .billing-label { font-size: 0.95rem; font-weight: 700; }
+    .billing-label .save { color: var(--accent); }
+
+    .pricing-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 18px; max-width: 1040px; margin: 0 auto; align-items: stretch;
+    }
+    .price-card {
+      position: relative; background: #fff; border: 1.5px solid var(--border);
+      border-radius: var(--r-xl); padding: 36px 30px; text-align: center;
+      display: flex; flex-direction: column;
+      transition: border-color 0.25s, box-shadow 0.25s, transform 0.3s cubic-bezier(.2,.7,.3,1);
+    }
+    .price-card.popular { border: 2px solid var(--accent); box-shadow: 0 24px 60px rgba(107,92,231,0.16); }
+    @media (min-width: 768px) {
+      .price-card.popular { transform: translateY(-18px) scale(1.03); z-index: 2; }
+      .price-card:not(.popular) { transform: scale(0.97); }
+      .price-card:first-child { transform-origin: right center; }
+      .price-card:last-child  { transform-origin: left center; }
+    }
+    .price-badge {
+      position: absolute; top: 0; right: 0;
+      background: var(--accent); color: #fff;
+      padding: 5px 14px; border-radius: 0 var(--r-xl) 0 14px;
+      display: flex; align-items: center; gap: 5px;
+      font-size: 0.72rem; font-weight: 800;
+    }
+    .price-badge svg { width: 13px; height: 13px; fill: #fff; }
+    .price-name { font-size: 0.82rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text2); margin-bottom: 20px; }
+    .price-amount { display: flex; align-items: baseline; justify-content: center; gap: 4px; margin-bottom: 4px; }
+    .price-num { font-size: 3.2rem; font-weight: 900; letter-spacing: -0.03em; line-height: 1; }
+    .price-period { font-size: 0.85rem; font-weight: 700; color: var(--text2); }
+    .price-billed { font-size: 0.74rem; color: var(--text3); margin-bottom: 24px; }
+    .price-feats { list-style: none; display: flex; flex-direction: column; gap: 11px; text-align: left; margin-bottom: 24px; flex: 1; }
+    .price-feats li { display: flex; align-items: flex-start; gap: 9px; font-size: 0.88rem; color: var(--text); }
+    .price-feats svg { width: 16px; height: 16px; stroke: var(--accent); fill: none; stroke-width: 2.5; flex-shrink: 0; margin-top: 3px; }
+    .price-hr { border: none; border-top: 1px solid var(--border); margin: 0 0 22px; }
+    .price-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 100%; min-height: 50px; padding: 0 24px; border-radius: var(--r-full);
+      font-size: 1rem; font-weight: 800; cursor: pointer; font-family: 'Heebo', sans-serif;
+      border: 1.5px solid var(--accent); transition: all 0.25s;
+    }
+    .price-card:not(.popular) .price-btn { background: #fff; color: var(--text); }
+    .price-card.popular .price-btn { background: var(--accent); color: #fff; }
+    .price-btn:hover { background: var(--accent); color: #fff; transform: translateY(-2px); box-shadow: 0 10px 28px rgba(107,92,231,0.25); }
+    .price-desc { font-size: 0.76rem; color: var(--text3); margin-top: 16px; line-height: 1.5; }
+
+    @media (max-width: 767px) {
+      .pricing-grid { grid-template-columns: 1fr; max-width: 420px; }
+    }
+
+    /* ═══════════════════════════════════
+       CART — button, drawer, checkout
+    ═══════════════════════════════════ */
+    .cart-btn {
+      position: relative; display: inline-flex; align-items: center; justify-content: center;
+      width: 42px; height: 42px; border-radius: var(--r-full);
+      border: 1.5px solid var(--border); background: #fff; cursor: pointer;
+      transition: border-color 0.2s, transform 0.15s;
+    }
+    .cart-btn:hover { border-color: var(--border-a); transform: translateY(-1px); }
+    .cart-btn svg { width: 20px; height: 20px; stroke: var(--text); fill: none; stroke-width: 1.8; }
+    .cart-count {
+      position: absolute; top: -6px; right: -6px;
+      min-width: 19px; height: 19px; padding: 0 5px;
+      background: var(--accent); color: #fff;
+      border-radius: var(--r-full); font-size: 0.66rem; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      transform: scale(0); transition: transform 0.2s;
+    }
+    .cart-count.show { transform: scale(1); }
+
+    /* Overlay */
+    .cart-overlay {
+      position: fixed; inset: 0; background: rgba(12,10,30,0.5);
+      backdrop-filter: blur(2px); z-index: 998;
+      opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s;
+    }
+    .cart-overlay.open { opacity: 1; visibility: visible; }
+
+    /* Drawer */
+    .cart-drawer {
+      position: fixed; top: 0; right: 0; bottom: 0; z-index: 999;
+      width: 420px; max-width: 92vw; background: #fff;
+      transform: translateX(100%); transition: transform 0.35s cubic-bezier(.3,.7,.3,1);
+      display: flex; flex-direction: column;
+      box-shadow: -20px 0 60px rgba(12,10,30,0.2);
+    }
+    .cart-drawer.open { transform: translateX(0); }
+    html[dir="rtl"] .cart-drawer { right: auto; left: 0; transform: translateX(-100%); box-shadow: 20px 0 60px rgba(12,10,30,0.2); }
+    html[dir="rtl"] .cart-drawer.open { transform: translateX(0); }
+
+    .cart-head { display: flex; align-items: center; justify-content: space-between; padding: 24px 28px; border-bottom: 1px solid var(--border); }
+    .cart-head h3 { font-size: 1.2rem; font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; }
+    .cart-close { width: 34px; height: 34px; border: none; background: var(--bg2); border-radius: 50%; cursor: pointer; font-size: 1.1rem; color: var(--text2); transition: background 0.2s; }
+    .cart-close:hover { background: #eceaff; }
+
+    .cart-body { flex: 1; overflow-y: auto; padding: 16px 28px; }
+    .cart-empty { text-align: center; color: var(--text3); padding: 60px 20px; font-size: 0.95rem; }
+    .cart-empty-icon { font-size: 2.5rem; margin-bottom: 14px; }
+
+    .cart-item { display: flex; gap: 14px; padding: 16px 0; border-bottom: 1px solid var(--border); }
+    .cart-item-thumb { width: 56px; height: 56px; border-radius: var(--r-sm); background: linear-gradient(135deg, #f0ebff, #ddd6fe); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0; }
+    .cart-item-info { flex: 1; min-width: 0; }
+    .cart-item-name { font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: -0.01em; margin-bottom: 2px; }
+    .cart-item-tag { font-size: 0.68rem; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+    .cart-item-bottom { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; }
+    .cart-qty { display: flex; align-items: center; gap: 8px; }
+    .cart-qty button { width: 26px; height: 26px; border: 1.5px solid var(--border); background: #fff; border-radius: 6px; cursor: pointer; font-size: 0.9rem; font-weight: 800; color: var(--text2); transition: all 0.15s; line-height: 1; }
+    .cart-qty button:hover { border-color: var(--accent); color: var(--accent); }
+    .cart-qty span { font-size: 0.85rem; font-weight: 800; min-width: 18px; text-align: center; }
+    .cart-item-price { font-size: 0.95rem; font-weight: 900; color: var(--accent); }
+    .cart-item-remove { background: none; border: none; color: var(--text3); font-size: 0.72rem; cursor: pointer; text-decoration: underline; margin-top: 4px; }
+    .cart-item-remove:hover { color: #e0494b; }
+
+    .cart-foot { padding: 22px 28px; border-top: 1px solid var(--border); background: var(--bg2); }
+    .cart-total { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+    .cart-total-label { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text2); }
+    .cart-total-num { font-size: 1.5rem; font-weight: 900; }
+    .cart-checkout { display: flex; align-items: center; justify-content: center; width: 100%; min-height: 52px; background: var(--accent); color: #fff; border: none; border-radius: var(--r-full); font-size: 0.95rem; font-weight: 900; cursor: pointer; font-family: 'Heebo', sans-serif; text-transform: uppercase; letter-spacing: 0.03em; transition: background 0.2s, transform 0.15s; }
+    .cart-checkout:hover { background: var(--accent3); transform: translateY(-2px); }
+    .cart-checkout:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+    /* Checkout payment screen */
+    .checkout-screen { position: absolute; inset: 0; background: #fff; transform: translateX(100%); transition: transform 0.35s cubic-bezier(.3,.7,.3,1); display: flex; flex-direction: column; z-index: 2; }
+    .checkout-screen.open { transform: translateX(0); }
+    .checkout-back { background: none; border: none; color: var(--text2); font-size: 0.82rem; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+    .checkout-back:hover { color: var(--text); }
+    .pay-method {
+      display: flex; align-items: center; gap: 14px; padding: 18px;
+      border: 2px solid var(--border); border-radius: var(--r-md);
+      margin-bottom: 12px; cursor: pointer; transition: all 0.18s;
+    }
+    .pay-method:hover { border-color: var(--border-a); }
+    .pay-method.sel { border-color: var(--accent); background: var(--accent-dim); }
+    .pay-method-icon { width: 46px; height: 46px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 0.95rem; color: #fff; flex-shrink: 0; }
+    .pm-bit { background: #00B8A9; }
+    .pm-paybox { background: #1A1A2E; }
+    .pm-bank { background: var(--accent); }
+    .pay-method-info { flex: 1; }
+    .pay-method-name { font-size: 0.95rem; font-weight: 800; margin-bottom: 2px; }
+    .pay-method-desc { font-size: 0.78rem; color: var(--text2); }
+    .pay-method-radio { width: 20px; height: 20px; border: 2px solid var(--border); border-radius: 50%; flex-shrink: 0; position: relative; transition: border-color 0.18s; }
+    .pay-method.sel .pay-method-radio { border-color: var(--accent); }
+    .pay-method.sel .pay-method-radio::after { content: ''; position: absolute; inset: 3px; background: var(--accent); border-radius: 50%; }
+
+    .bank-details { background: var(--bg2); border-radius: var(--r-md); padding: 18px; margin-top: 8px; font-size: 0.85rem; }
+    .bank-row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--border); }
+    .bank-row:last-child { border-bottom: none; }
+    .bank-row span:first-child { color: var(--text2); }
+    .bank-row span:last-child { font-weight: 700; }
+
+    @media (max-width: 900px) {
+      .cart-drawer { width: 100%; max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="logo">
+    <svg class="logo-mark" viewBox="0 0 32 32" fill="none">
+      <path d="M16 17c-2-5-6-8-9-7-2 1-2 4 0 7 2 2.5 6 4 9 3z" fill="#9B8CFF"/>
+      <path d="M16 17c2-5 6-8 9-7 2 1 2 4 0 7-2 2.5-6 4-9 3z" fill="#7C6FF0"/>
+      <rect x="15.4" y="9" width="1.2" height="14" rx="0.6" fill="#5B4BE0"/>
+    </svg>
+    <span class="logo-text">pop-up<small>flyer</small></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about"     data-en="About" data-ru="О нас"     data-he="אודות">About</a></li>
+    <li><a href="#pricing"   data-en="Pricing" data-ru="Цены"   data-he="מחירים">Pricing</a></li>
+    <li><a href="#templates" data-en="Templates" data-ru="Шаблоны" data-he="תבניות">Templates</a></li>
+    <li><a href="#order"     data-en="Contact" data-ru="Контакты"   data-he="צור קשר">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn"        id="btn-ru" onclick="setLang('ru')">RU</button>
+      <button class="lang-btn"        id="btn-he" onclick="setLang('he')">HE</button>
+    </div>
+    <button class="cart-btn" onclick="openCart()" aria-label="Cart">
+      <svg viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h2.5l2.2 12.4a1.6 1.6 0 0 0 1.6 1.3h8.9a1.6 1.6 0 0 0 1.6-1.3L21 7H5.5"/></svg>
+      <span class="cart-count" id="cart-count">0</span>
+    </button>
+    <a href="#order" class="nav-cta" data-en="Order Now" data-ru="Заказать" data-he="הזמן עכשיו">Order Now</a>
+  </div>
+</nav>
+
+<!-- ═══════════ CART DRAWER ═══════════ -->
+<div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+<aside class="cart-drawer" id="cart-drawer" aria-label="Shopping cart">
+  <!-- Cart screen -->
+  <div class="cart-head">
+    <h3 data-en="Your Cart" data-ru="Корзина" data-he="העגלה שלך">Your Cart</h3>
+    <button class="cart-close" onclick="closeCart()" aria-label="Close">✕</button>
+  </div>
+  <div class="cart-body" id="cart-body"></div>
+  <div class="cart-foot" id="cart-foot" style="display:none;">
+    <div class="cart-total">
+      <span class="cart-total-label" data-en="Total" data-ru="Итого" data-he="סה״כ">Total</span>
+      <span class="cart-total-num" id="cart-total">₪0</span>
+    </div>
+    <button class="cart-checkout" id="cart-checkout" onclick="goCheckout()" data-en="Checkout" data-ru="Оформить" data-he="לתשלום">Checkout</button>
+  </div>
+
+  <!-- Checkout / payment screen -->
+  <div class="checkout-screen" id="checkout-screen">
+    <div class="cart-head">
+      <button class="checkout-back" onclick="backToCart()" data-en="← Back to cart" data-ru="← Назад в корзину" data-he="→ חזרה לעגלה">← Back to cart</button>
+      <button class="cart-close" onclick="closeCart()" aria-label="Close">✕</button>
+    </div>
+    <div class="cart-body">
+      <h3 style="font-size:1.1rem;font-weight:900;text-transform:uppercase;letter-spacing:-0.02em;margin-bottom:6px;" data-en="Payment Method" data-ru="Способ оплаты" data-he="אמצעי תשלום">Payment Method</h3>
+      <p style="font-size:0.85rem;color:var(--text2);margin-bottom:20px;" data-en="Choose how you'd like to pay." data-ru="Выберите, как хотите оплатить." data-he="בחר איך תרצה לשלם.">Choose how you'd like to pay.</p>
+
+      <!-- Bit -->
+      <div class="pay-method sel" data-method="bit" onclick="selectPay('bit')">
+        <div class="pay-method-icon pm-bit">bit</div>
+        <div class="pay-method-info">
+          <div class="pay-method-name">Bit</div>
+          <div class="pay-method-desc" data-en="Pay instantly from your phone" data-ru="Мгновенная оплата с телефона" data-he="שלם מיידית מהטלפון">Pay instantly from your phone</div>
+        </div>
+        <div class="pay-method-radio"></div>
+      </div>
+
+      <!-- PayBox -->
+      <div class="pay-method" data-method="paybox" onclick="selectPay('paybox')">
+        <div class="pay-method-icon pm-paybox">PB</div>
+        <div class="pay-method-info">
+          <div class="pay-method-name">PayBox</div>
+          <div class="pay-method-desc" data-en="Pay with the PayBox app" data-ru="Оплата через приложение PayBox" data-he="שלם עם אפליקציית PayBox">Pay with the PayBox app</div>
+        </div>
+        <div class="pay-method-radio"></div>
+      </div>
+
+      <!-- Bank transfer -->
+      <div class="pay-method" data-method="bank" onclick="selectPay('bank')">
+        <div class="pay-method-icon pm-bank">🏦</div>
+        <div class="pay-method-info">
+          <div class="pay-method-name" data-en="Bank Transfer" data-ru="Банковский перевод" data-he="העברה בנקאית">Bank Transfer</div>
+          <div class="pay-method-desc" data-en="Direct transfer to our account" data-ru="Прямой перевод на наш счёт" data-he="העברה ישירה לחשבון שלנו">Direct transfer to our account</div>
+        </div>
+        <div class="pay-method-radio"></div>
+      </div>
+
+      <!-- Bank details (shown when bank selected) -->
+      <div class="bank-details" id="bank-details" style="display:none;">
+        <div class="bank-row"><span data-en="Bank" data-ru="Банк" data-he="בנק">Bank</span><span>Bank Hapoalim (12)</span></div>
+        <div class="bank-row"><span data-en="Branch" data-ru="Отделение" data-he="סניף">Branch</span><span>567</span></div>
+        <div class="bank-row"><span data-en="Account" data-ru="Счёт" data-he="חשבון">Account</span><span>123456</span></div>
+        <div class="bank-row"><span data-en="Name" data-ru="Имя" data-he="שם">Name</span><span>Pop-Up Flyer Ltd</span></div>
+        <p style="margin-top:12px;font-size:0.78rem;color:var(--text2);" data-en="Send the transfer confirmation to WhatsApp and we'll start right away." data-ru="Отправьте подтверждение перевода в WhatsApp, и мы сразу начнём." data-he="שלח אישור העברה לוואטסאפ ונתחיל מיד.">Send the transfer confirmation to WhatsApp and we'll start right away.</p>
+      </div>
+    </div>
+    <div class="cart-foot">
+      <div class="cart-total">
+        <span class="cart-total-label" data-en="Total" data-ru="Итого" data-he="סה״כ">Total</span>
+        <span class="cart-total-num" id="checkout-total">₪0</span>
+      </div>
+      <button class="cart-checkout" id="pay-btn" onclick="payNow()" data-en="Pay with Bit" data-ru="Оплатить через Bit" data-he="שלם עם Bit">Pay with Bit</button>
+    </div>
+  </div>
+</aside>
+
+<!-- ═══════════ HERO = ANIMATION (FIRST) ═══════════ -->
+<section id="hero">
+  <div id="hero-sticky">
+    <img id="bfly" src="images/ezgif-frame-001.jpg" alt="Purple butterfly — Pop-Up Flyer" />
+
+    <!-- Live badge top-right -->
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      <span data-en="Now Taking Orders" data-ru="Принимаем заказы" data-he="פתוחים להזמנות">Now Taking Orders</span>
+    </div>
+
+    <!-- STAGE 1: main value + CTA -->
+    <div class="stage on" id="st1">
+      <div class="s-inner s1-inner">
+        <span class="eyebrow" data-en="Designer Physical Flyers" data-ru="Дизайнерские флаеры" data-he="פלאיירים פיזיים מעוצבים">Designer Physical Flyers</span>
+        <h1 class="headline" data-en="Flyers that make<br>people <em>stop &amp; stare</em>" data-ru="Флаеры, которые<br>заставляют <em>остановиться</em>" data-he="פלאיירים שגורמים<br>לאנשים <em>לעצור ולהסתכל</em>">Flyers that make<br>people <em>stop &amp; stare</em></h1>
+        <p class="stage-sub" data-en="For beauty masters, cafes, experts — and everyone who wants more than a plain leaflet." data-ru="Для мастеров красоты, кафе, экспертов — и всех, кто хочет больше обычной листовки." data-he="למאסטרים של יופי, בתי קפה, מומחים — וכל מי שרוצה יותר מעלון רגיל.">For beauty masters, cafes, experts — and everyone who wants more than a plain leaflet.</p>
+        <a href="#order" class="stage-cta" data-en="Start Your Order" data-ru="Начать заказ" data-he="התחל הזמנה">Start Your Order</a>
+      </div>
+    </div>
+    <!-- STAGE 2 -->
+    <div class="stage" id="st2">
+      <div class="s-inner s2-inner">
+        <span class="eyebrow" data-en="Design & Print" data-ru="Дизайн и печать" data-he="עיצוב והדפסה">Design & Print</span>
+        <div class="headline" data-en="Your brand.<br>Beautifully<br><em>printed.</em>" data-ru="Ваш бренд.<br>Красиво<br><em>напечатан.</em>" data-he="המותג שלך.<br>מודפס<br><em>בצורה מרהיבה.</em>">Your brand.<br>Beautifully<br><em>printed.</em></div>
+      </div>
+    </div>
+    <!-- STAGE 3 -->
+    <div class="stage" id="st3">
+      <div class="s-inner s3-inner">
+        <span class="eyebrow" data-en="For Every Business" data-ru="Для любого бизнеса" data-he="לכל עסק">For Every Business</span>
+        <div class="headline" data-en="Beauty.<br>Cafes.<br><em>Experts.</em>" data-ru="Красота.<br>Кафе.<br><em>Эксперты.</em>" data-he="יופי.<br>בתי קפה.<br><em>מומחים.</em>">Beauty.<br>Cafes.<br><em>Experts.</em></div>
+      </div>
+    </div>
+    <!-- STAGE 4 -->
+    <div class="stage" id="st4">
+      <div class="s-inner s4-inner">
+        <span class="eyebrow" data-en="Ready Templates" data-ru="Готовые шаблоны" data-he="תבניות מוכנות">Ready Templates</span>
+        <div class="headline" data-en="Buy. Customize.<br><em>Print.</em>" data-ru="Купи. Настрой.<br><em>Печатай.</em>" data-he="קנה. התאם.<br><em>הדפס.</em>">Buy. Customize.<br><em>Print.</em></div>
+        <p class="stage-sub" data-en="50+ professional templates, ready in minutes." data-ru="50+ профессиональных шаблонов, готовых за минуты." data-he="50+ תבניות מקצועיות, מוכנות תוך דקות.">50+ professional templates, ready in minutes.</p>
+      </div>
+    </div>
+    <!-- STAGE 5 -->
+    <div class="stage" id="st5">
+      <div class="s-inner s5-inner">
+        <span class="eyebrow" data-en="60 Seconds" data-ru="60 секунд" data-he="60 שניות">60 Seconds</span>
+        <div class="headline" data-en="Leave a request.<br>We handle<br><em>everything.</em>" data-ru="Оставьте заявку.<br>Мы сделаем<br><em>всё.</em>" data-he="השאר בקשה.<br>אנחנו מטפלים<br><em>בהכל.</em>">Leave a request.<br>We handle<br><em>everything.</em></div>
+        <a href="#order" class="stage-cta" data-en="Order Now →" data-ru="Заказать →" data-he="הזמן עכשיו →">Order Now →</a>
+      </div>
+    </div>
+
+    <div class="scroll-hint">
+      <span data-en="Scroll" data-ru="Листай" data-he="גלול">Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </div>
+</section>
+
+<main>
+
+<!-- STATS — instant trust -->
+<section id="stats">
+  <div class="stats-grid">
+    <div class="stat"><div class="stat-num">200+</div><div class="stat-label" data-en="Businesses" data-ru="Бизнесов" data-he="עסקים">Businesses</div></div>
+    <div class="stat"><div class="stat-num">50k+</div><div class="stat-label" data-en="Flyers Printed" data-ru="Флаеров напечатано" data-he="פלאיירים מודפסים">Flyers Printed</div></div>
+    <div class="stat"><div class="stat-num">48h</div><div class="stat-label" data-en="Express Option" data-ru="Экспресс" data-he="אקספרס">Express Option</div></div>
+    <div class="stat"><div class="stat-num">4.9★</div><div class="stat-label" data-en="Avg. Rating" data-ru="Средний рейтинг" data-he="דירוג ממוצע">Avg. Rating</div></div>
+  </div>
+</section>
+
+<!-- ABOUT / WHO -->
+<section id="about" class="pad">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="about-imgs reveal">
+        <img class="about-main"   src="images/ezgif-frame-016.jpg" alt="Purple butterfly" loading="lazy" />
+        <img class="about-accent" src="images/ezgif-frame-006.jpg" alt="Butterfly motion" loading="lazy" />
+      </div>
+      <div>
+        <p class="sec-label reveal" data-en="Who Is It For?" data-ru="Для кого это?" data-he="למי זה מיועד?">Who Is It For?</p>
+        <h2 class="reveal d1" data-en="Replace plain leaflets<br>with something <em>memorable</em>" data-ru="Замените обычные листовки<br>на что-то <em>запоминающееся</em>" data-he="החלף עלונים רגילים<br>במשהו <em>בלתי נשכח</em>">Replace plain leaflets<br>with something <em>memorable</em></h2>
+        <p class="lead reveal d2" data-en="We design and print physical flyers that people actually pick up, keep, and share. Every flyer is tailored — not a generic template from a print shop." data-ru="Мы создаём и печатаем физические флаеры, которые люди берут, хранят и показывают другим. Каждый флаер уникален — а не шаблон из типографии." data-he="אנחנו מעצבים ומדפיסים פלאיירים פיזיים שאנשים באמת אוספים, שומרים ומשתפים. כל פלאייר מותאם אישית.">We design and print physical flyers that people actually pick up, keep, and share. Every flyer is tailored — not a generic template from a print shop.</p>
+        <div class="pills reveal d3">
+          <span class="pill" data-en="💅 Beauty Masters" data-ru="💅 Мастера красоты" data-he="💅 מאסטרים של יופי">💅 Beauty Masters</span>
+          <span class="pill" data-en="☕ Cafes & Bars" data-ru="☕ Кафе и бары" data-he="☕ בתי קפה">☕ Cafes & Bars</span>
+          <span class="pill" data-en="🧘 Coaches" data-ru="🧘 Коучи" data-he="🧘 מאמנים">🧘 Coaches</span>
+          <span class="pill" data-en="🍽️ Restaurants" data-ru="🍽️ Рестораны" data-he="🍽️ מסעדות">🍽️ Restaurants</span>
+          <span class="pill" data-en="🛍️ Boutiques" data-ru="🛍️ Бутики" data-he="🛍️ בוטיקים">🛍️ Boutiques</span>
+          <span class="pill" data-en="🎓 Studios" data-ru="🎓 Студии" data-he="🎓 סטודיוס">🎓 Studios</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="pad">
+  <div class="wrap">
+    <div class="pricing-head reveal">
+      <p class="sec-label" data-en="Packages" data-ru="Пакеты" data-he="חבילות">Packages</p>
+      <h2 data-en="Simple, <em>transparent</em> pricing" data-ru="Простые, <em>прозрачные</em> цены" data-he="תמחור פשוט <em>ושקוף</em>">Simple, <em>transparent</em> pricing</h2>
+      <p data-en="Choose the package that fits your business. All include free consultation, PDF proof, and unlimited revisions." data-ru="Выберите пакет под ваш бизнес. Все включают бесплатную консультацию, PDF-макет и неограниченные правки." data-he="בחר את החבילה שמתאימה לעסק שלך. הכל כולל ייעוץ חינם, הוכחת PDF ותיקונים ללא הגבלה.">Choose the package that fits your business. All include free consultation, PDF proof, and unlimited revisions.</p>
+    </div>
+
+    <div style="height:32px;"></div>
+
+    <div class="pricing-grid">
+      <!-- STARTER -->
+      <div class="price-card reveal">
+        <div class="price-name" data-en="Starter" data-ru="Старт" data-he="בסיסי">Starter</div>
+        <div class="price-amount">
+          <span class="price-num" data-once="150" data-sub="120">₪150</span>
+        </div>
+        <div class="price-period price-billed" data-en="one-time / per flyer" data-ru="разово / за флаер" data-he="חד פעמי / לפלאייר">one-time / per flyer</div>
+        <ul class="price-feats">
+          <li><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg><span data-en="1 custom flyer design" data-ru="1 уникальный дизайн флаера" data-he="עיצוב פלאייר מותאם אחד">1 custom flyer design</span></li>
+          <li><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg><span data-en="Print-ready PDF file" data-ru="Готовый к печати PDF" data-he="קובץ PDF מוכן להדפסה">Print-ready PDF file</span></li>
+          <li><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg><span data-en="2 revision rounds" data-ru="2 раунда правок" data-he="2 סבבי תיקונים">2 revision rounds</span></li>
+          <li><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg><span data-en="48h turnaround option" data-ru="Опция 48 часов" data-he="אפשרות 48 שעות">48h turnaround option</span></li>
+        </ul>
+        <hr class="price-hr" />
+        <a href="#order" class="price-btn" data-en="Start Now" data-ru="Начать" data-he="התחל עכשיו">Start Now</a>
+        <p class="price-desc" data-en="Perfect for a one-off promo or event." data-ru="Идеально для разовой акции или события." data-he="מושלם למבצע או אירוע חד פעמי.">Perfect for a one-off promo or event.</p>
+      </div>
+
+      <!-- BUSINESS (popular) -->
+      <div class="price-card popular reveal d1">
+        <div class="price-badge">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+          <span data-en="Popular" data-ru="Популярный" data-he="פופולרי">Popular</span>
+        </div>
+        <div class="price-name" data-en="Business" data-ru="Бизнес" data-he="עסקי">Business</div>
+        <div class="price-amount">
+          <span class="price-num" data-once="350" data-sub="280">₪350</span>
+        </div>
+        <div class="price-period price-billed" data-en="design + print bundle" data-ru="дизайн + печать" data-he="חבילת עיצוב + הדפסה">design + print bundle</div>
+        <ul class="price-feats">
+          <li><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg><span data-en="Custom design + 500 prints" data-ru="Уникальный дизайн + 500 печати" data-he="עיצוב מותאם + 500 הדפסות">Custom design + 500 prints</span></li>
+          <li><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg><span data-en="Any format & finish" data-ru="Любой формат и отделка" data-he="כל פורמט וגימור">Any format & finish</span></li>
+          <li><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg><span data-en="Unlimited revisions" data-ru="Неограниченные правки" data-he="תיקונים ללא הגבלה">Unlimited revisions</span></li>
+          <li><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg><span data-en="Free delivery in Israel" data-ru="Бесплатная доставка по Израилю" data-he="משלוח חינם בישראל">Free delivery in Israel</span></li>
+          <li><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg><span data-en="Priority support" data-ru="Приоритетная поддержка" data-he="תמיכה מועדפת">Priority support</span></li>
+        </ul>
+        <hr class="price-hr" />
+        <a href="#order" class="price-btn" data-en="Get Started" data-ru="Начать" data-he="בוא נתחיל">Get Started</a>
+        <p class="price-desc" data-en="Best value for growing businesses." data-ru="Лучшая цена для растущего бизнеса." data-he="התמורה הטובה ביותר לעסקים צומחים.">Best value for growing businesses.</p>
+      </div>
+
+      <!-- AGENCY -->
+      <div class="price-card reveal d2">
+        <div class="price-name" data-en="Agency" data-ru="Агентство" data-he="סוכנות">Agency</div>
+        <div class="price-amount">
+          <span class="price-num" data-once="990" data-sub="790">₪990</span>
+        </div>
+        <div class="price-period price-billed" data-en="multi-flyer package" data-ru="пакет мульти-флаер" data-he="חבילת ריבוי פלאיירים">multi-flyer package</div>
+        <ul class="price-feats">
+          <li><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg><span data-en="Everything in Business" data-ru="Всё из «Бизнес»" data-he="הכל מ-עסקי">Everything in Business</span></li>
+          <li><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg><span data-en="Up to 5 flyer designs" data-ru="До 5 дизайнов флаеров" data-he="עד 5 עיצובי פלאייר">Up to 5 flyer designs</span></li>
+          <li><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg><span data-en="2,000 prints included" data-ru="2 000 печати включено" data-he="2,000 הדפסות כלולות">2,000 prints included</span></li>
+          <li><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg><span data-en="Dedicated designer" data-ru="Личный дизайнер" data-he="מעצב ייעודי">Dedicated designer</span></li>
+          <li><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg><span data-en="Brand style guide" data-ru="Гайд по фирменному стилю" data-he="מדריך סגנון מותג">Brand style guide</span></li>
+        </ul>
+        <hr class="price-hr" />
+        <a href="#order" class="price-btn" data-en="Contact Us" data-ru="Связаться" data-he="צור קשר">Contact Us</a>
+        <p class="price-desc" data-en="For salons, chains & agencies." data-ru="Для салонов, сетей и агентств." data-he="לסלונים, רשתות וסוכנויות.">For salons, chains & agencies.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" class="pad">
+  <div class="wrap">
+    <p class="sec-label reveal" data-en="Simple Process" data-ru="Простой процесс" data-he="תהליך פשוט">Simple Process</p>
+    <h2 class="reveal d1" data-en="3 Steps to your <em>perfect flyer</em>" data-ru="3 шага к <em>идеальному флаеру</em>" data-he="3 צעדים לפלאייר <em>המושלם</em>">3 Steps to your <em>perfect flyer</em></h2>
+    <div class="steps">
+      <div class="step-card reveal"><span class="step-tag">Step 01</span><h3 data-en="Fill the Form" data-ru="Заполните форму" data-he="מלא את הטופס">Fill the Form</h3><p data-en="Who you are, service, format, quantity. Takes 2 minutes." data-ru="Кто вы, услуга, формат, количество. Займёт 2 минуты." data-he="מי אתה, שירות, פורמט, כמות. 2 דקות.">Who you are, service, format, quantity. Takes 2 minutes.</p></div>
+      <div class="step-card reveal d1"><span class="step-tag">Step 02</span><h3 data-en="We Design & Approve" data-ru="Мы создаём и согласуем" data-he="אנחנו מעצבים">We Design & Approve</h3><p data-en="Designer creates your flyer. Review, request edits, approve. 1-2 business days." data-ru="Дизайнер создаёт флаер. Вы смотрите, просите правки, утверждаете. 1–2 рабочих дня." data-he="המעצב יוצר. תבדוק, תבקש עריכות, תאשר. 1-2 ימי עבודה.">Designer creates your flyer. Review, request edits, approve. 1-2 business days.</p></div>
+      <div class="step-card reveal d2"><span class="step-tag">Step 03</span><h3 data-en="Printed & Delivered" data-ru="Печать и доставка" data-he="מודפס ומוגש">Printed & Delivered</h3><p data-en="We print and ship across Israel 2-4 business days. Or pick up in Tel Aviv." data-ru="Печатаем и доставляем по Израилю за 2–4 дня. Или самовывоз в Тель-Авиве." data-he="מדפיסים ושולחים 2-4 ימי עבודה. או איסוף בתל אביב.">We print and ship across Israel 2-4 business days. Or pick up in Tel Aviv.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<div id="gallery" role="region" aria-label="Examples"><div class="gtrack" id="gtrack"></div></div>
+
+<!-- TEMPLATES -->
+<section id="templates" class="pad">
+  <div class="wrap">
+    <p class="sec-label reveal" data-en="Ready-Made Templates" data-ru="Готовые шаблоны" data-he="תבניות מוכנות">Ready-Made Templates</p>
+    <h2 class="reveal d1" data-en="Buy. Customize. <em>Print.</em>" data-ru="Купи. Настрой. <em>Печатай.</em>" data-he="קנה. התאם. <em>הדפס.</em>">Buy. Customize. <em>Print.</em></h2>
+    <p class="lead reveal d2" data-en="Professional designs ready to go. Buy, add your details, print with us or anywhere." data-ru="Профессиональные дизайны готовы к работе. Купите, добавьте свои данные, печатайте у нас или где угодно." data-he="עיצובים מקצועיים מוכנים. קנה, הוסף פרטים, הדפס אצלנו או בכל מקום.">Professional designs ready to go. Buy, add your details, print with us or anywhere.</p>
+    <div class="tmpl-grid">
+      <div class="tmpl-card reveal"><div class="tmpl-thumb">💅</div><div class="tmpl-body"><span class="tmpl-tag" data-en="Beauty" data-ru="Красота" data-he="יופי">Beauty</span><div class="tmpl-name">Nail Studio Pro</div><div class="tmpl-desc" data-en="Elegant A5 for nail salons. Price list, social, booking CTA." data-ru="Элегантный A5 для ногтевых салонов. Прайс, соцсети, кнопка записи." data-he="A5 אלגנטי לסלוני ציפורניים.">Elegant A5 for nail salons. Price list, social, booking CTA.</div><div class="tmpl-foot"><div class="tmpl-price">₪49 <span data-en="/ file" data-ru="/ файл" data-he="/ קובץ">/ file</span></div><button class="btn-buy" onclick="addToCart('t1','Nail Studio Pro','Beauty','💅',49)" data-en="Add +" data-ru="В корзину +" data-he="הוסף +">Add +</button></div></div></div>
+      <div class="tmpl-card hot reveal d1"><div class="tmpl-badge" data-en="Popular" data-ru="Популярный" data-he="פופולרי">Popular</div><div class="tmpl-thumb">☕</div><div class="tmpl-body"><span class="tmpl-tag" data-en="Cafe" data-ru="Кафе" data-he="בית קפה">Cafe</span><div class="tmpl-name">Morning Brew</div><div class="tmpl-desc" data-en="Bold editorial flyer for cafes. Menus, events, loyalty." data-ru="Яркий флаер для кафе. Меню, события, лояльность." data-he="פלאייר אדיטוריאל לבתי קפה.">Bold editorial flyer for cafes. Menus, events, loyalty.</div><div class="tmpl-foot"><div class="tmpl-price">₪49 <span data-en="/ file" data-ru="/ файл" data-he="/ קובץ">/ file</span></div><button class="btn-buy" onclick="addToCart('t2','Morning Brew','Cafe','☕',49)" data-en="Add +" data-ru="В корзину +" data-he="הוסף +">Add +</button></div></div></div>
+      <div class="tmpl-card reveal d2"><div class="tmpl-thumb">🧘</div><div class="tmpl-body"><span class="tmpl-tag" data-en="Wellness" data-ru="Велнес" data-he="בריאות">Wellness</span><div class="tmpl-name">Studio Flow</div><div class="tmpl-desc" data-en="Minimal A6 for yoga, pilates, wellness. Class schedule." data-ru="Минимализм A6 для йоги, пилатеса, велнеса. Расписание." data-he="A6 מינימלי ליוגה, פילאטיס.">Minimal A6 for yoga, pilates, wellness. Class schedule.</div><div class="tmpl-foot"><div class="tmpl-price">₪49 <span data-en="/ file" data-ru="/ файл" data-he="/ קובץ">/ file</span></div><button class="btn-buy" onclick="addToCart('t3','Studio Flow','Wellness','🧘',49)" data-en="Add +" data-ru="В корзину +" data-he="הוסף +">Add +</button></div></div></div>
+      <div class="tmpl-card reveal"><div class="tmpl-thumb">🍽️</div><div class="tmpl-body"><span class="tmpl-tag" data-en="Food" data-ru="Еда" data-he="אוכל">Food</span><div class="tmpl-name">Taste & Tell</div><div class="tmpl-desc" data-en="Dark restaurant flyer. Dishes, hours, address." data-ru="Тёмный флаер ресторана. Блюда, часы, адрес." data-he="פלאייר מסעדה כהה.">Dark restaurant flyer. Dishes, hours, address.</div><div class="tmpl-foot"><div class="tmpl-price">₪59 <span data-en="/ file" data-ru="/ файл" data-he="/ קובץ">/ file</span></div><button class="btn-buy" onclick="addToCart('t4','Taste & Tell','Food','🍽️',59)" data-en="Add +" data-ru="В корзину +" data-he="הוסף +">Add +</button></div></div></div>
+      <div class="tmpl-card reveal d1"><div class="tmpl-thumb">🎓</div><div class="tmpl-body"><span class="tmpl-tag" data-en="Expert" data-ru="Эксперт" data-he="מומחה">Expert</span><div class="tmpl-name">Authority Card</div><div class="tmpl-desc" data-en="Premium flyer for coaches & consultants." data-ru="Премиум-флаер для коучей и консультантов." data-he="פלאייר פרמיום למאמנים.">Premium flyer for coaches & consultants.</div><div class="tmpl-foot"><div class="tmpl-price">₪69 <span data-en="/ file" data-ru="/ файл" data-he="/ קובץ">/ file</span></div><button class="btn-buy" onclick="addToCart('t5','Authority Card','Expert','🎓',69)" data-en="Add +" data-ru="В корзину +" data-he="הוסף +">Add +</button></div></div></div>
+      <div class="tmpl-card reveal d2"><div class="tmpl-thumb">🛍️</div><div class="tmpl-body"><span class="tmpl-tag" data-en="Retail" data-ru="Ритейл" data-he="קמעונאות">Retail</span><div class="tmpl-name">Sale & Style</div><div class="tmpl-desc" data-en="Sale flyer for boutiques. Also a loyalty card." data-ru="Флаер распродажи для бутиков. Также карта лояльности." data-he="פלאייר מבצע לבוטיקים.">Sale flyer for boutiques. Also a loyalty card.</div><div class="tmpl-foot"><div class="tmpl-price">₪49 <span data-en="/ file" data-ru="/ файл" data-he="/ קובץ">/ file</span></div><button class="btn-buy" onclick="addToCart('t6','Sale & Style','Retail','🛍️',49)" data-en="Add +" data-ru="В корзину +" data-he="הוסף +">Add +</button></div></div></div>
+    </div>
+    <p class="pay-note reveal"><strong data-en="Payment via BitPayBox — coming soon." data-ru="Оплата через BitPayBox — скоро." data-he="תשלום דרך BitPayBox — בקרוב.">Payment via BitPayBox — coming soon.</strong> <span data-en="Leave an order below in the meantime." data-ru="А пока оставьте заказ ниже." data-he="בינתיים השאר הזמנה למטה.">Leave an order below in the meantime.</span></p>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews" class="pad">
+  <div class="wrap">
+    <p class="sec-label reveal" data-en="Happy Clients" data-ru="Довольные клиенты" data-he="לקוחות מרוצים">Happy Clients</p>
+    <h2 class="reveal d1" data-en="What our <em>clients say</em>" data-ru="Что говорят <em>клиенты</em>" data-he="מה <em>הלקוחות</em> אומרים">What our <em>clients say</em></h2>
+    <div class="rev-grid">
+      <div class="rev-card reveal"><div class="stars">★★★★★</div><blockquote data-en='"Bookings went up 30% after the new flyers. Clients comment on how beautiful my materials are."' data-he='"ההזמנות עלו ב-30% אחרי הפלאיירים החדשים."'>"Bookings went up 30% after the new flyers. Clients comment on how beautiful my materials are."</blockquote><div class="rev-author" data-en="Shira M. — Nail Artist" data-ru="Шира М. — мастер маникюра" data-he="שירה מ. — אמנית ציפורניים">Shira M. — Nail Artist</div></div>
+      <div class="rev-card reveal d1"><div class="stars">★★★★★</div><blockquote data-en='"Die-cut coffee cup flyers for our opening. People took them just to keep. Delivered in 3 days."' data-he='"פלאיירים בחיתוך ספל קפה. אנשים לקחו רק לשמור. ב-3 ימים."'>"Die-cut coffee cup flyers for our opening. People took them just to keep. Delivered in 3 days."</blockquote><div class="rev-author" data-en="Yossi K. — Cafe Owner" data-ru="Йоси К. — владелец кафе" data-he="יוסי ק. — בעל בית קפה">Yossi K. — Cafe Owner</div></div>
+      <div class="rev-card reveal d2"><div class="stars">★★★★★</div><blockquote data-en='"Bought a template, added my photo, printed 300 copies. Looks premium, worth every shekel."' data-he='"קניתי תבנית, הוספתי תמונה, 300 עותקים. נראה פרמיום."'>"Bought a template, added my photo, printed 300 copies. Looks premium, worth every shekel."</blockquote><div class="rev-author" data-en="Amir D. — Business Coach" data-ru="Амир Д. — бизнес-коуч" data-he="עמיר ד. — מאמן עסקי">Amir D. — Business Coach</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ORDER -->
+<section id="order" class="pad">
+  <div class="wrap">
+    <p class="sec-label reveal" data-en="Place Your Order" data-ru="Оформите заказ" data-he="בצע הזמנה">Place Your Order</p>
+    <h2 class="reveal d1" data-en="Tell us about<br>your <em>project</em>" data-ru="Расскажите о<br>вашем <em>проекте</em>" data-he="ספר לנו על<br><em>הפרויקט</em> שלך">Tell us about<br>your <em>project</em></h2>
+    <div class="order-grid">
+      <div class="order-info reveal">
+        <h3 data-en="We reply within 4 hours" data-ru="Отвечаем в течение 4 часов" data-he="מגיבים תוך 4 שעות">We reply within 4 hours</h3>
+        <p data-en="Fill the form and our team will reach out with a quote. No commitment needed." data-ru="Заполните форму, и мы свяжемся с предложением цены. Без обязательств." data-he="מלא את הטופס והצוות יצור קשר עם הצעת מחיר. אין צורך בהתחייבות.">Fill the form and our team will reach out with a quote. No commitment needed.</p>
+        <ul class="perks">
+          <li data-en="Free design consultation" data-ru="Бесплатная консультация по дизайну" data-he="ייעוץ עיצוב חינם">Free design consultation</li>
+          <li data-en="PDF proof before printing" data-ru="PDF-макет перед печатью" data-he="הוכחת PDF לפני הדפסה">PDF proof before printing</li>
+          <li data-en="Unlimited design revisions" data-ru="Неограниченные правки дизайна" data-he="תיקונים ללא הגבלה">Unlimited design revisions</li>
+          <li data-en="Delivery across Israel" data-ru="Доставка по Израилю" data-he="משלוח בכל ישראל">Delivery across Israel</li>
+          <li data-en="WhatsApp support" data-ru="Поддержка в WhatsApp" data-he="תמיכת WhatsApp">WhatsApp support</li>
+        </ul>
+      </div>
+      <div class="form-box reveal d1">
+        <form onsubmit="handleSubmit(event)" novalidate>
+          <div class="fg"><label data-en="I AM A..." data-ru="Я..." data-he="אני...">I AM A...</label>
+            <div class="rgroup">
+              <div class="rchip"><input type="radio" name="who" id="w1" value="Beauty"/><label for="w1" data-en="💅 Beauty" data-ru="💅 Красота" data-he="💅 יופי">💅 Beauty</label></div>
+              <div class="rchip"><input type="radio" name="who" id="w2" value="Cafe"/><label for="w2" data-en="☕ Cafe" data-ru="☕ Кафе" data-he="☕ קפה">☕ Cafe</label></div>
+              <div class="rchip"><input type="radio" name="who" id="w3" value="Coach"/><label for="w3" data-en="🧘 Coach" data-ru="🧘 Коуч" data-he="🧘 מאמן">🧘 Coach</label></div>
+              <div class="rchip"><input type="radio" name="who" id="w4" value="Restaurant"/><label for="w4" data-en="🍽️ Restaurant" data-ru="🍽️ Ресторан" data-he="🍽️ מסעדה">🍽️ Restaurant</label></div>
+              <div class="rchip"><input type="radio" name="who" id="w5" value="Shop"/><label for="w5" data-en="🛍️ Shop" data-ru="🛍️ Магазин" data-he="🛍️ חנות">🛍️ Shop</label></div>
+              <div class="rchip"><input type="radio" name="who" id="w6" value="Other"/><label for="w6" data-en="+ Other" data-ru="+ Другое" data-he="+ אחר">+ Other</label></div>
+            </div>
+          </div>
+          <div class="fg"><label data-en="SERVICE" data-ru="УСЛУГА" data-he="שירות">SERVICE</label>
+            <div class="rgroup">
+              <div class="rchip"><input type="radio" name="svc" id="s1" value="Design+Print" checked/><label for="s1" data-en="Design + Print" data-ru="Дизайн + Печать" data-he="עיצוב + הדפסה">Design + Print</label></div>
+              <div class="rchip"><input type="radio" name="svc" id="s2" value="Design"/><label for="s2" data-en="Design Only" data-ru="Только дизайн" data-he="עיצוב בלבד">Design Only</label></div>
+              <div class="rchip"><input type="radio" name="svc" id="s3" value="Print"/><label for="s3" data-en="Print Only" data-ru="Только печать" data-he="הדפסה בלבד">Print Only</label></div>
+              <div class="rchip"><input type="radio" name="svc" id="s4" value="Template"/><label for="s4" data-en="Template" data-ru="Шаблон" data-he="תבנית">Template</label></div>
+            </div>
+          </div>
+          <div class="fg"><label data-en="FORMAT" data-ru="ФОРМАТ" data-he="פורמט">FORMAT</label>
+            <div class="rgroup">
+              <div class="rchip"><input type="radio" name="fmt" id="f1" value="A5" checked/><label for="f1">A5</label></div>
+              <div class="rchip"><input type="radio" name="fmt" id="f2" value="A6"/><label for="f2">A6</label></div>
+              <div class="rchip"><input type="radio" name="fmt" id="f3" value="Square"/><label for="f3" data-en="Square" data-ru="Квадрат" data-he="ריבועי">Square</label></div>
+              <div class="rchip"><input type="radio" name="fmt" id="f4" value="Die-Cut"/><label for="f4" data-en="Die-Cut" data-ru="Фигурный" data-he="חיתוך">Die-Cut</label></div>
+            </div>
+          </div>
+          <div class="fg"><label data-en="QUANTITY" data-ru="КОЛИЧЕСТВО" data-he="כמות">QUANTITY</label>
+            <div class="rgroup">
+              <div class="rchip"><input type="radio" name="qty" id="q1" value="100"/><label for="q1">100</label></div>
+              <div class="rchip"><input type="radio" name="qty" id="q2" value="250"/><label for="q2">250</label></div>
+              <div class="rchip"><input type="radio" name="qty" id="q3" value="500" checked/><label for="q3">500</label></div>
+              <div class="rchip"><input type="radio" name="qty" id="q4" value="1000"/><label for="q4">1,000</label></div>
+              <div class="rchip"><input type="radio" name="qty" id="q5" value="2000+"/><label for="q5">2,000+</label></div>
+            </div>
+          </div>
+          <div class="frow">
+            <div class="fg"><label data-en="YOUR NAME" data-ru="ВАШЕ ИМЯ" data-he="שמך">YOUR NAME</label><input type="text" placeholder="Your name" required /></div>
+            <div class="fg"><label data-en="WHATSAPP" data-ru="WHATSAPP" data-he="וואטסאפ">WHATSAPP</label><input type="tel" placeholder="05x-xxxxxxx" required /></div>
+          </div>
+          <div class="fg"><label data-en="DETAILS (OPTIONAL)" data-ru="ДЕТАЛИ (НЕОБЯЗАТЕЛЬНО)" data-he="פרטים (אופציונלי)">DETAILS (OPTIONAL)</label><textarea placeholder="Colors, style, what the flyer is for..."></textarea></div>
+          <button type="submit" class="btn-submit" data-en="Send Request →" data-ru="Отправить заявку →" data-he="שלח בקשה →">Send Request →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section id="final-cta">
+  <div class="fc-inner reveal">
+    <h2 data-en="Ready to <em>stand out?</em>" data-ru="Готовы <em>выделиться?</em>" data-he="מוכן <em>לבלוט?</em>">Ready to <em>stand out?</em></h2>
+    <p class="fc-sub" data-en="Join 200+ businesses that replaced boring leaflets with flyers people actually keep." data-ru="Присоединяйтесь к 200+ бизнесам, заменившим скучные листовки на флаеры, которые хранят." data-he="הצטרף ל-200+ עסקים שהחליפו עלונים משעממים בפלאיירים שאנשים באמת שומרים.">Join 200+ businesses that replaced boring leaflets with flyers people actually keep.</p>
+    <a href="#order" class="fc-btn" data-en="Start Your Order" data-ru="Начать заказ" data-he="התחל הזמנה">Start Your Order</a>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <div class="foot-top">
+      <div class="foot-logo">
+        <svg class="logo-mark" viewBox="0 0 32 32" fill="none">
+          <path d="M16 17c-2-5-6-8-9-7-2 1-2 4 0 7 2 2.5 6 4 9 3z" fill="#9B8CFF"/>
+          <path d="M16 17c2-5 6-8 9-7 2 1 2 4 0 7-2 2.5-6 4-9 3z" fill="#7C6FF0"/>
+          <rect x="15.4" y="9" width="1.2" height="14" rx="0.6" fill="#5B4BE0"/>
+        </svg>
+        <span class="logo-text">pop-up<small>flyer</small></span>
+      </div>
+      <ul class="foot-links">
+        <li><a href="#about" data-en="About" data-ru="О нас" data-he="אודות">About</a></li>
+        <li><a href="#pricing" data-en="Pricing" data-ru="Цены" data-he="מחירים">Pricing</a></li>
+        <li><a href="#templates" data-en="Templates" data-ru="Шаблоны" data-he="תבניות">Templates</a></li>
+        <li><a href="#order" data-en="Order" data-ru="Заказ" data-he="הזמנה">Order</a></li>
+      </ul>
+      <a href="#order" class="nav-cta" data-en="Order Now" data-ru="Заказать" data-he="הזמן עכשיו">Order Now</a>
+    </div>
+    <div class="foot-bottom">
+      <p class="foot-copy" data-en="© 2026 Pop-Up Flyer. All rights reserved." data-ru="© 2026 Pop-Up Flyer. Все права защищены." data-he="© 2026 Pop-Up Flyer. כל הזכויות שמורות.">© 2026 Pop-Up Flyer. All rights reserved.</p>
+      <p class="foot-copy" data-en="Payment via BitPayBox — coming soon." data-ru="Оплата через BitPayBox — скоро." data-he="תשלום דרך BitPayBox — בקרוב.">Payment via BitPayBox — coming soon.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+  const FC = 50;
+  const canvas = document.getElementById('bfly');
+  const fobj = { f: 0 };
+  const frames = [];
+  for (let i = 1; i <= FC; i++) {
+    const img = new Image();
+    img.src = `images/ezgif-frame-${String(i).padStart(3,'0')}.jpg`;
+    frames.push(img);
+  }
+  const THRESH = [0, 0.22, 0.44, 0.66, 0.88];
+  const IDS = [1, 2, 3, 4, 5];
+  let cur = 1;
+  function setStage(idx) {
+    const n = IDS[idx];
+    if (n === cur) return;
+    document.getElementById(`st${cur}`)?.classList.remove('on');
+    document.getElementById(`st${n}`)?.classList.add('on');
+    cur = n;
+  }
+  gsap.to(fobj, {
+    f: FC - 1, snap: 'f', ease: 'none',
+    scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom bottom', scrub: 0.6 },
+    onUpdate: () => {
+      const f = Math.round(fobj.f);
+      if (frames[f]?.complete) canvas.src = frames[f].src;
+      const p = f / (FC - 1);
+      let ns = 0;
+      for (let i = THRESH.length - 1; i >= 0; i--) { if (p >= THRESH[i]) { ns = i; break; } }
+      setStage(ns);
+    }
+  });
+
+  // Nav border on scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // Gallery
+  const gtrack = document.getElementById('gtrack');
+  [3,8,13,18,23,28,33,38,43,48,3,8,13,18,23,28,33,38,43,48].forEach(n => {
+    const el = document.createElement('img');
+    el.src = `images/ezgif-frame-${String(n).padStart(3,'0')}.jpg`;
+    el.alt = 'Pop-Up flyer';
+    gtrack.appendChild(el);
+  });
+
+  // Reveal
+  const obs = new IntersectionObserver(es => { es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); obs.unobserve(e.target); } }); }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // ═══════════ PRICING — count-up on scroll ═══════════
+  function countUp(el, to) {
+    const dur = 700, start = performance.now();
+    function step(now) {
+      const p = Math.min((now - start) / dur, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = '₪' + Math.round(to * eased);
+      if (p < 1) requestAnimationFrame(step);
+      else el.textContent = '₪' + to;
+    }
+    requestAnimationFrame(step);
+  }
+  const priceObs = new IntersectionObserver(es => {
+    es.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.price-num').forEach(el => countUp(el, parseInt(el.dataset.once)));
+        priceObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.4 });
+  const pg = document.querySelector('.pricing-grid');
+  if (pg) priceObs.observe(pg);
+
+  // ═══════════ CART LOGIC ═══════════
+  let cart = [];          // {id, name, tag, emoji, price, qty}
+  let payMethod = 'bit';
+
+  function t(en, he, ru) {
+    const l = document.documentElement.getAttribute('lang');
+    if (l === 'he') return he;
+    if (l === 'ru') return (ru !== undefined ? ru : en);
+    return en;
+  }
+
+  function addToCart(id, name, tag, emoji, price) {
+    const ex = cart.find(i => i.id === id);
+    if (ex) ex.qty++;
+    else cart.push({ id, name, tag, emoji, price, qty: 1 });
+    renderCart();
+    openCart();
+  }
+  function changeQty(id, delta) {
+    const it = cart.find(i => i.id === id);
+    if (!it) return;
+    it.qty += delta;
+    if (it.qty <= 0) cart = cart.filter(i => i.id !== id);
+    renderCart();
+  }
+  function removeItem(id) { cart = cart.filter(i => i.id !== id); renderCart(); }
+
+  function cartTotal() { return cart.reduce((s, i) => s + i.price * i.qty, 0); }
+  function cartCount() { return cart.reduce((s, i) => s + i.qty, 0); }
+
+  function renderCart() {
+    const body = document.getElementById('cart-body');
+    const foot = document.getElementById('cart-foot');
+    const countEl = document.getElementById('cart-count');
+    const n = cartCount();
+    countEl.textContent = n;
+    countEl.classList.toggle('show', n > 0);
+
+    if (cart.length === 0) {
+      body.innerHTML = `<div class="cart-empty"><div class="cart-empty-icon">🛒</div>${t('Your cart is empty.<br>Add a template to get started.','העגלה ריקה.<br>הוסף תבנית כדי להתחיל.','Корзина пуста.<br>Добавьте шаблон, чтобы начать.')}</div>`;
+      foot.style.display = 'none';
+      return;
+    }
+    foot.style.display = 'block';
+    body.innerHTML = cart.map(i => `
+      <div class="cart-item">
+        <div class="cart-item-thumb">${i.emoji}</div>
+        <div class="cart-item-info">
+          <div class="cart-item-name">${i.name}</div>
+          <div class="cart-item-tag">${i.tag}</div>
+          <div class="cart-item-bottom">
+            <div class="cart-qty">
+              <button onclick="changeQty('${i.id}',-1)">−</button>
+              <span>${i.qty}</span>
+              <button onclick="changeQty('${i.id}',1)">+</button>
+            </div>
+            <div class="cart-item-price">₪${i.price * i.qty}</div>
+          </div>
+          <button class="cart-item-remove" onclick="removeItem('${i.id}')">${t('Remove','הסר','Удалить')}</button>
+        </div>
+      </div>`).join('');
+    document.getElementById('cart-total').textContent = '₪' + cartTotal();
+    document.getElementById('checkout-total').textContent = '₪' + cartTotal();
+  }
+
+  function openCart() {
+    document.getElementById('cart-overlay').classList.add('open');
+    document.getElementById('cart-drawer').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeCart() {
+    document.getElementById('cart-overlay').classList.remove('open');
+    document.getElementById('cart-drawer').classList.remove('open');
+    document.body.style.overflow = '';
+    backToCart();
+  }
+  // Robust wiring: close buttons, Escape key, click-outside
+  document.querySelectorAll('.cart-close').forEach(btn => btn.addEventListener('click', closeCart));
+  document.getElementById('cart-overlay').addEventListener('click', closeCart);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCart(); });
+  function goCheckout() {
+    if (cart.length === 0) return;
+    document.getElementById('checkout-screen').classList.add('open');
+  }
+  function backToCart() {
+    document.getElementById('checkout-screen').classList.remove('open');
+  }
+
+  function selectPay(method) {
+    payMethod = method;
+    document.querySelectorAll('.pay-method').forEach(el => el.classList.toggle('sel', el.dataset.method === method));
+    document.getElementById('bank-details').style.display = (method === 'bank') ? 'block' : 'none';
+    const labels = {
+      bit:    t('Pay with Bit','שלם עם Bit','Оплатить через Bit'),
+      paybox: t('Pay with PayBox','שלם עם PayBox','Оплатить через PayBox'),
+      bank:   t('I Sent the Transfer','שלחתי את ההעברה','Я отправил перевод')
+    };
+    document.getElementById('pay-btn').textContent = labels[method];
+  }
+
+  function payNow() {
+    const btn = document.getElementById('pay-btn');
+    const total = cartTotal();
+    // NOTE: real Bit/PayBox charging requires the business's merchant
+    // account + API/redirect link. Hook those up on the backend here.
+    if (payMethod === 'bit') {
+      // TODO: redirect to your Bit payment request link
+      btn.textContent = t('Opening Bit…','פותח Bit…','Открываю Bit…');
+    } else if (payMethod === 'paybox') {
+      // TODO: redirect to your PayBox payment link
+      btn.textContent = t('Opening PayBox…','פותח PayBox…','Открываю PayBox…');
+    } else {
+      btn.textContent = t('Thank you! ✓','תודה! ✓','Спасибо! ✓');
+    }
+    setTimeout(() => {
+      btn.textContent = t('Order Received ✓','ההזמנה התקבלה ✓','Заказ принят ✓');
+      btn.style.background = '#16a34a';
+      setTimeout(() => {
+        cart = []; renderCart(); closeCart();
+        btn.style.background = ''; selectPay('bit');
+        alert(t(`Thanks! Your order of ₪${total} is received. We'll send the files / payment link to your WhatsApp.`,
+                `תודה! ההזמנה שלך על סך ₪${total} התקבלה. נשלח את הקבצים / קישור התשלום לוואטסאפ שלך.`,
+                `Спасибо! Ваш заказ на ₪${total} принят. Мы пришлём файлы / ссылку на оплату в WhatsApp.`));
+      }, 1200);
+    }, 1000);
+  }
+
+  renderCart();
+
+  // Language
+  function setLang(lang) {
+    const html = document.documentElement;
+    html.setAttribute('lang', lang);
+    html.setAttribute('dir', lang === 'he' ? 'rtl' : 'ltr');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.getElementById('btn-ru').classList.toggle('active', lang === 'ru');
+    document.getElementById('btn-he').classList.toggle('active', lang === 'he');
+    document.querySelectorAll('[data-en]').forEach(el => {
+      const t = el.getAttribute(`data-${lang}`);
+      if (t) el.innerHTML = t;
+    });
+    renderCart();
+    selectPay(payMethod);
+  }
+
+  // Form
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.btn-submit');
+    const lang = document.documentElement.getAttribute('lang') || 'en';
+    btn.textContent = t('✓ Sent! We\'ll be in touch within 4 hours', '✓ נשלח! ניצור קשר תוך 4 שעות', '✓ Отправлено! Свяжемся в течение 4 часов');
+    btn.style.background = '#16a34a';
+    setTimeout(() => { btn.innerHTML = btn.getAttribute(`data-${lang}`); btn.style.background = ''; e.target.reset(); }, 5000);
+  }
+</script>
+</body>
+</html>
